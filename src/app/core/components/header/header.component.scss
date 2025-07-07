@@ -1,0 +1,22 @@
+:host ::ng-deep {
+    .btns .p-button .p-button-label{
+        font-family: var(--btn-font-family);
+        font-weight: 700 !important;
+        font-style: normal;
+        font-size: 16px;
+        letter-spacing: -0.02em;
+        color: var(--btn-color);
+    }
+    .auth-btn .p-button{
+        border-radius: 8px;
+        padding: 10px;
+        background: var(--btn-color);
+    }
+    .auth-btn .p-button .p-button-label{
+        font-family: var(--btn-font-family);
+        font-weight: 400;
+        font-size: 13.95px;
+
+    }
+
+}

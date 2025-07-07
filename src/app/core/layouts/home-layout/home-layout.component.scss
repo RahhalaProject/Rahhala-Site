@@ -1,0 +1,303 @@
+:host ::ng-deep {
+    section {
+        margin-top: 60px;
+    }
+
+    .slider-section {
+        .p-card {
+            background-image: url('/images/slider.png');
+            background-size: cover;
+        }
+        .card-overlay-wrapper {
+            position: relative;
+            .p-card {
+                position: relative;
+                z-index: 1;
+            }
+
+            .overlay {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: rgba(0, 55, 104, 0.4);
+                z-index: 2;
+                pointer-events: none;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                pointer-events: none;
+            }
+        }
+        .overlay div {
+            padding: 20px;
+            
+        }
+        .overlay div h1 {
+            font-weight: 700;
+            font-size: 48px;
+            color: #FFFFFF;
+            line-height: 90px;
+            text-align: center;
+        }
+        .overlay div p {
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+            color: #FFFFFF;
+        }
+        .overlay .add-btn {
+            display: grid;
+            justify-content: center;
+        }
+        .overlay div .p-button {
+            text-align: center;
+            background: #FFFFFF;
+            
+        }
+        .overlay .p-button-label {
+            font-weight: 600;
+            font-size: 13.95px;
+            color: #003768;
+            padding-left: 7px;
+            padding-right: 7px;
+            pointer-events: auto;
+        }
+    }
+
+    .Who-are-we-section {
+        .p-card {
+            background-color: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
+        .p-card-title {
+            font-weight: 600;
+            font-size: 48px;
+            text-align: center;
+            color: #003768;
+        }
+        .p-card p {
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+            color: #003768;
+            padding: 0 25%;
+        }
+    }
+
+    .Our-vision-and-mission-section {
+        .p-card {
+            background-image: url('/images/mission.png');
+            background-size: cover;
+        }
+        .card-overlay-wrapper {
+            position: relative;
+            .p-card {
+                position: relative;
+                z-index: 1;
+            }
+
+            .overlay {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: rgba(0, 55, 104, 0.4);
+                z-index: 2;
+                pointer-events: none;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                pointer-events: none;
+            }
+        }
+        .overlay div {
+            padding: 20px;
+            
+        }
+        .overlay div h2 {
+            font-weight: 700;
+            font-size: 48px;
+            color: #FFFFFF;
+            line-height: 90px;
+            text-align: center;
+        }
+        .overlay div p {
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+            color: #FFFFFF;
+        }
+    }
+
+    .Our-services-section {
+        .p-card {
+            background-image: url('/images/Ourservices.jpg');
+            background-size: cover;
+        }
+        .card-overlay-wrapper {
+            position: relative;
+            .p-card {
+                position: relative;
+                z-index: 1;
+            }
+
+            .overlay {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: rgba(0, 55, 104, 0.4);
+                z-index: 2;
+                pointer-events: none;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                pointer-events: none;
+            }
+        }
+        .overlay div {
+            padding: 20px;
+            
+        }
+        .overlay div h2 {
+            font-weight: 700;
+            font-size: 48px;
+            color: #FFFFFF;
+            line-height: 90px;
+            text-align: center;
+        }
+    }
+
+    .Why-us-section {
+        .p-card {
+            background-image: url('/images/Ourservices.jpg');
+            background-size: cover;
+            min-height: 120px;
+        }
+        .card-overlay-wrapper {
+            position: relative;
+            width: 100%;
+            .p-card {
+                position: relative;
+                z-index: 1;
+                min-height: 120px;
+            }
+
+            .overlay {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: rgba(0, 55, 104, 0.4);
+                z-index: 2;
+                pointer-events: none;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                pointer-events: none;
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .overlay div {
+            padding: 20px;
+            
+        }
+        .overlay div h2 {
+            font-weight: 700;
+            font-size: 48px;
+            color: #FFFFFF;
+            text-align: center;
+        }
+
+        .overlay-content {
+            max-width: 100%;
+            color: white;
+            font-size: 1.2rem;
+            word-wrap: break-word;
+        }
+
+        @media only screen and (max-width: 400px) {
+            .overlay-content h2 {
+                font-size: 35px !important;
+            }
+        }
+    }
+    
+    .Our-vision-cards-section {
+        .p-card {
+            background-color: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
+        .p-card-header div{
+            text-align: center;
+        }
+        .p-card-header div h2{
+            font-weight: 700;
+            font-size: 48px;
+            color: #003768;
+        }
+        .p-card p {
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+            color: #003768;
+            padding: 0 20%;
+        }
+    }
+
+    .Services-cards-section {
+        .p-card {
+            background: #F6F6F6;
+            height: 140px;
+        }
+        .row div {
+            margin-bottom: 20px;
+        }
+        .p-card-title {
+            font-weight: bold;
+            font-size: 16px;
+            color: #003768;
+        }
+        .p-card p {
+            font-weight: 400;
+            font-size: 18px;
+            color: #003768;
+        }
+    }
+
+    .What-do-we-offer-section {
+        .p-card {
+            background: #F6F6F6;
+            padding: 17px;
+            padding-bottom: 0px;
+            height: 390px;
+        }
+        .p-card-header img {
+            width: 100%;
+        }
+        .p-card-title {
+            font-weight: bold;
+            font-size: 20px;
+            color: #003768;
+            margin-bottom: 0px;
+        }
+        .p-card p {
+            font-weight: 600;
+            font-size: 16px;
+            color: #003768;
+            margin-bottom: 0px;
+        }
+    }
+}
