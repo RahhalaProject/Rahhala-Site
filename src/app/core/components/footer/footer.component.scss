@@ -1,0 +1,170 @@
+:host ::ng-deep{
+    .footer-section {
+         width: 100%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        .p-card {
+            background-color: #003768;
+            box-shadow: none;
+            border: none;
+            border-radius: 0;
+            height: auto;
+        }
+        .p-card-title {
+            font-weight: 600;
+            font-size: 48px;
+            color: #FFFFFF;
+        }
+        .p-card-body {
+            padding: 60px;
+        }
+        .description {
+            font-family: var(--btn-font-family);
+            font-weight: 300;
+            font-size: 40px;
+            color: #FFFFFF;
+            text-align: right;
+
+        }
+        
+        .start-btn .p-button{ 
+            border-radius: 8px;
+            padding: 10px 30px;
+            background: #FFFFFF;
+        }
+        .start-btn .p-button .p-button-label{
+            font-family: var(--btn-font-family);
+            font-weight: 600;
+            font-size: 16px;
+            color: #003768;
+
+        }
+        .row1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; // لو عايز العناصر تنزل تحت بعض في الشاشات الصغيرة
+            gap: 1rem;
+        }
+    }
+
+
+    .rahhala-footer {
+        background-color: #003768;
+        color: white;
+        padding: 2rem;
+        font-family: 'Tajawal', sans-serif;
+        direction: rtl;
+        }
+
+        .footer-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        }
+
+        .cta-btn {
+        background-color: white;
+        color: #003768;
+        padding: 0.6rem 1.2rem;
+        border: none;
+        border-radius: 0.4rem;
+        font-weight: bold;
+        cursor: pointer;
+        }
+
+        .footer-header h2 {
+        font-size: 1.5rem;
+        margin: 0;
+        }
+
+        .footer-header p {
+        margin-top: 0.5rem;
+        font-size: 1rem;
+        }
+
+        .footer-divider {
+        margin: 2rem 0;
+        height: 2px;
+        background-color: white;
+        color: white; 
+        border: none;
+        }
+
+        .footer-content {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 2rem;
+        }
+
+        .footer-contact p,
+        .footer-links ul li {
+        margin: 0.5rem 0;
+        font-size: 0.95rem;
+        }
+
+        .footer-links ul {
+        list-style: none;
+        padding: 0;
+        }
+
+        .footer-links ul li a {
+        color: white;
+        text-decoration: none;
+        }
+
+        .footer-bottom {
+        text-align: center;
+        margin-top: 2rem;
+        }
+
+        .footer-logo {
+        height: 40px;
+        margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+        .footer-top {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .footer-content {
+            flex-direction: column;
+        }
+        }
+
+        .footer-links h4 {
+            font-family: var(--btn-font-family);
+            font-weight: 600;
+            font-size: 20px;
+            color: #FFFFFF;
+            margin-bottom: 2rem;
+        }
+        .footer-links li a {
+            font-family: var(--btn-font-family);
+            font-weight: 400;
+            font-size: 16px;
+            color: #FFFFFF;
+        }
+        .footer-links {
+            display: flex;
+
+        }
+        .footer-contact {
+            margin-top: 40px;
+
+        }
+        .footer-contact p {
+            color: white;
+            line-height: 2.2;
+        }
+        .footer-contact p i {
+            margin-left: 5px;
+        }
+        
+}

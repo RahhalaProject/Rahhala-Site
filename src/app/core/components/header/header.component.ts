@@ -1,35 +1,49 @@
 import { Component } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { MegaMenuItem } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
-import { Toolbar } from 'primeng/toolbar';
+import { CommonModule } from '@angular/common';
+import { MegaMenu } from 'primeng/megamenu';
+
 
 @Component({
   selector: 'header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   standalone: true,
-  imports: [Toolbar, AvatarModule, ButtonModule, MenubarModule]
+  imports: [AvatarModule, ButtonModule, MenubarModule,
+    MegaMenu, ButtonModule, CommonModule
+  ]
 })
 export class HeaderComponent {
   
-   items: MenuItem[] | undefined;
+   items: MegaMenuItem[] | undefined;
   constructor() {}
 
-  ngOnInit() { this.items = [
+  ngOnInit() {
+     this.items = [
             {
                 label: 'الرئيسية',
+                root: true,
             },
             {
                 label: 'خدماتنا',
+                root: true,
             },
             {
                 label: 'من نحن',
+                root: true,
             },
             {
                 label: 'الدعم',
+                root: true,
+            },
+            {
+                label: '',
+                root: false,
             },
         ];
+    
     }
 }

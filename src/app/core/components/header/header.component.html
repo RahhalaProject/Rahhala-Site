@@ -1,45 +1,24 @@
-<p-toolbar [style]="{ 'border-radius': '1rem', 'padding': '1rem 1rem 1rem 1.5rem' }">
+<p-megamenu [model]="items" [style]="{ 'border-radius': '1rem'}" >
         <ng-template #start>
             <div class="flex items-center gap-2">
-                 <p-avatar
+                <p-avatar
                     image="/icons/AlrahalaLogo.svg"
-                    [style]="{ width: '124px', height: '58px' }"
+                    [style]="{ width: '124px', height: '50px' }"
                 />
             </div>
         </ng-template>
-        <ng-template #center>
-            <div class="flex items-center gap-2 btns">
-                <p-button label="الرئيسية" text plain />
-                <p-button label="خدماتنا" text plain />
-                <p-button label="من نحن" text plain />
-                <p-button label="الدعم" text plain />
+        <ng-template #item let-item>
+            <a pRipple class="flex items-center p-megamenu-item-link" *ngIf="item.root">
+                <span>{{ item.label }}</span>
+            </a>
+            <div class="flex items-center gap-2 auth-btn-inMenu" *ngIf="!item.root">
+                <p-button label="تسجيل الدخول" severity="contrast" size="small" />
             </div>
         </ng-template>
-
-        <ng-template #end>
+        <ng-template #end let-root="root">
             <div class="flex items-center gap-2 auth-btn">
                 <p-button label="تسجيل الدخول" severity="contrast" size="small" />
             </div>
         </ng-template>
-</p-toolbar>
-
-<!-- <p-menubar [model]="items" [style]="{ 'border-radius': '1rem', 'padding': '1rem 1rem 1rem 1.5rem' }">
-    <ng-template #start>
-            <div class="flex items-center gap-2">
-                 <p-avatar
-                    image="/icons/AlrahalaLogo.svg"
-                    [style]="{ width: '124px', height: '58px' }"
-                />
-            </div>
-    </ng-template>
-    <ng-template #item let-item let-root="root">
-        <a pRipple class="flex items-center p-menubar-item-link">
-            <span>{{ item.label }}</span>
-        </a>
-    </ng-template>
-    <ng-template #end>
-            <div class="flex items-center gap-2 auth-btn">
-                <p-button label="تسجيل الدخول" severity="contrast" size="small" />
-            </div>
-        </ng-template>
-</p-menubar> -->
+        
+</p-megamenu>

@@ -1,22 +1,61 @@
 :host ::ng-deep {
-    .btns .p-button .p-button-label{
+    .p-megamenu-item-link {
         font-family: var(--btn-font-family);
         font-weight: 700 !important;
-        font-style: normal;
         font-size: 16px;
         letter-spacing: -0.02em;
         color: var(--btn-color);
     }
-    .auth-btn .p-button{
+    .auth-btn .p-button, .auth-btn-inMenu .p-button{ 
         border-radius: 8px;
-        padding: 10px;
+        padding: 8px;
         background: var(--btn-color);
     }
-    .auth-btn .p-button .p-button-label{
+    .auth-btn .p-button .p-button-label,
+    .auth-btn-inMenu .p-button .p-button-label{
         font-family: var(--btn-font-family);
         font-weight: 400;
         font-size: 13.95px;
 
     }
 
+    .p-megamenu-mobile {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .p-megamenu-mobile .p-megamenu-start {
+        flex-grow: 1;
+    }
+    .p-megamenu-mobile .p-megamenu-end{
+        width: 100%;
+        order: 2;
+        justify-content: flex-end;
+    }
+    .p-megamenu-mobile .p-megamenu-end .nav-end{
+        justify-content: flex-end;
+    }
+    .p-megamenu-mobile .nav2-site-map-span2 {
+        overflow-wrap: break-word;
+        width: 194px;
+    }
+    .p-megamenu-start, .p-megamenu-end {
+        flex-grow: 1;
+    }
+    .p-megamenu{
+        border: none;
+    }
+
+    .p-megamenu-mobile  .auth-btn {
+        display: none;
+    }
+
+    .auth-btn-inMenu {
+        display: none;
+    }
+    .p-megamenu-mobile .auth-btn-inMenu {
+        display: inline;
+    }
+    .p-megamenu-horizontal .p-megamenu-end {
+        justify-content: end;
+    }
 }

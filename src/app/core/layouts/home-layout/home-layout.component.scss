@@ -136,6 +136,10 @@
     }
 
     .Our-services-section {
+            width: 100%;
+            position: absolute;
+            left: 0;
+            right: 0;
         .p-card {
             background-image: url('/images/Ourservices.jpg');
             background-size: cover;
@@ -156,7 +160,7 @@
                 background-color: rgba(0, 55, 104, 0.4);
                 z-index: 2;
                 pointer-events: none;
-                border-radius: 10px;
+                //border-radius: 10px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -177,6 +181,10 @@
     }
 
     .Why-us-section {
+         width: 100%;
+        position: absolute;
+        left: 0;
+        right: 0;
         .p-card {
             background-image: url('/images/Ourservices.jpg');
             background-size: cover;
@@ -200,7 +208,7 @@
                 background-color: rgba(0, 55, 104, 0.4);
                 z-index: 2;
                 pointer-events: none;
-                border-radius: 10px;
+                //border-radius: 10px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -258,6 +266,7 @@
     }
 
     .Services-cards-section {
+        margin-top: 250PX;
         .p-card {
             background: #F6F6F6;
             height: 140px;
@@ -278,6 +287,7 @@
     }
 
     .What-do-we-offer-section {
+        margin-top: 250PX;
         .p-card {
             background: #F6F6F6;
             padding: 17px;
