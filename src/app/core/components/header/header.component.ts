@@ -26,18 +26,22 @@ export class HeaderComponent {
             {
                 label: 'الرئيسية',
                 root: true,
+                section: 'home'
             },
             {
                 label: 'خدماتنا',
                 root: true,
+                section: 'service'
             },
             {
                 label: 'من نحن',
                 root: true,
+                section: 'whoour'
             },
             {
                 label: 'الدعم',
                 root: true,
+                section: 'support'
             },
             {
                 label: '',

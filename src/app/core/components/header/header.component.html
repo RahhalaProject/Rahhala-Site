@@ -8,7 +8,7 @@
             </div>
         </ng-template>
         <ng-template #item let-item>
-            <a pRipple class="flex items-center p-megamenu-item-link" *ngIf="item.root">
+            <a pRipple class="flex items-center p-megamenu-item-link" *ngIf="item.root" [href]="'#' + item.section">
                 <span>{{ item.label }}</span>
             </a>
             <div class="flex items-center gap-2 auth-btn-inMenu" *ngIf="!item.root">
