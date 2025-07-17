@@ -25,11 +25,12 @@
     </p-megamenu>
 }
 @else {
-    <p-megamenu [model]="items" [style]="{ 'border-radius': '1rem'}" class="main-nav">
+    <div class="main-nav">
+        <p-megamenu [model]="items" [style]="{ 'border-radius': '1rem'}">
             <ng-template #start>
                 <div class="flex items-center gap-2">
                     <p-avatar
-                        image="/icons/AlrahalaLogo.svg"
+                        image="/logos/AlrahalaLogo.svg"
                         [style]="{ width: '124px', height: '50px' }"
                     />
                 </div>
@@ -40,5 +41,6 @@
                 </a>
             </ng-template>
             
-    </p-megamenu>
+        </p-megamenu>
+    </div>
 }

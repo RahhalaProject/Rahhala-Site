@@ -58,4 +58,28 @@
     .p-megamenu-horizontal .p-megamenu-end {
         justify-content: end;
     }
+    .main-nav {
+        .p-megamenu{
+            background: #003768;
+        }
+        .p-megamenu-item-link {
+            color: #FFFFFF;
+        }
+        .p-megamenu-item:not(.p-disabled) > .p-megamenu-item-content:hover {
+            color: var(--p-megamenu-item-focus-background);
+            background: #112c58;
+        }
+        .p-megamenu-mobile-active {
+            .p-megamenu-item-link {
+                    color: var(--btn-color);
+            }
+            .p-megamenu-item:not(.p-disabled) > .p-megamenu-item-content:hover {
+                color: #FFFFFF;
+                background: #112c58;
+                .p-megamenu-item-link {
+                    color: #FFFFFF;
+                }
+            }
+        }
+    }
 }
