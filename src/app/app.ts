@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { HomeLayoutComponent } from './core/layouts/home-layout/home-layout.component';
 import { PrimeNG } from 'primeng/config';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [HomeLayoutComponent],
+  imports: [RouterModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

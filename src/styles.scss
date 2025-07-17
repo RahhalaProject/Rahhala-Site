@@ -40,8 +40,6 @@ body {
   background-color: var(--body-bg);
   font-weight: normal;
   color: var(--body-text-color);
-  padding: 1rem;
-  background-image: url('/images/background.jpg');
   direction: rtl;
 }
 
@@ -52,4 +50,9 @@ body {
     border-radius: 10px;
     margin-bottom: 1rem;
 }
-    
+.container {
+    padding: 0px;
+}
+.maim-section {
+  padding: 15px 0px;
+}

@@ -17,7 +17,7 @@
             color: #FFFFFF;
         }
         .p-card-body {
-            padding: 60px;
+            padding: 20px 60px
         }
         .description {
             font-family: var(--btn-font-family);
@@ -86,7 +86,7 @@
         }
 
         .footer-divider {
-        margin: 2rem 0;
+        margin: 6px 0px 12px 0px;
         height: 2px;
         background-color: white;
         color: white; 
@@ -126,24 +126,14 @@
         margin-bottom: 0.5rem;
         }
 
-        @media (max-width: 768px) {
-        .footer-top {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .footer-content {
-            flex-direction: column;
-        }
-        }
+        
 
         .footer-links h4 {
             font-family: var(--btn-font-family);
             font-weight: 600;
             font-size: 20px;
             color: #FFFFFF;
-            margin-bottom: 2rem;
+            margin-bottom: 18px;
         }
         .footer-links li a {
             font-family: var(--btn-font-family);
@@ -168,7 +158,27 @@
         }
         .footer-Icon {
             text-align: center;
-            padding: 30px;
+            padding: 20px;
         }
-        
+        .footer-copy {
+            margin-top: 10px;
+            .footer-Icon {
+                text-align: center;
+                padding: 30px;
+            }
+        }
+        @media (max-width: 768px) {
+            .footer-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+            .footer-contact {
+                margin-top: 0px;
+            }
+        }
 }

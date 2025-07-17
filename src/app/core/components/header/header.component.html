@@ -1,24 +1,44 @@
-<p-megamenu [model]="items" [style]="{ 'border-radius': '1rem'}" >
-        <ng-template #start>
-            <div class="flex items-center gap-2">
-                <p-avatar
-                    image="/icons/AlrahalaLogo.svg"
-                    [style]="{ width: '124px', height: '50px' }"
-                />
-            </div>
-        </ng-template>
-        <ng-template #item let-item>
-            <a pRipple class="flex items-center p-megamenu-item-link" *ngIf="item.root" [href]="'#' + item.section">
-                <span>{{ item.label }}</span>
-            </a>
-            <div class="flex items-center gap-2 auth-btn-inMenu" *ngIf="!item.root">
-                <p-button label="تسجيل الدخول" severity="contrast" size="small" />
-            </div>
-        </ng-template>
-        <ng-template #end let-root="root">
-            <div class="flex items-center gap-2 auth-btn">
-                <p-button label="تسجيل الدخول" severity="contrast" size="small" />
-            </div>
-        </ng-template>
-        
-</p-megamenu>
+@if(isHomeLayout) {
+    <p-megamenu [model]="items" [style]="{ 'border-radius': '1rem'}" class="home-nav">
+            <ng-template #start>
+                <div class="flex items-center gap-2">
+                    <p-avatar
+                        image="/icons/AlrahalaLogo.svg"
+                        [style]="{ width: '124px', height: '50px' }"
+                    />
+                </div>
+            </ng-template>
+            <ng-template #item let-item>
+                <a pRipple class="flex items-center p-megamenu-item-link" *ngIf="item.root" [href]="'#' + item.section">
+                    <span>{{ item.label }}</span>
+                </a>
+                <div class="flex items-center gap-2 auth-btn-inMenu" *ngIf="!item.root">
+                    <p-button label="تسجيل الدخول" severity="contrast" size="small" routerLink="/auth"/>
+                </div>
+            </ng-template>
+            <ng-template #end let-root="root">
+                <div class="flex items-center gap-2 auth-btn">
+                    <p-button label="تسجيل الدخول" severity="contrast" size="small" routerLink="/auth"/>
+                </div>
+            </ng-template>
+            
+    </p-megamenu>
+}
+@else {
+    <p-megamenu [model]="items" [style]="{ 'border-radius': '1rem'}" class="main-nav">
+            <ng-template #start>
+                <div class="flex items-center gap-2">
+                    <p-avatar
+                        image="/icons/AlrahalaLogo.svg"
+                        [style]="{ width: '124px', height: '50px' }"
+                    />
+                </div>
+            </ng-template>
+            <ng-template #item let-item>
+                <a pRipple class="flex items-center p-megamenu-item-link" *ngIf="item.root" [href]="'#' + item.section">
+                    <span>{{ item.label }}</span>
+                </a>
+            </ng-template>
+            
+    </p-megamenu>
+}
