@@ -1,10 +1,17 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { Checkbox } from 'primeng/checkbox';
 
 @Component({
   selector: 'sign-up',
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
-  standalone: true
+  standalone: true,
+  imports: [CardModule, ButtonModule, FormsModule, InputTextModule, PasswordModule, Checkbox]
 })
 export class SignUpComponent {
   

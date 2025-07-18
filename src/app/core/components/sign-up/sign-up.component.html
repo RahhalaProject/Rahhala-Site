@@ -1,0 +1,40 @@
+<div class="sign-up-container">
+    <p-card class="sign-up-box" header="انشاء حساب جديد">
+        <div class="btns-div">
+            <button pButton [rounded]="true" [raised]="true" severity="secondary" [text]="true">
+                <span pButtonLabel>الاستمرار مع</span>
+                <img src="/icons/google.svg" alt="google" pButtonIcon>
+            </button>
+            <button pButton [rounded]="true" [raised]="true" severity="secondary" [text]="true">
+                <span pButtonLabel>الاستمرار مع</span>
+                <img src="/icons/apple.svg" alt="Apple" pButtonIcon>
+            </button>
+        </div>
+        <div class="social-login-separator">
+            <div class="line"></div>
+            <span class="or-text">أو تسجيل بالبريد الإلكتروني</span>
+            <div class="line"></div>
+        </div>
+        <div class="form">
+            <div class="mb-4">
+                <label for="fluid" class="font-bold mb-2 block">إسم المستخدم</label>
+                <input type="text" pInputText id="fluid" fluid placeholder="ادخل إسم المستخدم"/>
+            </div>
+            <div class="mb-4">
+                <label for="fluid" class="font-bold mb-2 block">كلمة المرور</label>
+                <p-password [toggleMask]="true" placeholder="ادخل كلمة المرور"/>
+            </div>
+            <div class="mb-4">
+                <label for="fluid" class="font-bold mb-2 block">تأكيد كلمة المرور</label>
+                <p-password [toggleMask]="true" placeholder="ادخل كلمة المرور"/>
+            </div>
+            <div class="mb-4 privacy-div">
+                <span class="forget">لقد قرأت سياسة الخصوصية</span>
+                <p-checkbox [binary]="true" />
+            </div>
+            <div class="mb-6">
+                <p-button label="تسجيل الدخول" severity="contrast" size="small"/>
+            </div>
+        </div>
+    </p-card>
+</div>
