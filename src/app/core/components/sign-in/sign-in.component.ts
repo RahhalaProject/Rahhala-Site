@@ -3,12 +3,13 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'sign-in',
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
   standalone: true,
-  imports: [CardModule, ButtonModule, FormsModule, InputTextModule]
+  imports: [CardModule, ButtonModule, FormsModule, InputTextModule, RouterModule]
 })
 export class SignInComponent {
   
