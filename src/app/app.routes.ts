@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeLayoutComponent } from './core/layouts/home-layout/home-layout.component';
 import { AuthLayoutComponent } from './core/layouts/auth-layout/auth-layout.component';
+import { MainLayoutComponent } from './core/layouts/main-layout/main-layout.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -20,6 +21,13 @@ export const routes: Routes = [
             { path: 'forgot-password', loadComponent: () => import('./core/components/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent) },
             { path: 'reset-password', loadComponent: () => import('./core/components/reset-password/reset-password.component').then(m => m.ResetPasswordComponent) },
             { path: 'password-recovery-otp', loadComponent: () => import('./core/components/password-recovery-otp/password-recovery-otp.component').then(m => m.PasswordRecoveryOTPComponent) },
+        ]
+    },
+    {
+        path: '',
+        component: MainLayoutComponent,
+        children: [
+            { path: 'our-services', loadComponent: () => import('./features/orders/components/our-services/our-services.component').then(m => m.OurServicesComponent) },
         ]
     },
     { path: '**', redirectTo: 'home' }
