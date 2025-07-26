@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 
@@ -7,7 +8,7 @@ import { CardModule } from 'primeng/card';
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
   standalone: true,
-  imports: [CardModule, ButtonModule],
+  imports: [CardModule, ButtonModule, TranslateModule],
 })
 export class FooterComponent {
   

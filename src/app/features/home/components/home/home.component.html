@@ -1,98 +1,93 @@
 <!--Start slider-->
 <section class="slider-section" id="home">
     <div class="card-overlay-wrapper">
-        <p-card [style]="{ overflow: 'hidden', height: '780px' }">
-        </p-card>
-        <div class="overlay">
-            <div>
-                <h1>حلول نقل موثوقة <br> في المملكة </h1>
-                <p>
-                    نرحب بكم في شركة الرحالة للخدمات اللوجستية، حيث تلتقي الخبرة مع الابتكار لنقدم لكم خدمات نقل وشحن متكاملة بمستوى عالمي داخل المملكة العربية السعودية.
-                </p>
-                <div class="add-btn">
-                    <p-button label="أنشئ طلب" severity="secondary" [outlined]="true" />
-                </div>
+    <p-card [style]="{ overflow: 'hidden', height: '780px' }">
+    </p-card>
+    <div class="overlay">
+        <div>
+            <h1>{{ 'homeSliderTitle' | translate }} <br> {{ 'location' | translate }}</h1>
+            <p>
+                {{ 'homeSliderText' | translate }}
+            </p>
+            <div class="add-btn">
+                <p-button [label]="'createOrder' | translate" severity="secondary" [outlined]="true" />
             </div>
         </div>
     </div>
+</div>
+
 </section>
 <!--End slider-->
 
 <!--Start Who-are-we-->
 <section class="Who-are-we-section" id="whoour">
-    <p-card header="من نحن">
-            <p class="m-0">
-                شركة سعودية متخصصة في تقديم خدمات النقل والشحن بجميع أنواعها (المبرد، المجمد، الجاف، والأدوية). نتميز بأسطول متطور وفريق عمل محترف يضمن سلامة شحناتكم وكفاءتها في الوصول.
-                <br>
-                نطمح في شركة الرحالة للخدمات اللوجستية المتكاملة والتي تستند إلى تقديم حلول متكاملة ومبتكرة لعملائنا وعملائك والمجتمعات التجارية والخدمات اللوجستية في المنطقة.
-            </p>
-    </p-card>
+    <p-card [header]="'whoAreWeHeader' | translate">
+    <p class="m-0">
+        {{ 'whoAreWeText' | translate }}
+    </p>
+</p-card>
+
 </section>
 <!--End Who-are-we-->
 
 <!--Start Our vision and mission-->
 <section class="Our-vision-and-mission-section">
     <div class="card-overlay-wrapper">
-        <p-card [style]="{ overflow: 'hidden', height: '480px' }">
-        </p-card>
-        <div class="overlay">
-            <div>
-                <h2>رؤيتنا ورسالتنا وقيمنا الأساسية</h2>
-                <p>
-                    "نؤمن في الرحالة بأن النجاح يبدأ من وضوح الرؤية، وقوة الرسالة، وثبات القيم”
-                </p>
-            </div>
+    <p-card [style]="{ overflow: 'hidden', height: '480px' }">
+    </p-card>
+    <div class="overlay">
+        <div>
+            <h2>{{ 'visionMissionTitle' | translate }}</h2>
+            <p>{{ 'visionMissionQuote' | translate }}</p>
         </div>
     </div>
+</div>
+
 </section>
 <!--End Our vision and mission-->
 
 <!--Start Our vision cards-->
 <section class="Our-vision-cards-section">
     <div class="row">
-        <div class="col-12">
-            <p-card>
-                    <ng-template pTemplate="header">
-                        <div>
-                            <img alt="Card" class="w-full" src="/icons/visionIcon.svg" />
-                            <h2>رؤيتنا</h2>
-                        </div>
-                    </ng-template>
-                    <p>
-                        أن نكون الخيار الأول لحلول النقل والخدمات اللوجستية في المملكة العربية السعودية من خلال تقديم خدمات موثوقة وفعالة.
-                    </p>
-            </p-card>
-        </div>
-        <div class="col-12">
-            <p-card>
-                    <ng-template pTemplate="header">
-                        <div>
-                            <img alt="Card" class="w-full" src="/icons/MessegeIcon.svg" />
-                            <h2>رسالتنا</h2>
-                        </div>
-                    </ng-template>
-                    <p>
-                        تقديم خدمات نقل ولوجستية متكاملة تلبي متطلبات العملاء بدقة وسرعة مع الالتزام بأعلى معايير السلامة والجودة.
-                    </p>
-            </p-card>
-        </div>
-        <div class="col-12">
-            <p-card>
-                    <ng-template pTemplate="header">
-                        <div>
-                            <img alt="Card" class="w-full" src="/icons/ValueIcon.svg" />
-                            <h2>قيمنا</h2>
-                        </div>
-                    </ng-template>
-                    <p>
-                        الالتزام: نضع عملاءنا أولاً ونفي بوعودنا.
-                        <br>الجودة: خدمات بمعايير تشغيل دقيقة وتقنيات متقدمة.
-                        <br>الشفافية: وضوح كامل في العمليات والتكلفة.
-                        <br>المرونة: حلول متنوعة تناسب كل قطاع وكل حجم شحنة.
-                    </p>
-            </p-card>
-        </div>
+    <div class="col-12">
+        <p-card>
+            <ng-template pTemplate="header">
+                <div>
+                    <img alt="Card" class="w-full" src="/icons/visionIcon.svg" />
+                    <h2>{{ 'visionTitle' | translate }}</h2>
+                </div>
+            </ng-template>
+            <p>
+                {{ 'visionText' | translate }}
+            </p>
+        </p-card>
     </div>
+    <div class="col-12">
+        <p-card>
+            <ng-template pTemplate="header">
+                <div>
+                    <img alt="Card" class="w-full" src="/icons/MessegeIcon.svg" />
+                    <h2>{{ 'missionTitle' | translate }}</h2>
+                </div>
+            </ng-template>
+            <p>
+                {{ 'missionText' | translate }}
+            </p>
+        </p-card>
+    </div>
+    <div class="col-12">
+        <p-card>
+            <ng-template pTemplate="header">
+                <div>
+                    <img alt="Card" class="w-full" src="/icons/ValueIcon.svg" />
+                    <h2>{{ 'valuesTitle' | translate }}</h2>
+                </div>
+            </ng-template>
+            <p [innerHTML]="'valuesText' | translate"></p>
+        </p-card>
+    </div>
+</div>
+
 </section>
 <!--End  Our vision cards-->
 
@@ -103,7 +98,7 @@
         </p-card>
         <div class="overlay">
             <div>
-                <h2>خدماتنا</h2>
+                <h2>{{ 'servicesTitle' | translate }}</h2>
             </div>
         </div>
     </div>
@@ -114,60 +109,43 @@
 <section class="Services-cards-section">
     <div class="row">
         <div class="col-lg-3 col-sm-6">
-            <p-card header="🔹النقل الجاف">
-                <p class="m-0">
-                    نقل الأدوات، الأجهزة، الملابس وغيرها من المنتجات غير المبردة.
-                </p>
+            <p-card [header]="'serviceDry' | translate">
+                <p class="m-0">{{ 'serviceDryText' | translate }}</p>
             </p-card>
         </div>
         <div class="col-lg-3 col-sm-6">
-            <p-card header="🔹النقل المجمد">
-                <p class="m-0">
-                    شحن اللحوم والأسماك والمجمدات بأسطول مجهز بأنظمة تجميد حديثة.
-                </p>
+            <p-card [header]="'serviceFrozen' | translate">
+                <p class="m-0">{{ 'serviceFrozenText' | translate }}</p>
             </p-card>
         </div>
         <div class="col-lg-3 col-sm-6">
-            <p-card header="🔹النقل الجاف">
-                <p class="m-0">
-                    نقل الأدوات، الأجهزة، الملابس وغيرها من المنتجات غير المبردة.
-                </p>
+            <p-card [header]="'serviceDry' | translate">
+                <p class="m-0">{{ 'serviceDryText' | translate }}</p>
             </p-card>
         </div>
         <div class="col-lg-3 col-sm-6">
-            <p-card header="🔹شحنة">
-                <p class="m-0">
-                    حلول مرنة لشحنات الأفراد والتجار حسب الحاجة.
-                </p>
+            <p-card [header]="'serviceFlexible' | translate">
+                <p class="m-0">{{ 'serviceFlexibleText' | translate }}</p>
             </p-card>
         </div>
         <div class="col-lg-3 col-sm-6">
-            <p-card header="🔹نقل الأدوية">
-                <p class="m-0">
-                    نقل مستلزمات طبية وأدوية مع أنظمة تحكم دقيقة في درجة الحرارة.
-                </p>
+            <p-card [header]="'serviceMedicine' | translate">
+                <p class="m-0">{{ 'serviceMedicineText' | translate }}</p>
             </p-card>
         </div>
         <div class="col-lg-3 col-sm-6">
-            <p-card header="🔹تأجير سيارات نقل(يومي-شهري
-سنوي)">
-                <p class="m-0">
-                    تأجير شاحنات مجهزة تناسب احتياجات الأعمال.
-                </p>
+            <p-card [header]="'serviceCarRental' | translate">
+                <p class="m-0">{{ 'serviceCarRentalText' | translate }}</p>
             </p-card>
         </div>
         <div class="col-lg-3 col-sm-6">
-            <p-card header="🔹خدمة الشحن">
-                <p class="m-0">
-                    خدمات شحن داخلية ودولية مع تتبع مباشر لحظة بلحظة.
-                </p>
+            <p-card [header]="'serviceShipping' | translate">
+                <p class="m-0">{{ 'serviceShippingText' | translate }}</p>
             </p-card>
         </div>
         <div class="col-lg-3 col-sm-6">
-            <p-card header="🔹حجز رحلة كاملة">
-                <p class="m-0">
-                    حجز شاحنة كاملة بمسار مخصص لتلبية طلبك.
-                </p>
+            <p-card [header]="'serviceFullTrip' | translate">
+                <p class="m-0">{{ 'serviceFullTripText' | translate }}</p>
             </p-card>
         </div>
     </div>
@@ -178,19 +156,15 @@
 <section class="features-cards-section">
     <div class="row">
         <div class="col-sm-12 title">
-            <h2>مزايا خدمات الرحالة</h2>
+            <h2>{{ 'featuresTitle' | translate }}</h2>
         </div>
         <div class="col-lg-3 col-sm-6 ord2">
             <div class="cards">
-                <p-card header="نظام تتبع متطور">
-                    <p class="m-0">
-                        نوفر تقنية تتبع مباشرة للعملاء ومتابعة الشحنات لحظة بلحظة
-                    </p>
+                <p-card [header]="'featureTracking' | translate">
+                    <p class="m-0">{{ 'featureTrackingText' | translate }}</p>
                 </p-card>
-                <p-card header="كفاءة تشغيلية">
-                    <p class="m-0">
-                        نعتمد على أفضل الممارسات التشغيلية لضمان سرعة ودقة التوصيل.
-                    </p>
+                <p-card [header]="'featureEfficiency' | translate">
+                    <p class="m-0">{{ 'featureEfficiencyText' | translate }}</p>
                 </p-card>
             </div>
         </div>
@@ -201,15 +175,11 @@
         </div>
         <div class="col-lg-3 col-sm-6 ord3">
             <div class="cards">
-                <p-card header="إجراءات أمان صارمة">
-                    <p class="m-0">
-                        نلتزم بأعلى معايير الأمان لضمان وصول الشحنات بأمان تام.
-                    </p>
+                <p-card [header]="'featureSecurity' | translate">
+                    <p class="m-0">{{ 'featureSecurityText' | translate }}</p>
                 </p-card>
-                <p-card header="حلول مخصصة">
-                    <p class="m-0">
-                        نقدم خدمات نقل وشحن مصممة خصيصًا لتلبية احتياجات كل عميل.
-                    </p>
+                <p-card [header]="'featureCustomSolutions' | translate">
+                    <p class="m-0">{{ 'featureCustomSolutionsText' | translate }}</p>
                 </p-card>
             </div>
         </div>
@@ -217,10 +187,8 @@
     <div class="row" style="justify-content: center;">
         <div class="col-lg-3 col-sm-6">
             <div class="cards">
-                <p-card header="تأمين  على البضائع المنقولة">
-                    <p class="m-0">
-                        مما يضمن حماية البضائع من أي مخاطر محتملة مثل التلف أو الفقدان أثناء النقل، وذلك بالتعاون مع شركات التأمين المعتمدة لضمان أقصى درجات الأمان والموثوقية.
-                    </p>
+                <p-card [header]="'featureInsurance' | translate">
+                    <p class="m-0">{{ 'featureInsuranceText' | translate }}</p>
                 </p-card>
             </div>
         </div>
@@ -235,25 +203,24 @@
         </p-card>
         <div class="overlay">
             <div class="overlay-content">
-                <h2>لماذا تختار الرحالة للخدمات اللوجستية؟</h2>
+                <h2>{{ 'whyUsTitle' | translate }}</h2>
             </div>
         </div>
     </div>
+
 </section>
 <!--End Why-us services-->
 
 <!--Start What do we offer-->
 <section class="What-do-we-offer-section">
     <div class="row">
-        <div class=" col-lg-4 col-sm-6 mb-4">
+        <div class="col-lg-4 col-sm-6 mb-4">
             <p-card [style]="{ overflow: 'hidden' }">
                 <ng-template #header>
                     <img alt="Card" class="w-full" src="/images/1.svg" />
                 </ng-template>
-                <ng-template #title>خبرة وكفاءة</ng-template>
-                <p>
-                    فريق متخصص بخبرة واسعة في مجال النقل والخدمات اللوجستية.
-                </p>
+                <ng-template #title>{{ 'offerExperience' | translate }}</ng-template>
+                <p>{{ 'offerExperienceText' | translate }}</p>
             </p-card>
         </div>
         <div class="col-lg-4 col-sm-6 mb-4">
@@ -261,10 +228,8 @@
                 <ng-template #header>
                     <img alt="Card" class="w-full" src="/images/2.svg" />
                 </ng-template>
-                <ng-template #title>أمان وجودة</ng-template>
-                <p>
-                    نستخدم أحدث التقنيات لضمان سلامة البضائع ووصولها بفعالية.
-                </p>
+                <ng-template #title>{{ 'offerSafety' | translate }}</ng-template>
+                <p>{{ 'offerSafetyText' | translate }}</p>
             </p-card>
         </div>
         <div class="col-lg-4 col-sm-6 mb-4">
@@ -272,10 +237,8 @@
                 <ng-template #header>
                     <img alt="Card" class="w-full" src="/images/3.svg" />
                 </ng-template>
-                <ng-template #title>أسطول متطور</ng-template>
-                <p>
-                    شاحنات مجهزة بأحدث الأنظمة للحفاظ على المنتجات في أفضل حالاتها.
-                </p>
+                <ng-template #title>{{ 'offerFleet' | translate }}</ng-template>
+                <p>{{ 'offerFleetText' | translate }}</p>
             </p-card>
         </div>
         <div class="col-lg-4 col-sm-6 mb-4">
@@ -283,10 +246,8 @@
                 <ng-template #header>
                     <img alt="Card" class="w-full" src="/images/4.svg" />
                 </ng-template>
-                <ng-template #title>خدمة عملاء متميزة</ng-template>
-                <p>
-                    فني واستجابة سريعة لجميع الاستفسارات على مدار الساعة.
-                </p>
+                <ng-template #title>{{ 'offerSupport' | translate }}</ng-template>
+                <p>{{ 'offerSupportText' | translate }}</p>
             </p-card>
         </div>
         <div class="col-lg-4 col-sm-6 mb-4">
@@ -294,12 +255,11 @@
                 <ng-template #header>
                     <img alt="Card" class="w-full" src="/images/5.svg" />
                 </ng-template>
-                <ng-template #title>التزام بالمواعيد</ng-template>
-                <p>
-                    نحرص على تسليم الشحنات في الوقت المحدد دون تأخير.
-                </p>
+                <ng-template #title>{{ 'offerPunctuality' | translate }}</ng-template>
+                <p>{{ 'offerPunctualityText' | translate }}</p>
             </p-card>
         </div>
     </div>
+
 </section>
 <!--End What do we offer-->

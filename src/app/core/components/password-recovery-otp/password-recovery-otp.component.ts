@@ -4,12 +4,13 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputOtp } from 'primeng/inputotp';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'password-recovery-otp',
   templateUrl: './password-recovery-otp.component.html',
   styleUrl: './password-recovery-otp.component.scss',
   standalone: true,
-  imports: [CommonModule, ButtonModule, CardModule, InputOtp, RouterModule]
+  imports: [CommonModule, ButtonModule, CardModule, InputOtp, RouterModule, TranslateModule]
 })
 export class PasswordRecoveryOTPComponent {
   

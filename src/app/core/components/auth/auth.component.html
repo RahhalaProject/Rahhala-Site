@@ -1,22 +1,23 @@
 <div class="title-sec">
-    <div class="title-div">
-        <h4>نساعدك فى تسليم طردك وتتبعه</h4>
-        <p>نحن نؤمن بأن العالم المتصل هو عالم أفضل، وأن هذا الاعتقاد يوجه كل ما نقوم به</p>
-    </div>
+  <div class="title-div">
+    <h4>{{ 'packageTracking' | translate }}</h4>
+    <p>{{ 'vision' | translate }}</p>
+  </div>
 </div>
+
 <div class="card-div">
-    <p-tabs value="0">
-        <p-tablist>
-            <p-tab value="0">تسجيل الدخول</p-tab>
-            <p-tab value="1">انشاء حساب</p-tab>
-        </p-tablist>
-        <p-tabpanels>
-            <p-tabpanel value="0">
-                <sign-in></sign-in>
-            </p-tabpanel>
-            <p-tabpanel value="1">
-                <sign-up></sign-up>
-            </p-tabpanel>
-        </p-tabpanels>
-    </p-tabs>
+  <p-tabs value="0">
+    <p-tablist>
+      <p-tab value="0">{{ 'login' | translate }}</p-tab>
+      <p-tab value="1">{{ 'createAccount' | translate }}</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+      <p-tabpanel value="0">
+        <sign-in></sign-in>
+      </p-tabpanel>
+      <p-tabpanel value="1">
+        <sign-up></sign-up>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
 </div>

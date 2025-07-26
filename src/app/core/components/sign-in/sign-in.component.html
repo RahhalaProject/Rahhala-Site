@@ -2,21 +2,26 @@
     <p-card class="sign-in-box">
         <div class="form">
             <div class="mb-4">
-                <label for="fluid" class="font-bold mb-2 block">إسم المستخدم</label>
-                <input type="text" pInputText id="fluid" fluid placeholder="ادخل إسم المستخدم"/>
+                <label for="username" class="font-bold mb-2 block">{{ 'username' | translate }}</label>
+                <input type="text" pInputText id="username" fluid [placeholder]="'enterUsername' | translate"/>
             </div>
             <div class="mb-4">
-                <label for="fluid" class="font-bold mb-2 block">كلمة المرور</label>
-                <input type="text" pInputText id="fluid" fluid placeholder="ادخل كلمة المرور" />
+                <label for="password" class="font-bold mb-2 block">{{ 'password' | translate }}</label>
+                <input type="password" pInputText id="password" fluid [placeholder]="'enterPassword' | translate"/>
             </div>
             <div class="mb-6">
-                <span class="forget">نسيت كلمة المرور ؟</span>
-                <p-button label="تسجيل الدخول" severity="contrast" size="small" routerLink="/otp-verification"/>
+                <span class="forget">{{ 'forgotPassword' | translate }}</span>
+                <p-button
+                    [label]="'login' | translate"
+                    severity="contrast"
+                    size="small"
+                    routerLink="/otp-verification"
+                ></p-button>
             </div>
             <div>
                 <div class="social-login-separator">
                     <div class="line"></div>
-                    <span class="or-text">أو سجل دخولك ب</span>
+                    <span class="or-text">{{ 'loginWith' | translate }}</span>
                     <div class="line"></div>
                 </div>
                 <div class="social-icons">

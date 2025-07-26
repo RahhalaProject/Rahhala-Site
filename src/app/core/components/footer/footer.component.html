@@ -1,51 +1,50 @@
 <section class="footer-section" id="support">
     <p-card>
-        @if(isHomeLayout) {
-            <h1 class="p-card-title">الرحالة للخدمات اللوجستية</h1>
-            <div class="row1 flex justify-between items-center">
-                <p class="description">حلول نقل موثوقة داخل المملكة العربية السعودية</p>
-                <div class="flex items-center gap-2 start-btn">
-                    <p-button label="ابدأ الاآن" severity="contrast" size="small" />
-                </div>
-            </div>
-            <hr class="footer-divider" />
-        }
-        
-        <div class="footer-content">
-            <div class="footer-links">
-                <div style="margin-left: 30px;">
-                    <h4>الخدمات</h4>
-                    <ul>
-                        <li><a href="#">النقل الجاف</a></li>
-                        <li><a href="#">النقل المجمد</a></li>
-                        <li><a href="#">النقل المبرد</a></li>
-                        <li><a href="#">طلب رحلة خاصة</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>روابط سريعة</h4>
-                    <ul>
-                        <li><a href="#">الرئيسية</a></li>
-                        <li><a href="#">خدماتنا</a></li>
-                        <li><a href="#">من نحن</a></li>
-                        <li><a href="#">الدعم</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-contact">
-                <p><i class="pi pi-phone"></i>  +996507482020</p>
-                <p><i class="pi pi-envelope"></i>  Inforahala.com.sa</p>
-                <p><i class="pi pi-map-marker"></i>  المملكة العربية السعودية - الرياض</p>
+        @if (isHomeLayout) {
+        <h1 class="p-card-title">{{ 'companyName' | translate }}</h1>
+        <div class="row1 flex justify-between items-center">
+            <p class="description">{{ 'slogan' | translate }}</p>
+            <div class="flex items-center gap-2 start-btn">
+            <p-button [label]="'getStarted' | translate" severity="contrast" size="small" />
             </div>
         </div>
+        <hr class="footer-divider" />
+        }
+
+        <div class="footer-content">
+        <div class="footer-links">
+            <div style="margin-left: 30px;">
+            <h4>{{ 'ourServices' | translate }}</h4>
+            <ul>
+                <li><a href="#">{{ 'dryTransport' | translate }}</a></li>
+                <li><a href="#">{{ 'frozenTransport' | translate }}</a></li>
+                <li><a href="#">{{ 'chilledTransport' | translate }}</a></li>
+                <li><a href="#">{{ 'specialTripRequest' | translate }}</a></li>
+            </ul>
+            </div>
+            <div>
+            <h4>{{ 'quickLinks' | translate }}</h4>    
+            <ul>
+                <li><a href="#">{{ 'home' | translate }}</a></li>
+                <li><a href="#">{{ 'ourServices' | translate }}</a></li>
+                <li><a href="#">{{ 'aboutUs' | translate }}</a></li>
+                <li><a href="#">{{ 'support' | translate }}</a></li>
+            </ul>
+            </div>
+        </div>
+        <div class="footer-contact">
+            <p><i class="pi pi-phone"></i> +996507482020</p>
+            <p><i class="pi pi-envelope"></i> Inforahala.com.sa</p>
+            <p><i class="pi pi-map-marker"></i> {{ 'location' | translate }}</p>
+        </div>
+        </div>
         <div class="footer-Icon">
-            <img alt="Card" class="w-full" src="/icons/Logo1.svg" />
+        <img alt="Card" class="w-full" src="/icons/Logo1.svg" />
         </div>
     </p-card>
     <div class="footer-copy">
         <div class="footer-Icon">
-            <img alt="Card" class="w-full" src="/icons/copy.svg" />
+        <img alt="Card" class="w-full" src="/icons/copy.svg" />
         </div>
     </div>
 </section>
-

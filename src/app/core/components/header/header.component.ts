@@ -34,22 +34,22 @@ export class HeaderComponent {
     ngOnInit() {
         this.items = [
             {
-                label: 'الرئيسية',
+                label: 'home',
                 root: true,
                 section: 'home'
             },
             {
-                label: 'خدماتنا',
+                label: 'ourServices',
                 root: true,
                 section: 'service'
             },
             {
-                label: 'من نحن',
+                label: 'aboutUs',
                 root: true,
                 section: 'whoour'
             },
             {
-                label: 'الدعم',
+                label: 'support',
                 root: true,
                 section: 'support'
             },
