@@ -10,6 +10,8 @@ import { Select } from 'primeng/select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PrimeNG } from 'primeng/config';
 import { FormsModule } from '@angular/forms';
+import { DOCUMENT } from '@angular/common';
+import { Inject } from '@angular/core';
 
 @Component({
   selector: 'header',
@@ -29,7 +31,7 @@ export class HeaderComponent {
     supportLanguages = ['en', 'ar'];
     selectedLanguage!: string;
 
-    constructor(readonly config: PrimeNG, readonly translateService: TranslateService) {}
+    constructor(readonly config: PrimeNG, readonly translateService: TranslateService, @Inject(DOCUMENT) private document: Document) {}
 
     ngOnInit() {
         this.items = [
@@ -64,9 +66,29 @@ export class HeaderComponent {
     }
 
     useLang(lang: any) {
-        this.translateService.use(lang.value);
-        this.translateService.get('primeng').subscribe((res) => {
+        // this.translateService.use(lang.value);
+        // this.translateService.get('primeng').subscribe((res) => {
+        //     this.config.setTranslation(res);
+        // });
+
+        const selectedLang = lang.value || lang; // handle both { value: 'ar' } or 'ar'
+
+        this.translateService.use(selectedLang);
+        localStorage.setItem('lang', selectedLang);
+
+        this.translateService.get('primeng').subscribe(res => {
             this.config.setTranslation(res);
         });
+
+        // Change direction dynamically
+        const html = this.document.documentElement as HTMLElement;
+        html.setAttribute('dir', selectedLang === 'ar' ? 'rtl' : 'ltr');
+
+        // Optionally: Change a custom class (for styling)
+        html.classList.remove('rtl', 'ltr');
+        html.classList.add(selectedLang === 'ar' ? 'rtl' : 'ltr');
+
+        // Optional hard reload (only if needed):
+        // location.reload(); // not ideal; use only if component doesn't detect dir change
     }
 }

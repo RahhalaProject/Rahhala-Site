@@ -24,8 +24,6 @@
             font-weight: 300;
             font-size: 40px;
             color: #FFFFFF;
-            text-align: right;
-
         }
         
         .start-btn .p-button{ 
@@ -166,6 +164,9 @@
                 text-align: center;
                 padding: 30px;
             }
+        }
+        .footer-links div {
+            padding: 0px 10px;
         }
         @media (max-width: 768px) {
             .footer-top {

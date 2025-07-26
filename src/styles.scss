@@ -40,7 +40,6 @@ body {
   background-color: var(--body-bg);
   font-weight: normal;
   color: var(--body-text-color);
-  direction: rtl;
 }
 
 .card {
@@ -55,4 +54,14 @@ body {
 }
 .maim-section {
   padding: 15px 0px;
+}
+
+html.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+html.ltr {
+  direction: ltr;
+  text-align: left;
 }

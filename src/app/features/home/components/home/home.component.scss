@@ -269,9 +269,9 @@
         margin-top: 250PX;
         .p-card {
             background: #F6F6F6;
-            height: 140px;
+            height: 100%;
         }
-        .row div {
+        .row .card-col{
             margin-bottom: 20px;
         }
         .p-card-title {
@@ -292,7 +292,7 @@
             background: #F6F6F6;
             padding: 17px;
             padding-bottom: 0px;
-            height: 390px;
+            height: 100%;
         }
         .p-card-header img {
             width: 100%;
@@ -328,7 +328,7 @@
         }
         .p-card {
             margin-bottom: 100px;
-            width: 70%;
+            width: 80%;
         }
         .p-card-body {
             padding: 8px;
