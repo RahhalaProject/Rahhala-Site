@@ -4,6 +4,12 @@
   "newProjectRoot": "projects",
   "projects": {
     "ClientApp": {
+      "i18n": {
+        "sourceLocale": "en",
+        "locales": {
+            "ar": "src/locale/ar.json"
+        }
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {

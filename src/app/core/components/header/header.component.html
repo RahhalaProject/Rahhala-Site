@@ -18,7 +18,9 @@
             </ng-template>
             <ng-template #end let-root="root">
                 <div class="flex items-center gap-2 auth-btn">
+                    {{ 'title' | translate }}
                     <p-button label="تسجيل الدخول" severity="contrast" size="small" routerLink="/auth"/>
+                    <p-select [options]="supportLanguages" [(ngModel)]="selectedLanguage" (onChange)="useLang($event)"/>
                 </div>
             </ng-template>
             

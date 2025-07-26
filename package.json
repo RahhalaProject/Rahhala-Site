@@ -26,6 +26,8 @@
     "@angular/forms": "^20.0.0",
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
+    "@ngx-translate/core": "^16.0.4",
+    "@ngx-translate/http-loader": "^16.0.1",
     "@primeuix/themes": "latest",
     "bootstrap": "^5.3.7",
     "primeicons": "latest",
