@@ -20,7 +20,7 @@ import { Inject } from '@angular/core';
   standalone: true,
   imports: [AvatarModule, ButtonModule, MenubarModule,
     MegaMenu, ButtonModule, CommonModule, RouterModule, Select,
-    FormsModule, TranslateModule
+    FormsModule, TranslateModule, AvatarModule
   ],
   providers: [TranslateService]
 })
@@ -31,7 +31,7 @@ export class HeaderComponent {
     supportLanguages = ['en', 'ar'];
     selectedLanguage!: string;
 
-    constructor(readonly config: PrimeNG, readonly translateService: TranslateService, @Inject(DOCUMENT) private document: Document) {}
+    constructor(readonly config: PrimeNG, readonly translateService: TranslateService, @Inject(DOCUMENT) readonly document: Document) {}
 
     ngOnInit() {
         this.items = [

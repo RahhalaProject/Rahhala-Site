@@ -81,5 +81,13 @@
                 }
             }
         }
+        .p-avatar {
+            width: 45px;
+            height: 45px;
+        }
+        .p-megamenu-mobile {
+            display: flex;
+            flex-flow: row;
+        }
     }
 }

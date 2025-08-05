@@ -18,14 +18,14 @@ export class App implements OnInit {
   supportLanguages = ['en', 'ar'];
   constructor(readonly primeng: PrimeNG, readonly translateService: TranslateService, @Inject(DOCUMENT) private document: Document) {
     this.translateService.addLangs(this.supportLanguages);
-    this.translateService.setDefaultLang('en');
+    this.translateService.setDefaultLang('ar');
   }
   
   ngOnInit() {
         this.primeng.ripple.set(true);
 
 
-      const lang = localStorage.getItem('lang') || 'en';
+      const lang = localStorage.getItem('lang') || 'ar';
       this.translateService.use(lang);
       this.translateService.get('primeng').subscribe(res => {
         this.primeng.setTranslation(res);

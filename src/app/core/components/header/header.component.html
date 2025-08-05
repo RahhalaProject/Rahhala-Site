@@ -36,11 +36,11 @@
             size="small"
             routerLink="/auth"
             />
-            <p-select
+            <!-- <p-select
             [options]="supportLanguages"
             [(ngModel)]="selectedLanguage"
             (onChange)="useLang($event)"
-            />
+            /> -->
         </div>
         </ng-template>
     </p-megamenu>
@@ -67,6 +67,11 @@
             <span>{{ item.label | translate }}</span>
             </a>
         </ng-template>
+        @if(true){
+            <ng-template #end>
+                <p-avatar image="./images/profile.png" shape="circle" />
+            </ng-template>
+        }
         </p-megamenu>
     </div>
 }
