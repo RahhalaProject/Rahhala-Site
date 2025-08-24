@@ -1,46 +1,55 @@
 <div class="title-sec">
-    <div class="title-div">
-        <h4>{{ 'packageTracking' | translate }}</h4>
-    </div>
+  <div class="title-div">
+    <h4>{{ "packageTracking" | translate }}</h4>
+  </div>
 </div>
-
 <div class="container">
-    <div class="box">
-        <h2>{{ 'homeIntro' | translate }}</h2>
-        <div class="row mt-5 mb-5">
-            <div class="col-lg-4 col-sm-6 mb-4">
-                <p-card [style]="{ overflow: 'hidden' }">
-                    <ng-template #header>
-                        <img alt="Card" class="w-full" src="/images/businessValue.svg" />
-                    </ng-template>
-                    <ng-template #title>{{ 'ourValuesTitle' | translate }}</ng-template>
-                    <p>{{ 'ourValuesText' | translate }}</p>
-                </p-card>
-            </div>
-            <div class="col-lg-4 col-sm-6 mb-4">
-                <p-card [style]="{ overflow: 'hidden' }">
-                    <ng-template #header>
-                        <img alt="Card" class="w-full" src="/images/VisionBanner.svg" />
-                    </ng-template>
-                    <ng-template #title>{{ 'ourMissionTitle' | translate }}</ng-template>
-                    <p>{{ 'ourMissionText' | translate }}</p>
-                </p-card>
-            </div>
-            <div class="col-lg-4 col-sm-6 mb-4">
-                <p-card [style]="{ overflow: 'hidden' }">
-                    <ng-template #header>
-                        <img alt="Card" class="w-full" src="/images/message.svg" />
-                    </ng-template>
-                    <ng-template #title>{{ 'ourVisionTitle' | translate }}</ng-template>
-                    <p>{{ 'ourVisionText' | translate }}</p>
-                </p-card>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 col-sm-6 btns">
-                <p-button [label]="'newOrder' | translate" severity="contrast" size="small" routerLink="/password-recovery-otp" />
-                <p-button [label]="'carRentalRequest' | translate" severity="contrast" size="small" routerLink="/password-recovery-otp" />
-            </div>
-        </div>
+  <div class="box">
+    <h2>{{ "homeIntro" | translate }}</h2>
+    <div class="row mt-5 mb-5">
+      <div class="col-lg-4 col-sm-6 mb-4">
+        <p-card [style]="{ overflow: 'hidden' }">
+          <ng-template #header>
+            <img alt="Card" class="w-full" src="/images/businessValue.svg" />
+          </ng-template>
+          <ng-template #title>{{ "ourValuesTitle" | translate }}</ng-template>
+          <p>{{ "ourValuesText" | translate }}</p>
+        </p-card>
+      </div>
+      <div class="col-lg-4 col-sm-6 mb-4">
+        <p-card [style]="{ overflow: 'hidden' }">
+          <ng-template #header>
+            <img alt="Card" class="w-full" src="/images/VisionBanner.svg" />
+          </ng-template>
+          <ng-template #title>{{ "ourMissionTitle" | translate }}</ng-template>
+          <p>{{ "ourMissionText" | translate }}</p>
+        </p-card>
+      </div>
+      <div class="col-lg-4 col-sm-6 mb-4">
+        <p-card [style]="{ overflow: 'hidden' }">
+          <ng-template #header>
+            <img alt="Card" class="w-full" src="/images/message.svg" />
+          </ng-template>
+          <ng-template #title>{{ "ourVisionTitle" | translate }}</ng-template>
+          <p>{{ "ourVisionText" | translate }}</p>
+        </p-card>
+      </div>
     </div>
+    <div class="row">
+      <div class="col-lg-4 col-sm-6 btns">
+        <p-button
+          [label]="'newOrder' | translate"
+          severity="contrast"
+          size="small"
+          routerLink="/request-form"
+        />
+        <p-button
+          [label]="'carRentalRequest' | translate"
+          severity="contrast"
+          size="small"
+          routerLink="/password-recovery-otp"
+        />
+      </div>
+    </div>
+  </div>
 </div>

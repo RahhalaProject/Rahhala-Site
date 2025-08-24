@@ -1,0 +1,124 @@
+<div class="title-sec">
+  <div class="title-div">
+    <h4>{{ "createOrder" | translate }}</h4>
+  </div>
+</div>
+<div class="container">
+  <p-card class="box">
+    <div class="form">
+      <div class="mb-6">
+        <!-- Payment -->
+        <button
+          class="form-item"
+          (click)="showShipmentDetailsDialog()"
+          type="button"
+        >
+          <span
+            ><i class="pi pi-car"></i>{{ "shipmentDetails" | translate }}</span
+          >
+          <i
+            class="pi"
+            [ngClass]="
+              currentLang === 'ar' ? 'pi-angle-left' : 'pi-angle-right'
+            "
+          ></i>
+        </button>
+
+        <!-- Upload -->
+        <button
+          class="form-item dashed"
+          (click)="showUploadDialog()"
+          type="button"
+        >
+          <span
+            ><i class="pi pi-camera"></i>{{ "uploadImage" | translate }}</span
+          >
+        </button>
+
+        <!-- Location -->
+        <button class="form-item" (click)="showLocationDialog()" type="button">
+          <span
+            ><i class="pi pi-globe"></i
+            >{{ "pickupAndDeliveryLocation" | translate }}</span
+          >
+        </button>
+
+        <!-- Delivery Date -->
+        <button
+          class="form-item"
+          (click)="showDeliveryDateDialog()"
+          type="button"
+        >
+          <span
+            ><i class="pi pi-calendar"></i
+            >{{ "deliveryDate" | translate }}</span
+          >
+        </button>
+
+        <!-- Payment -->
+        <button
+          class="form-item"
+          (click)="showPaymentMethodDialog()"
+          type="button"
+          [attr.aria-label]="'paymentMethod' | translate"
+        >
+          <span
+            ><i class="pi pi-credit-card"></i
+            >{{ "paymentMethod" | translate }}</span
+          >
+          <i
+            class="pi"
+            [ngClass]="
+              currentLang === 'ar' ? 'pi-angle-left' : 'pi-angle-right'
+            "
+            aria-hidden="true"
+          ></i>
+        </button>
+
+        <p-button
+          class="initialPricing-btn"
+          [label]="'initialPricing' | translate"
+          severity="contrast"
+          size="small"
+        />
+        <p-button
+          [label]="'orderConfirmation' | translate"
+          severity="contrast"
+          size="small"
+        />
+      </div>
+    </div>
+  </p-card>
+</div>
+
+<!------------- Start shipment Details ------------>
+<p-dialog
+  header="Edit Profile"
+  [modal]="true"
+  [(visible)]="visibleShipmentDetails"
+  [style]="{ width: '25rem' }"
+>
+  <span class="p-text-secondary block mb-8">Update your information.</span>
+  <div class="flex items-center gap-4 mb-4">
+    <label for="username" class="font-semibold w-24">Username</label>
+    <input pInputText id="username" class="flex-auto" autocomplete="off" />
+  </div>
+  <div class="flex items-center gap-4 mb-8">
+    <label for="email" class="font-semibold w-24">Email</label>
+    <input pInputText id="email" class="flex-auto" autocomplete="off" />
+  </div>
+  <div class="flex justify-end gap-2">
+    <p-button
+      label="Cancel"
+      severity="secondary"
+      (click)="visibleShipmentDetails = false"
+      (keydown.enter)="visibleShipmentDetails = false"
+    />
+    <p-button
+      label="Save"
+      (click)="visibleShipmentDetails = false"
+      (keydown.enter)="visibleShipmentDetails = false"
+    />
+  </div>
+</p-dialog>
+<!------------- End shipment Details ------------>

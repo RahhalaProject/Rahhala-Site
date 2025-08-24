@@ -1,393 +1,104 @@
+.header-div {
+  height: 0vh;
+  padding: 10px 0px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 80px 20px 40px 20px;
+  box-sizing: border-box;
+}
+
+.box {
+  background-color: #ffffff;
+  padding: 60px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.form-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #003768;
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 12px;
+  background: #fff;
+  cursor: pointer;
+  width: 100%;
+}
+
+.form-item.dashed {
+  border: 2px dashed #003768;
+  background: #fafafa;
+  cursor: pointer;
+}
+
+.form-item span {
+  color: #013769;
+  font-family: var(--btn-font-family);
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.icon {
+  font-size: 18px;
+}
+
+.form-item span i {
+  margin: 0 10px;
+}
+
 :host ::ng-deep {
-    section {
-        margin-top: 60px;
-    }
+  .box .form .p-button {
+    width: 100%;
+    padding: 12px;
+    background: #003768;
+    display: block;
+    margin-top: 20px;
+  }
 
-    .slider-section {
-        .p-card {
-            background-image: url('/images/slider.png');
-            background-size: cover;
-        }
-        .card-overlay-wrapper {
-            position: relative;
-            .p-card {
-                position: relative;
-                z-index: 1;
-            }
+  .box .form .p-button-label {
+    font-weight: 600;
+    font-size: 13px;
+    color: #ffffff;
+  }
 
-            .overlay {
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                background-color: rgba(0, 55, 104, 0.4);
-                z-index: 2;
-                pointer-events: none;
-                border-radius: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                pointer-events: none;
-            }
-        }
-        .overlay div {
-            padding: 20px;
-            
-        }
-        .overlay div h1 {
-            font-weight: 700;
-            font-size: 48px;
-            color: #FFFFFF;
-            line-height: 90px;
-            text-align: center;
-        }
-        .overlay div p {
-            font-weight: 600;
-            font-size: 16px;
-            text-align: center;
-            color: #FFFFFF;
-        }
-        .overlay .add-btn {
-            display: grid;
-            justify-content: center;
-        }
-        .overlay div .p-button {
-            text-align: center;
-            background: #FFFFFF;
-            
-        }
-        .overlay .p-button-label {
-            font-weight: 600;
-            font-size: 13.95px;
-            color: #003768;
-            padding-left: 7px;
-            padding-right: 7px;
-            pointer-events: auto;
-        }
-    }
+  .box .form .initialPricing-btn .p-button {
+    background: #707070;
+  }
+}
+/* For screens smaller than 600px */
+@media (max-width: 600px) {
+  .box {
+    padding: 20px; /* Reduce padding on smaller screens */
+    border-radius: 5px; /* Slightly less rounded corners */
+  }
+}
 
-    .Who-are-we-section {
-        .p-card {
-            background-color: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
-        }
-        .p-card-title {
-            font-weight: 600;
-            font-size: 48px;
-            text-align: center;
-            color: #003768;
-        }
-        .p-card p {
-            font-weight: 600;
-            font-size: 16px;
-            text-align: center;
-            color: #003768;
-            padding: 0 25%;
-        }
-    }
+/* For very small screens, further adjustments if needed */
+@media (max-width: 320px) {
+  .box {
+    padding: 10px;
+  }
 
-    .Our-vision-and-mission-section {
-        .p-card {
-            background-image: url('/images/mission.png');
-            background-size: cover;
-        }
-        .card-overlay-wrapper {
-            position: relative;
-            .p-card {
-                position: relative;
-                z-index: 1;
-            }
-
-            .overlay {
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                background-color: rgba(0, 55, 104, 0.4);
-                z-index: 2;
-                pointer-events: none;
-                border-radius: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                pointer-events: none;
-            }
-        }
-        .overlay div {
-            padding: 20px;
-            
-        }
-        .overlay div h2 {
-            font-weight: 700;
-            font-size: 48px;
-            color: #FFFFFF;
-            line-height: 90px;
-            text-align: center;
-        }
-        .overlay div p {
-            font-weight: 600;
-            font-size: 16px;
-            text-align: center;
-            color: #FFFFFF;
-        }
-    }
-
-    .Our-services-section {
-            width: 100%;
-            position: absolute;
-            left: 0;
-            right: 0;
-        .p-card {
-            background-image: url('/images/Ourservices.jpg');
-            background-size: cover;
-        }
-        .card-overlay-wrapper {
-            position: relative;
-            .p-card {
-                position: relative;
-                z-index: 1;
-            }
-
-            .overlay {
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                background-color: rgba(0, 55, 104, 0.4);
-                z-index: 2;
-                pointer-events: none;
-                //border-radius: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                pointer-events: none;
-            }
-        }
-        .overlay div {
-            padding: 20px;
-            
-        }
-        .overlay div h2 {
-            font-weight: 700;
-            font-size: 48px;
-            color: #FFFFFF;
-            line-height: 90px;
-            text-align: center;
-        }
-    }
-
-    .Why-us-section {
-         width: 100%;
-        position: absolute;
-        left: 0;
-        right: 0;
-        .p-card {
-            background-image: url('/images/Ourservices.jpg');
-            background-size: cover;
-            min-height: 120px;
-        }
-        .card-overlay-wrapper {
-            position: relative;
-            width: 100%;
-            .p-card {
-                position: relative;
-                z-index: 1;
-                min-height: 120px;
-            }
-
-            .overlay {
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                background-color: rgba(0, 55, 104, 0.4);
-                z-index: 2;
-                pointer-events: none;
-                //border-radius: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                pointer-events: none;
-                width: 100%;
-                height: 100%;
-            }
-        }
-        .overlay div {
-            padding: 20px;
-            
-        }
-        .overlay div h2 {
-            font-weight: 700;
-            font-size: 48px;
-            color: #FFFFFF;
-            text-align: center;
-        }
-
-        .overlay-content {
-            max-width: 100%;
-            color: white;
-            font-size: 1.2rem;
-            word-wrap: break-word;
-        }
-
-        @media only screen and (max-width: 400px) {
-            .overlay-content h2 {
-                font-size: 35px !important;
-            }
-        }
-    }
-    
-    .Our-vision-cards-section {
-        .p-card {
-            background-color: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
-        }
-        .p-card-header div{
-            text-align: center;
-        }
-        .p-card-header div h2{
-            font-weight: 700;
-            font-size: 48px;
-            color: #003768;
-        }
-        .p-card p {
-            font-weight: 600;
-            font-size: 16px;
-            text-align: center;
-            color: #003768;
-            padding: 0 20%;
-        }
-    }
-
-    .Services-cards-section {
-        margin-top: 250PX;
-        .p-card {
-            background: #F6F6F6;
-            height: 140px;
-        }
-        .row div {
-            margin-bottom: 20px;
-        }
-        .p-card-title {
-            font-weight: bold;
-            font-size: 16px;
-            color: #003768;
-        }
-        .p-card p {
-            font-weight: 400;
-            font-size: 18px;
-            color: #003768;
-        }
-    }
-
-    .What-do-we-offer-section {
-        margin-top: 250PX;
-        .p-card {
-            background: #F6F6F6;
-            padding: 17px;
-            padding-bottom: 0px;
-            height: 390px;
-        }
-        .p-card-header img {
-            width: 100%;
-        }
-        .p-card-title {
-            font-weight: bold;
-            font-size: 20px;
-            color: #003768;
-            margin-bottom: 0px;
-        }
-        .p-card p {
-            font-weight: 600;
-            font-size: 16px;
-            color: #003768;
-            margin-bottom: 0px;
-        }
-    }
-    
-    .features-cards-section {
-        .title {
-            text-align: center;
-        }
-        h2 {
-            font-weight: 600;
-            font-size: 48px;
-            line-height: 60px;
-            letter-spacing: 0px;
-            text-align: center;
-            color: #003768;
-            margin-bottom: 50px;
-            border-bottom: 2px solid #003768;
-            display: inline-block;
-        }
-        .p-card {
-            margin-bottom: 100px;
-            width: 70%;
-        }
-        .p-card-body {
-            padding: 8px;
-        }
-        .p-card-title {
-            font-weight: 400;
-            font-size: 18px;
-            color:#FFFFFF;
-            background: #003768;
-            padding: 7px;
-            border-radius: 5px;
-        }
-        .p-card-content p {
-            font-weight: 400;
-            font-size: 16px;
-            color: #003768;
-        }
-        .image {
-            text-align: center;
-            margin-bottom: 30px;
-            width: 100%;
-        }
-        .image img {
-            width: 100%;
-        }
-        .cards {
-            justify-items: center;
-        }
-        @media (max-width: 768px) {
-            .ord1 {
-                order: 1;
-            }
-
-            .ord2 {
-                order: 2;
-            }
-            .ord3 {
-                order: 3;
-            }
-            .p-card {
-                margin-bottom: 20px;
-                width: 100%;
-            }
-        }
-        @media (max-width: 992px) {
-            .ord1 {
-                order: 1;
-            }
-
-            .ord2 {
-                order: 2;
-            }
-            .ord3 {
-                order: 3;
-            }
-            .p-card {
-                margin-bottom: 20px;
-                width: 100%;
-            }
-        }
-    }
+  .box h2 {
+    margin-bottom: 15px;
+  }
 }

@@ -1,77 +1,85 @@
 @if(isHomeLayout) {
-    <p-megamenu [model]="items" [style]="{ 'border-radius': '1rem' }" class="home-nav">
-        <ng-template #start>
-        <div class="flex items-center gap-2">
-            <p-avatar
-            image="/icons/AlrahalaLogo.svg"
-            [style]="{ width: '124px', height: '50px' }"
-            />
-        </div>
-        </ng-template>
+<p-megamenu
+  [model]="items"
+  [style]="{ 'border-radius': '1rem' }"
+  class="home-nav"
+>
+  <ng-template #start>
+    <div class="flex items-center gap-2">
+      <p-avatar
+        image="/icons/AlrahalaLogo.svg"
+        [style]="{ width: '124px', height: '50px' }"
+      />
+    </div>
+  </ng-template>
 
-        <ng-template #item let-item>
-        <a
-            pRipple
-            class="flex items-center p-megamenu-item-link"
-            *ngIf="item.root"
-            [href]="'#' + item.section"
-        >
-            <span>{{ item.label | translate }}</span>
-        </a>
-        <div class="flex items-center gap-2 auth-btn-inMenu" *ngIf="!item.root">
-            <p-button
-            [label]="'login' | translate"
-            severity="contrast"
-            size="small"
-            routerLink="/auth"
-            />
-        </div>
-        </ng-template>
+  <ng-template #item let-item>
+    <a
+      pRipple
+      class="flex items-center p-megamenu-item-link"
+      *ngIf="item.root"
+      [href]="'#' + item.section"
+    >
+      <span>{{ item.label | translate }}</span>
+    </a>
+    <div class="flex items-center gap-2 auth-btn-inMenu" *ngIf="!item.root">
+      <p-button
+        [label]="'login' | translate"
+        severity="contrast"
+        size="small"
+        routerLink="/auth"
+      />
+    </div>
+  </ng-template>
 
-        <ng-template #end let-root="root">
-        <div class="flex items-center gap-2 auth-btn">
-            <p-button
-            [label]="'login' | translate"
-            severity="contrast"
-            size="small"
-            routerLink="/auth"
-            />
-            <!-- <p-select
+  <ng-template #end let-root="root">
+    <div class="flex items-center gap-2 auth-btn">
+      <p-button
+        [label]="'login' | translate"
+        severity="contrast"
+        size="small"
+        routerLink="/auth"
+      />
+      <!-- <p-select
             [options]="supportLanguages"
             [(ngModel)]="selectedLanguage"
             (onChange)="useLang($event)"
             /> -->
-        </div>
-        </ng-template>
-    </p-megamenu>
-}
-@else {
-    <div class="main-nav">
-        <p-megamenu [model]="items" [style]="{ 'border-radius': '1rem' }">
-        <ng-template #start>
-            <div class="flex items-center gap-2">
-            <p-avatar
-                image="/logos/AlrahalaLogo.svg"
-                [style]="{ width: '124px', height: '50px' }"
-            />
-            </div>
-        </ng-template>
-
-        <ng-template #item let-item>
-            <a
-            pRipple
-            class="flex items-center p-megamenu-item-link"
-            *ngIf="item.root"
-            [href]="'#' + item.section"
-            >
-            <span>{{ item.label | translate }}</span>
-            </a>
-        </ng-template>
-        @if(true){
-            <ng-template #end>
-                <p-avatar image="./images/profile.png" shape="circle" />
-            </ng-template>
-        }
-        </p-megamenu>
     </div>
+  </ng-template>
+</p-megamenu>
+} @else {
+<div class="main-nav">
+  <p-megamenu [model]="items" [style]="{ 'border-radius': '1rem' }">
+    <ng-template #start>
+      <div class="flex items-center gap-2">
+        <p-avatar
+          image="/logos/AlrahalaLogo.svg"
+          [style]="{ width: '124px', height: '50px' }"
+        />
+      </div>
+    </ng-template>
+
+    <ng-template #item let-item>
+      <a
+        pRipple
+        class="flex items-center p-megamenu-item-link"
+        *ngIf="item.root"
+        [href]="'#' + item.section"
+      >
+        <span>{{ item.label | translate }}</span>
+      </a>
+    </ng-template>
+    @if(true){
+    <ng-template #end>
+      <p-avatar image="./images/profile.png" shape="circle" />
+      <p-select
+        [options]="supportLanguages"
+        [(ngModel)]="selectedLanguage"
+        (onChange)="useLang($event)"
+      />
+    </ng-template>
+    }
+  </p-megamenu>
+</div>
 }
