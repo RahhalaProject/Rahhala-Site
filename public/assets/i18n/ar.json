@@ -216,5 +216,18 @@
   "enterHeight": "ادخل الارتفاع",
   "additionalNotes": "ملاحظات إضافية",
   "initialPricing": "تسعير أولي",
-  "orderConfirmation": "تأكيد الطلب"
+  "orderConfirmation": "تأكيد الطلب",
+  "cancel": "إلغاء",
+  "save": "حفظ",
+  "pickupAddress": "عنوان الاستلام",
+  "city": "المدينة",
+  "districtName": "اسم الحي",
+  "streetName": "اسم الشارع",
+  "useCurrentLocation": "استخدم موقعك الحالي",
+  "recipientDetails": "بيانات المستلم",
+  "recipientName": "إسم المستلم",
+  "phoneNumber": "رقم الهاتف",
+  "address": "العنوان",
+  "neighborhood": "الحي",
+  "saveAndConfirm": "حفظ وتأكيد"
 }

@@ -279,5 +279,18 @@
   "enterHeight": "Enter Height",
   "additionalNotes": "Additional Notes",
   "initialPricing": "Initial Pricing",
-  "orderConfirmation": "Order Confirmation"
+  "orderConfirmation": "Order Confirmation",
+  "cancel": "Cancel",
+  "save": "Save",
+  "pickupAddress": "Pickup Address",
+  "city": "City",
+  "districtName": "District Name",
+  "streetName": "Street Name",
+  "useCurrentLocation": "Use Current Location",
+  "recipientDetails": "Recipient Details",
+  "recipientName": "Recipient Name",
+  "phoneNumber": "Phone Number",
+  "address": "Address",
+  "neighborhood": "Neighborhood",
+  "saveAndConfirm": "Save & Confirm"
 }

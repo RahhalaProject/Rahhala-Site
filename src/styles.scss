@@ -1,4 +1,4 @@
-@use 'bootstrap/scss/bootstrap' as *;
+@use "bootstrap/scss/bootstrap" as *;
 
 @tailwind base;
 @tailwind components;
@@ -14,10 +14,16 @@
   --text-color: var(--p-surface-700);
   --overlay-background: #ffffff;
   --btn-color: #003768;
-  --btn-font-family: 'FF Shamel Family', sans-serif;
+  --btn-font-family: "FF Shamel Family", sans-serif;
+  --p-checkbox-checked-hover-background: #003768 !important;
+  --p-textarea-focus-border-color: #003768 !important;
+  --p-list-option-selected-focus-color: #003768 !important;
+  --p-list-option-selected-background-color: #003768 !important;
+  --p-form-field-focus-border-color: #003768 !important;
+  --p-primary-color: #003768 !important;
 }
 
-:root[class='p-dark'] {
+:root[class="p-dark"] {
   --body-bg: var(--p-surface-950);
   --body-text-color: var(--p-surface-50);
   --card-border: 1px solid transparent;
@@ -28,7 +34,7 @@
 }
 
 html {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 body {
@@ -43,14 +49,14 @@ body {
 }
 
 .card {
-    background: var(--card-bg);
-    border: var(--card-border);
-    padding: 2rem;
-    border-radius: 10px;
-    margin-bottom: 1rem;
+  background: var(--card-bg);
+  border: var(--card-border);
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
 }
 .container {
-    padding: 0px;
+  padding: 0px;
 }
 .maim-section {
   padding: 15px 0px;

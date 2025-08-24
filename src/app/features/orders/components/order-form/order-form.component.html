@@ -38,7 +38,7 @@
         <!-- Location -->
         <button class="form-item" (click)="showLocationDialog()" type="button">
           <span
-            ><i class="pi pi-globe"></i
+            ><i class="pi pi-map-marker"></i
             >{{ "pickupAndDeliveryLocation" | translate }}</span
           >
         </button>
@@ -93,32 +93,330 @@
 
 <!------------- Start shipment Details ------------>
 <p-dialog
-  header="Edit Profile"
   [modal]="true"
   [(visible)]="visibleShipmentDetails"
-  [style]="{ width: '25rem' }"
+  [style]="{ width: '50rem' }"
+  class="ShipmentDetails-form"
 >
-  <span class="p-text-secondary block mb-8">Update your information.</span>
-  <div class="flex items-center gap-4 mb-4">
-    <label for="username" class="font-semibold w-24">Username</label>
-    <input pInputText id="username" class="flex-auto" autocomplete="off" />
+  <div class="flex flex-col h-48 mb-3">
+    <div
+      class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+    >
+      <div class="flex justify-center card-cus">
+        <div class="row">
+          <div class="col-12 mb-3">
+            <p-select
+              [options]="cities"
+              optionLabel="name"
+              placeholder="{{ 'shipmentType' | translate }}"
+              class="w-full md:w-56"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <div class="checks">
+              <div class="flex items-center item">
+                <label for="ingredient1" class="ml-2">
+                  {{ "express" | translate }}
+                </label>
+                <p-checkbox inputId="ingredient1" name="pizza" value="Cheese" />
+              </div>
+              <div style="margin: 0 5px"></div>
+              <div class="flex items-center item">
+                <label for="ingredient1" class="ml-2">
+                  {{ "normal" | translate }}
+                </label>
+                <p-checkbox inputId="ingredient1" name="pizza" value="Cheese" />
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mb-3">
+            <p-select
+              [options]="cities"
+              optionLabel="name"
+              placeholder="{{ 'orderType' | translate }}"
+              class="w-full md:w-56"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <div class="tags-div">
+              <p-tag severity="info" value="{{ 'enterLength' | translate }}" />
+              <p-tag severity="info" value="{{ 'enterWidth' | translate }}" />
+              <p-tag severity="info" value="{{ 'enterHeight' | translate }}" />
+            </div>
+          </div>
+          <div class="col-12 mb-3">
+            <p-iftalabel>
+              <textarea
+                pTextarea
+                id="description"
+                rows="5"
+                style="resize: none"
+              ></textarea>
+              <label for="description">{{
+                "additionalNotes" | translate
+              }}</label>
+            </p-iftalabel>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="flex items-center gap-4 mb-8">
-    <label for="email" class="font-semibold w-24">Email</label>
-    <input pInputText id="email" class="flex-auto" autocomplete="off" />
-  </div>
-  <div class="flex justify-end gap-2">
+  <div class="flex w-full justify-between">
     <p-button
-      label="Cancel"
+      label="{{ 'cancel' | translate }}"
       severity="secondary"
       (click)="visibleShipmentDetails = false"
       (keydown.enter)="visibleShipmentDetails = false"
     />
     <p-button
-      label="Save"
+      label="{{ 'save' | translate }}"
       (click)="visibleShipmentDetails = false"
       (keydown.enter)="visibleShipmentDetails = false"
     />
   </div>
 </p-dialog>
 <!------------- End shipment Details ------------>
+
+<!------------- Start Upload ------------>
+<p-dialog
+  [modal]="true"
+  [(visible)]="visibleUpload"
+  [style]="{ width: '50rem' }"
+  class="Upload-form"
+>
+  <div class="flex flex-col h-48 mb-3">
+    <div
+      class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+    >
+      <div class="flex justify-center card-cus">
+        <div class="row">
+          <div class="col-12 mb-3">
+            <p-toast />
+            <p-fileupload
+              name="demo[]"
+              url="https://www.primefaces.org/cdn/api/upload.php"
+              (onUpload)="onUpload($event)"
+              [multiple]="true"
+              accept="image/*"
+              maxFileSize="1000000"
+              mode="advanced"
+            >
+              <ng-template #empty>
+                <div>Drag and drop files to here to upload.</div>
+              </ng-template>
+            </p-fileupload>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex w-full justify-between">
+    <p-button
+      label="{{ 'cancel' | translate }}"
+      severity="secondary"
+      (click)="visibleUpload = false"
+      (keydown.enter)="visibleUpload = false"
+    />
+    <p-button
+      label="{{ 'save' | translate }}"
+      (click)="visibleUpload = false"
+      (keydown.enter)="visibleUpload = false"
+    />
+  </div>
+</p-dialog>
+<!------------- End Upload ------------>
+
+<!------------- Start Delivery Date ------------>
+<p-dialog
+  [modal]="true"
+  [(visible)]="visibleDeliveryDate"
+  [style]="{ width: '50rem' }"
+  class="DeliveryDate-form"
+>
+  <div class="flex flex-col h-48 mb-3">
+    <div
+      class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+    >
+      <div class="flex justify-center card-cus">
+        <div class="row">
+          <div class="col-12 mb-3">
+            <p-datepicker
+              [(ngModel)]="date"
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              inputId="icondisplay"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex w-full justify-between">
+    <p-button
+      label="{{ 'cancel' | translate }}"
+      severity="secondary"
+      (click)="visibleDeliveryDate = false"
+      (keydown.enter)="visibleDeliveryDate = false"
+    />
+    <p-button
+      label="{{ 'save' | translate }}"
+      (click)="visibleDeliveryDate = false"
+      (keydown.enter)="visibleDeliveryDate = false"
+    />
+  </div>
+</p-dialog>
+<!------------- End Delivery Date ------------>
+
+<!------------- Start Payment Method ------------>
+<p-dialog
+  [modal]="true"
+  [(visible)]="visiblePaymentMethod"
+  [style]="{ width: '50rem' }"
+  class="PaymentMethod-form"
+>
+  <div class="flex flex-col h-48 mb-3">
+    <div
+      class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+    >
+      <div class="flex justify-center card-cus">
+        <div class="row">
+          <div class="col-12 mb-3">
+            <p-select
+              [options]="cities"
+              optionLabel="name"
+              placeholder="{{ 'paymentMethod' | translate }}"
+              class="w-full md:w-56"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex w-full justify-between">
+    <p-button
+      label="{{ 'cancel' | translate }}"
+      severity="secondary"
+      (click)="visiblePaymentMethod = false"
+      (keydown.enter)="visiblePaymentMethod = false"
+    />
+    <p-button
+      label="{{ 'save' | translate }}"
+      (click)="visiblePaymentMethod = false"
+      (keydown.enter)="visiblePaymentMethod = false"
+    />
+  </div>
+</p-dialog>
+<!------------- End Payment Method ------------>
+
+<!------------- Start Location ------------>
+<p-dialog
+  [modal]="true"
+  [(visible)]="visibleLocation"
+  [style]="{ width: '50rem' }"
+  class="Location-form"
+>
+  <div class="flex flex-col h-48 mb-3">
+    <div
+      class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+    >
+      <div class="flex justify-center card-cus">
+        <div class="row">
+          <div class="col-12">
+            <p class="title">{{ "pickupAddress" | translate }}</p>
+          </div>
+          <div class="col-12 mb-3">
+            <p-select
+              [options]="cities"
+              optionLabel="name"
+              placeholder="{{ 'city' | translate }}"
+              class="w-full md:w-56"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <p-select
+              [options]="cities"
+              optionLabel="name"
+              placeholder="{{ 'districtName' | translate }}"
+              class="w-full md:w-56"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <input
+              type="text"
+              pInputText
+              placeholder="{{ 'streetName' | translate }}"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <button class="form-item form-item-custom" type="button">
+              <span>{{ "useCurrentLocation" | translate }}</span>
+              <i class="pi pi-send"></i>
+            </button>
+          </div>
+          <div class="col-12">
+            <p class="title">{{ "recipientDetails" | translate }}</p>
+          </div>
+          <div class="col-12 mb-3">
+            <p-select
+              [options]="cities"
+              optionLabel="name"
+              placeholder="{{ 'recipientName' | translate }}"
+              class="w-full md:w-56"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <input
+              type="text"
+              pInputText
+              placeholder="{{ 'phoneNumber' | translate }}"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <button class="form-item form-item-custom" type="button">
+              <span>{{ "address" | translate }}</span>
+              <i class="pi pi-map"></i>
+            </button>
+          </div>
+          <div class="col-12 mb-3">
+            <p-select
+              [options]="cities"
+              optionLabel="name"
+              placeholder="{{ 'streetName' | translate }}"
+              class="w-full md:w-56"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <p-select
+              [options]="cities"
+              optionLabel="name"
+              placeholder="{{ 'city' | translate }}"
+              class="w-full md:w-56"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <p-select
+              [options]="cities"
+              optionLabel="name"
+              placeholder="{{ 'neighborhood' | translate }}"
+              class="w-full md:w-56"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex w-full justify-between">
+    <p-button
+      label="{{ 'cancel' | translate }}"
+      severity="secondary"
+      (click)="visibleLocation = false"
+      (keydown.enter)="visibleLocation = false"
+    />
+    <p-button
+      label="{{ 'save' | translate }}"
+      (click)="visibleLocation = false"
+      (keydown.enter)="visibleLocation = false"
+    />
+  </div>
+</p-dialog>
+<!------------- End Location ------------>

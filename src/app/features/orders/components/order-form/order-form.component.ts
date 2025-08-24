@@ -7,13 +7,21 @@ import { FormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
 import { Checkbox } from 'primeng/checkbox';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { InputGroup } from 'primeng/inputgroup';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { Tag } from 'primeng/tag';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { TextareaModule } from 'primeng/textarea';
 import { Dialog } from 'primeng/dialog';
+import { FileUpload } from 'primeng/fileupload';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { DatePickerModule } from 'primeng/datepicker';
+
+interface UploadEvent {
+  originalEvent: Event;
+  files: File[];
+}
 
 @Component({
   selector: 'order-form',
@@ -29,7 +37,6 @@ import { Dialog } from 'primeng/dialog';
     Select,
     Checkbox,
     InputGroupAddonModule,
-    InputGroup,
     InputTextModule,
     CommonModule,
     Tag,
@@ -37,7 +44,11 @@ import { Dialog } from 'primeng/dialog';
     IftaLabelModule,
     TextareaModule,
     Dialog,
+    FileUpload,
+    ToastModule,
+    DatePickerModule,
   ],
+  providers: [MessageService],
 })
 export class OrderFormComponent {
   currentLang: string;
@@ -46,8 +57,14 @@ export class OrderFormComponent {
   visibleLocation: boolean = false;
   visibleDeliveryDate: boolean = false;
   visiblePaymentMethod: boolean = false;
+  cities: any;
+  uploadedFiles: any[] = [];
+  date: Date | undefined;
 
-  constructor(readonly translate: TranslateService) {
+  constructor(
+    readonly translate: TranslateService,
+    readonly messageService: MessageService
+  ) {
     this.currentLang =
       this.translate.currentLang || this.translate.getDefaultLang();
     this.translate.onLangChange.subscribe((event) => {
@@ -85,5 +102,17 @@ export class OrderFormComponent {
   onOrderConfirmationClick() {
     // TODO: Implement order confirmation logic
     console.log('Order confirmation button clicked');
+  }
+
+  onUpload(event: any) {
+    for (let file of event.files) {
+      this.uploadedFiles.push(file);
+    }
+
+    this.messageService.add({
+      severity: 'info',
+      summary: 'File Uploaded',
+      detail: '',
+    });
   }
 }
