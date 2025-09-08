@@ -40,11 +40,6 @@
         size="small"
         routerLink="/auth"
       />
-      <!-- <p-select
-            [options]="supportLanguages"
-            [(ngModel)]="selectedLanguage"
-            (onChange)="useLang($event)"
-            /> -->
     </div>
   </ng-template>
 </p-megamenu>
@@ -72,12 +67,41 @@
     </ng-template>
     @if(true){
     <ng-template #end>
-      <p-avatar image="./images/profile.png" shape="circle" />
-      <p-select
-        [options]="supportLanguages"
-        [(ngModel)]="selectedLanguage"
-        (onChange)="useLang($event)"
+      <p-avatar
+        image="./images/profile.png"
+        shape="circle"
+        style="cursor: pointer"
+        (click)="popover.toggle($event)"
       />
+      <p-popover #popover [dismissable]="true">
+        <div class="profile-menu">
+          <div class="header">
+            <p-avatar image="./images/profile.png" shape="circle"></p-avatar>
+            <div class="info">
+              <div class="username">username</div>
+              <div class="email">usernamemail.com</div>
+            </div>
+          </div>
+
+          <ul class="menu-items">
+            <li>
+              <i class="pi pi-cog"></i> {{ "profileSettings" | translate }}
+            </li>
+            <li>
+              <i class="pi pi-shopping-bag"></i> {{ "myOrders" | translate }}
+            </li>
+            <li><i class="pi pi-wallet"></i> {{ "wallet" | translate }}</li>
+            <li (click)="changeLang()">
+              <i class="pi pi-globe"></i> {{ "language" | translate }}
+            </li>
+            <li>
+              <i class="pi pi-question-circle"></i>
+              {{ "supportAndHelp" | translate }}
+            </li>
+            <li><i class="pi pi-sign-out"></i> {{ "logout" | translate }}</li>
+          </ul>
+        </div>
+      </p-popover>
     </ng-template>
     }
   </p-megamenu>
