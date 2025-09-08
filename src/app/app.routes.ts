@@ -77,6 +77,20 @@ export const routes: Routes = [
             './features/orders/components/order-form/order-form.component'
           ).then((m) => m.OrderFormComponent),
       },
+      {
+        path: 'wallet',
+        loadComponent: () =>
+          import('./features/orders/components/wallet/wallet.component').then(
+            (m) => m.WalletComponent
+          ),
+      },
+      {
+        path: 'tracking',
+        loadComponent: () =>
+          import(
+            './features/orders/components/order-track/order-track.component'
+          ).then((m) => m.OrderTrackComponent),
+      },
     ],
   },
   { path: '**', redirectTo: 'home' },

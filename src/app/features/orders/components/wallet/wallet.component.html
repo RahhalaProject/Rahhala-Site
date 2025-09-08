@@ -1,0 +1,67 @@
+<div class="title-sec">
+  <div class="title-div">
+    <h4>{{ "wallet" | translate }}</h4>
+  </div>
+</div>
+<div class="container">
+  <p-card class="box">
+    <div class="form">
+      <div class="mb-6">
+        <div class="row wallet-container">
+          <div class="col-12 mb-4">
+            <!-- Balance Section -->
+            <div class="balance-card">
+              <div class="balance-title">
+                <i class="pi pi-wallet"></i>
+                <span>{{ "yourBalance" | translate }}</span>
+              </div>
+              <div class="balance-amount">5000 {{ "sar" | translate }}</div>
+              <p-button
+                [label]="'addBalance' | translate"
+                severity="contrast"
+                size="small"
+                icon="pi pi-plus"
+                iconPos="left"
+              />
+            </div>
+          </div>
+          <div class="col-12 mb-4">
+            <!-- Payment Methods -->
+            <div class="payment-methods">
+              <p-button><img src="/icons/pay.svg" alt="pay" /></p-button>
+              <p-button><img src="/icons/mad.svg" alt="mad" /> </p-button>
+              <p-button><img src="/icons/visa.svg" alt="visa" /> </p-button>
+            </div>
+          </div>
+          <div class="col-12 mb-4">
+            <!-- Add New Payment -->
+            <p-button
+              [label]="'addPaymentMethod' | translate"
+              severity="contrast"
+              size="small"
+              icon="pi pi-plus"
+              iconPos="left"
+            />
+          </div>
+          <div class="col-12 mb-4">
+            <!-- Transactions -->
+            <div class="transactions">
+              <h3>{{ "transactionHistory" | translate }}</h3>
+
+              <div class="transaction-item" *ngFor="let item of [1, 2, 3, 4]">
+                <div class="transaction-status">
+                  {{ "paymentReceived" | translate }}
+                </div>
+                <div class="transaction-date">12 Mar 2025</div>
+
+                <div class="transaction-amount">
+                  +3000 {{ "sar" | translate }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-card>
+</div>

@@ -1,0 +1,93 @@
+<div class="title-sec">
+  <div class="title-div">
+    <h4>{{ "trackOrder" | translate }}</h4>
+  </div>
+</div>
+<div class="container">
+  <p-card class="box">
+    <div class="form">
+      <div class="mb-6">
+        <div class="row">
+          <div class="col-12 mb-4">
+            <div class="steps">
+              <div class="step active">
+                <div class="circle"></div>
+                <span>{{ "createOrder" | translate }}</span>
+              </div>
+              <div class="line active"></div>
+              <div class="step active">
+                <div class="circle"></div>
+                <span>{{ "selectDriver" | translate }}</span>
+              </div>
+              <div class="line active"></div>
+              <div class="step active">
+                <div class="circle"></div>
+                <span>{{ "receiveShipment" | translate }}</span>
+              </div>
+              <div class="line"></div>
+              <div class="step">
+                <div class="circle"></div>
+                <span>{{ "delivered" | translate }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mb-4">
+            <!-- Map -->
+            <div class="map">
+              <img src="./images/Map.png" alt="Map" />
+            </div>
+          </div>
+          <div class="col-12 mb-4">
+            <!-- Driver Info -->
+            <div class="driver">
+              <p-avatar image="./images/profile.png" shape="circle" />
+              <div class="info">
+                <h3>{{ "driverName" | translate }}</h3>
+                <p>{{ "carNumber" | translate }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mb-4">
+            <div class="btns-div">
+              <p-button
+                [label]="'chat' | translate"
+                severity="contrast"
+                size="small"
+              />
+              <div class="splet"></div>
+              <p-button
+                [label]="'call' | translate"
+                severity="contrast"
+                size="small"
+              />
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            <!-- Order Details -->
+            <div class="order">
+              <div style="display: flex; align-items: center; gap: 10px">
+                <div class="imag-div">
+                  <img src="/images/Box.svg" alt="Order" />
+                </div>
+                <div>
+                  <h4>{{ "furniture" | translate }}</h4>
+                  <p>120 {{ "kg" | translate }}</p>
+                </div>
+              </div>
+              <div>
+                <p class="price">3000 {{ "sar" | translate }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <p-button
+              [label]="'cancelOrder' | translate"
+              severity="contrast"
+              size="small"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-card>
+</div>

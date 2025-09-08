@@ -18,77 +18,87 @@ import { Inject } from '@angular/core';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   standalone: true,
-  imports: [AvatarModule, ButtonModule, MenubarModule,
-    MegaMenu, ButtonModule, CommonModule, RouterModule, Select,
-    FormsModule, TranslateModule, AvatarModule
+  imports: [
+    AvatarModule,
+    ButtonModule,
+    MenubarModule,
+    MegaMenu,
+    ButtonModule,
+    CommonModule,
+    RouterModule,
+    Select,
+    FormsModule,
+    TranslateModule,
   ],
-  providers: [TranslateService]
+  providers: [TranslateService],
 })
 export class HeaderComponent {
+  @Input() isHomeLayout: boolean = true;
+  items: MegaMenuItem[] | undefined;
+  supportLanguages = ['en', 'ar'];
+  selectedLanguage!: string;
 
-    @Input() isHomeLayout: boolean = true;
-    items: MegaMenuItem[] | undefined;
-    supportLanguages = ['en', 'ar'];
-    selectedLanguage!: string;
+  constructor(
+    readonly config: PrimeNG,
+    readonly translateService: TranslateService,
+    @Inject(DOCUMENT) readonly document: Document
+  ) {}
 
-    constructor(readonly config: PrimeNG, readonly translateService: TranslateService, @Inject(DOCUMENT) readonly document: Document) {}
+  ngOnInit() {
+    this.items = [
+      {
+        label: 'home',
+        root: true,
+        section: 'home',
+      },
+      {
+        label: 'ourServices',
+        root: true,
+        section: 'service',
+      },
+      {
+        label: 'aboutUs',
+        root: true,
+        section: 'whoour',
+      },
+      {
+        label: 'support',
+        root: true,
+        section: 'support',
+      },
+      {
+        label: '',
+        root: false,
+      },
+    ];
 
-    ngOnInit() {
-        this.items = [
-            {
-                label: 'home',
-                root: true,
-                section: 'home'
-            },
-            {
-                label: 'ourServices',
-                root: true,
-                section: 'service'
-            },
-            {
-                label: 'aboutUs',
-                root: true,
-                section: 'whoour'
-            },
-            {
-                label: 'support',
-                root: true,
-                section: 'support'
-            },
-            {
-                label: '',
-                root: false,
-            },
-        ];
+    this.selectedLanguage = this.supportLanguages[0];
+  }
 
-        this.selectedLanguage = this.supportLanguages[0];
-        
-    }
+  useLang(lang: any) {
+    // this.translateService.use(lang.value);
+    // this.translateService.get('primeng').subscribe((res) => {
+    //     this.config.setTranslation(res);
+    // });
 
-    useLang(lang: any) {
-        // this.translateService.use(lang.value);
-        // this.translateService.get('primeng').subscribe((res) => {
-        //     this.config.setTranslation(res);
-        // });
+    const selectedLang = lang.value || lang; // handle both { value: 'ar' } or 'ar'
 
-        const selectedLang = lang.value || lang; // handle both { value: 'ar' } or 'ar'
+    this.translateService.use(selectedLang);
+    localStorage.setItem('lang', selectedLang);
 
-        this.translateService.use(selectedLang);
-        localStorage.setItem('lang', selectedLang);
+    this.translateService.get('primeng').subscribe((res) => {
+      this.config.setTranslation(res);
+    });
 
-        this.translateService.get('primeng').subscribe(res => {
-            this.config.setTranslation(res);
-        });
+    // Change direction dynamically
+    const html = this.document.documentElement as HTMLElement;
+    html.setAttribute('dir', selectedLang === 'ar' ? 'rtl' : 'ltr');
 
-        // Change direction dynamically
-        const html = this.document.documentElement as HTMLElement;
-        html.setAttribute('dir', selectedLang === 'ar' ? 'rtl' : 'ltr');
+    // Optionally: Change a custom class (for styling)
+    html.classList.remove('rtl', 'ltr');
+    html.classList.add(selectedLang === 'ar' ? 'rtl' : 'ltr');
 
-        // Optionally: Change a custom class (for styling)
-        html.classList.remove('rtl', 'ltr');
-        html.classList.add(selectedLang === 'ar' ? 'rtl' : 'ltr');
-
-        // Optional hard reload (only if needed):
-        // location.reload(); // not ideal; use only if component doesn't detect dir change
-    }
+    // Optional hard reload (only if needed):
+    // location.reload(); // not ideal; use only if component doesn't detect dir change
+  }
 }

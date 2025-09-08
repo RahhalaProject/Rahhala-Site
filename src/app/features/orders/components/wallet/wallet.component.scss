@@ -1,0 +1,175 @@
+.header-div {
+  height: 0vh;
+  padding: 10px 0px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 80px 20px 40px 20px;
+  box-sizing: border-box;
+}
+
+.box {
+  background-color: #ffffff;
+  padding: 60px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+}
+
+:host ::ng-deep {
+  .box .form .p-button {
+    width: 100%;
+    padding: 12px;
+    background: #fffeff;
+    display: block;
+    flex: 1;
+  }
+
+  .box .form .p-button-label {
+    font-weight: 700;
+    font-size: 15px;
+    color: #003768;
+  }
+
+  .p-button-icon {
+    color: #003768;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0 2px;
+  }
+
+  .wallet-container {
+    background: #fff;
+    border-radius: 15px;
+    padding: 1.5rem;
+    max-width: 500px;
+    margin: auto;
+    font-family: "Cairo", sans-serif;
+  }
+
+  .balance-card {
+    background: #073a78;
+    color: #fff;
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .balance-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 0.5rem;
+    gap: 0.5rem;
+    font-weight: bold;
+  }
+
+  .balance-amount {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  .add-balance-btn {
+    width: 100%;
+    border: 2px solid #fff !important;
+    color: #073a78 !important;
+    background: #fff !important;
+    font-weight: bold;
+  }
+
+  .payment-methods {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+  }
+  .payment-methods p-button {
+    flex: 1;
+  }
+  .method-btn {
+    flex: 1;
+    margin: 0 0.25rem;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .method-btn img {
+    max-height: 25px;
+  }
+
+  .add-method-btn {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+  }
+
+  .transactions {
+    border-top: 1px solid #ccc;
+    padding-top: 1rem;
+  }
+
+  .transactions h3 {
+    margin-bottom: 1rem;
+    font-size: 16px;
+    font-weight: bold;
+    color: #003768;
+  }
+
+  .transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #eaeaea;
+    font-size: 14px;
+    color: #003768;
+  }
+
+  .transaction-date {
+    color: #777;
+    width: 30%;
+  }
+
+  .transaction-status {
+    color: #333;
+    width: 40%;
+    text-align: center;
+    color: #003768;
+  }
+
+  .transaction-amount {
+    color: green;
+    font-weight: bold;
+    width: 30%;
+    text-align: right;
+  }
+}
+/* For screens smaller than 600px */
+@media (max-width: 600px) {
+  .box {
+    padding: 20px; /* Reduce padding on smaller screens */
+    border-radius: 5px; /* Slightly less rounded corners */
+  }
+}
+
+/* For very small screens, further adjustments if needed */
+@media (max-width: 320px) {
+  .box {
+    padding: 10px;
+  }
+
+  .box h2 {
+    margin-bottom: 15px;
+  }
+}
