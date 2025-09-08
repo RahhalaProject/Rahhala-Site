@@ -71,7 +71,6 @@
     padding: 12px;
     background: #003768;
     display: block;
-    margin-top: 20px;
   }
 
   .box .form .p-button-label {
@@ -138,15 +137,133 @@
     color: #003768;
     text-align: center;
   }
-  .Location-form .title-cum {
-    font-family: var(--btn-font-family);
-    font-weight: 600;
-    font-style: Sans One Bold;
-    font-size: 14px;
-    color: #003768;
-  }
   .p-inputtext {
     width: inherit;
+  }
+
+  .btns-div {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+  }
+  .splet {
+    padding: 5px;
+  }
+  .btns-div p-button {
+    flex: 1;
+  }
+  .btns-div .p-button {
+    padding: 8px !important;
+  }
+
+  /* Order */
+  .order {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f3f4f6;
+    border-radius: 12px;
+    padding: 7px 20px;
+    margin-bottom: 15px;
+    color: #003768;
+  }
+  .order img {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  .order h4 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .order p {
+    margin: 3px 0;
+    font-size: 13px;
+    color: #003768;
+  }
+  .price {
+    color: #003768;
+    font-weight: bold;
+  }
+  .imag-div {
+    background: #ffffff;
+    padding: 5px;
+    border-radius: 7px;
+  }
+
+  /* Driver */
+  .driver {
+    display: flex;
+    align-items: center;
+  }
+  .driver .p-avatar-circle {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .driver h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #003768;
+  }
+  .driver p {
+    margin: 2px 0 0;
+    color: #003768;
+    font-size: 14px;
+  }
+  .driver .info {
+    padding: 5px;
+  }
+  /* Map */
+  .map img {
+    width: 100%;
+    height: 170px;
+    border-radius: 12px;
+    //margin-bottom: 20px;
+  }
+  /* Steps */
+  .steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    line-height: 0px;
+  }
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .step span {
+    font-size: 12px;
+    color: #003768;
+    margin-top: 10px;
+  }
+  .circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ccc;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  .step.active .circle {
+    background: #2563eb;
+  }
+  .line {
+    height: 2px;
+    flex: 1;
+    background: #ccc;
+  }
+  .line.active {
+    background: #2563eb;
   }
 }
 /* For screens smaller than 600px */

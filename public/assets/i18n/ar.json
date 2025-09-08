@@ -252,5 +252,16 @@
   "myOrders": "طلباتي",
   "language": "اللغة",
   "supportAndHelp": "الدعم والمساعدة",
-  "logout": "تسجيل الخروج"
+  "logout": "تسجيل الخروج",
+  "requestPrivateTrip": "طلب رحلة خاصة",
+  "carType": "نوع السيارة",
+  "weightTons": "الوزن بالطن",
+  "loadByPallet": "الحمولة بالطبلية",
+  "fromDate": "من تاريخ",
+  "selectDate": "اختر التاريخ",
+  "toDate": "إلى تاريخ",
+  "pickupLocation": "موقع الاستلام",
+  "fromHQ": "من المقر",
+  "myLocation": "موقعي",
+  "map": "الخريطة"
 }

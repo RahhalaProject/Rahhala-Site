@@ -17,6 +17,7 @@ import { FileUpload } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { DatePickerModule } from 'primeng/datepicker';
+import { MapComponent } from '../map/map.component';
 
 interface UploadEvent {
   originalEvent: Event;
@@ -47,6 +48,7 @@ interface UploadEvent {
     FileUpload,
     ToastModule,
     DatePickerModule,
+    MapComponent,
   ],
   providers: [MessageService],
 })
@@ -57,10 +59,11 @@ export class OrderFormComponent {
   visibleLocation: boolean = false;
   visibleDeliveryDate: boolean = false;
   visiblePaymentMethod: boolean = false;
+  visibleLocationMap: boolean = false;
   cities: any;
   uploadedFiles: any[] = [];
   date: Date | undefined;
-
+  visibleRequestPrivateTrip: boolean = false;
   constructor(
     readonly translate: TranslateService,
     readonly messageService: MessageService
@@ -92,6 +95,14 @@ export class OrderFormComponent {
 
   showPaymentMethodDialog() {
     this.visiblePaymentMethod = true;
+  }
+
+  showRequestPrivateTripDialog() {
+    this.visibleRequestPrivateTrip = true;
+  }
+
+  showLocationMapDialog() {
+    this.visibleLocationMap = true;
   }
 
   onInitialPricingClick() {

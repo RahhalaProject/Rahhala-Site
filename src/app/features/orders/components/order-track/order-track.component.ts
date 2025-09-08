@@ -24,6 +24,4 @@ import { AvatarModule } from 'primeng/avatar';
 })
 export class OrderTrackComponent {
   constructor() {}
-
-  ngOnInit() {}
 }

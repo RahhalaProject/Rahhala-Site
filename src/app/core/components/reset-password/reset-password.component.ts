@@ -11,12 +11,15 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss',
   standalone: true,
-  imports: [CommonModule, ButtonModule, CardModule, PasswordModule, RouterModule, TranslateModule]
+  imports: [
+    CommonModule,
+    ButtonModule,
+    CardModule,
+    PasswordModule,
+    RouterModule,
+    TranslateModule,
+  ],
 })
 export class ResetPasswordComponent {
-  
   constructor() {}
-
-  ngOnInit() {}
-  
 }

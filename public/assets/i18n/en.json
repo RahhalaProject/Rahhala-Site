@@ -315,5 +315,16 @@
   "myOrders": "My Orders",
   "language": "Language",
   "supportAndHelp": "Support & Help",
-  "logout": "Logout"
+  "logout": "Logout",
+  "requestPrivateTrip": "Request Private Trip",
+  "carType": "Car Type",
+  "weightTons": "Weight (tons)",
+  "loadByPallet": "Load by Pallet",
+  "fromDate": "From Date",
+  "selectDate": "Select Date",
+  "toDate": "To Date",
+  "pickupLocation": "Pickup Location",
+  "fromHQ": "From HQ",
+  "myLocation": "My Location",
+  "map": "Map"
 }

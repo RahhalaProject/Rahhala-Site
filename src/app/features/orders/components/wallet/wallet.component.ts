@@ -20,6 +20,4 @@ interface UploadEvent {
 })
 export class WalletComponent {
   constructor(readonly translate: TranslateService) {}
-
-  ngOnInit() {}
 }

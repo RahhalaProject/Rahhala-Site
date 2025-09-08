@@ -10,12 +10,15 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
   standalone: true,
-  imports: [CommonModule, ButtonModule, CardModule, InputTextModule, RouterModule, TranslateModule]
+  imports: [
+    CommonModule,
+    ButtonModule,
+    CardModule,
+    InputTextModule,
+    RouterModule,
+    TranslateModule,
+  ],
 })
 export class ForgotPasswordComponent {
-  
   constructor() {}
-
-  ngOnInit() {}
-  
 }

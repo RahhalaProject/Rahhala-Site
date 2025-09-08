@@ -10,12 +10,15 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './password-recovery-otp.component.html',
   styleUrl: './password-recovery-otp.component.scss',
   standalone: true,
-  imports: [CommonModule, ButtonModule, CardModule, InputOtp, RouterModule, TranslateModule]
+  imports: [
+    CommonModule,
+    ButtonModule,
+    CardModule,
+    InputOtp,
+    RouterModule,
+    TranslateModule,
+  ],
 })
 export class PasswordRecoveryOTPComponent {
-  
   constructor() {}
-
-  ngOnInit() {}
-  
 }

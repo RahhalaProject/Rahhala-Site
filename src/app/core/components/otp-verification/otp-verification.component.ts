@@ -11,12 +11,15 @@ import { InputOtp } from 'primeng/inputotp';
   templateUrl: './otp-verification.component.html',
   styleUrl: './otp-verification.component.scss',
   standalone: true,
-  imports: [CommonModule, ButtonModule, CardModule, InputOtp, RouterModule, TranslateModule]
+  imports: [
+    CommonModule,
+    ButtonModule,
+    CardModule,
+    InputOtp,
+    RouterModule,
+    TranslateModule,
+  ],
 })
 export class OTPVerificationComponent {
-  
   constructor() {}
-
-  ngOnInit() {}
-  
 }
