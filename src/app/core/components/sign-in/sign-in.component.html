@@ -1,34 +1,71 @@
 <div class="sign-in-container">
-    <p-card class="sign-in-box">
-        <div class="form">
-            <div class="mb-4">
-                <label for="username" class="font-bold mb-2 block">{{ 'username' | translate }}</label>
-                <input type="text" pInputText id="username" fluid [placeholder]="'enterUsername' | translate"/>
-            </div>
-            <div class="mb-4">
-                <label for="password" class="font-bold mb-2 block">{{ 'password' | translate }}</label>
-                <input type="password" pInputText id="password" fluid [placeholder]="'enterPassword' | translate"/>
-            </div>
-            <div class="mb-6">
-                <span class="forget">{{ 'forgotPassword' | translate }}</span>
-                <p-button
-                    [label]="'login' | translate"
-                    severity="contrast"
-                    size="small"
-                    routerLink="/otp-verification"
-                ></p-button>
-            </div>
-            <div>
-                <div class="social-login-separator">
-                    <div class="line"></div>
-                    <span class="or-text">{{ 'loginWith' | translate }}</span>
-                    <div class="line"></div>
-                </div>
-                <div class="social-icons">
-                    <a href="#"><img src="/icons/apple.svg" alt="Apple"></a>
-                    <a href="#"><img src="/icons/google.svg" alt="Google"></a>
-                </div>
-            </div>
+  <p-card class="sign-in-box">
+    <div class="form">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+          <label for="email" class="font-bold mb-2 block">{{
+            "email" | translate
+          }}</label>
+          <input
+            type="email"
+            pInputText
+            [class.p-invalid]="email?.invalid && email?.touched"
+            id="email"
+            fluid
+            [placeholder]="'enterEmail' | translate"
+            formControlName="email"
+          />
+          @if (email?.errors?.['required']) {
+          <small class="p-error">
+            {{ "emailRequired" | translate }}
+          </small>
+          } @if (email?.errors?.['email']) {
+          <small class="p-error">
+            {{ "emailInvalid" | translate }}
+          </small>
+          }
         </div>
-    </p-card>
+        <div class="mb-4">
+          <label for="password" class="font-bold mb-2 block">{{
+            "password" | translate
+          }}</label>
+          <input
+            type="password"
+            pInputText
+            [class.p-invalid]="password?.invalid && password?.touched"
+            id="password"
+            fluid
+            [placeholder]="'enterPassword' | translate"
+            formControlName="password"
+          />
+          @if (password?.errors?.['required']) {
+          <small class="p-error">
+            {{ "passwordRequired" | translate }}
+          </small>
+          }
+        </div>
+        <div class="mb-6">
+          <span class="forget">{{ "forgotPassword" | translate }}</span>
+          <p-button
+            [label]="'login' | translate"
+            severity="contrast"
+            size="small"
+            (onClick)="onSubmit()"
+            [disabled]="isLoading() || loginForm.invalid"
+          ></p-button>
+        </div>
+      </form>
+      <div>
+        <div class="social-login-separator">
+          <div class="line"></div>
+          <span class="or-text">{{ "loginWith" | translate }}</span>
+          <div class="line"></div>
+        </div>
+        <div class="social-icons">
+          <a href="#"><img src="/icons/apple.svg" alt="Apple" /></a>
+          <a href="#"><img src="/icons/google.svg" alt="Google" /></a>
+        </div>
+      </div>
+    </div>
+  </p-card>
 </div>

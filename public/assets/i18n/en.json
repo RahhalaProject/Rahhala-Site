@@ -192,6 +192,8 @@
   "reset": "Reset",
   "username": "Username",
   "enterUsername": "Enter Username",
+  "enterEmail": "Enter Email",
+  "email": "Email",
   "password": "Password",
   "enterPassword": "Enter Password",
   "loginWith": "Or login with",

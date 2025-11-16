@@ -1,45 +1,45 @@
 :host ::ng-deep {
-    .title-sec {
-        background: #003768;
+  .title-sec {
+    background: #003768;
+  }
+  .title-div {
+    margin: 0 auto;
+    padding: 15px;
+  }
+  .title-div h4 {
+    font-weight: 600;
+    font-size: 23px;
+    margin-bottom: 15px;
+    text-align: center;
+    color: white;
+  }
+  .title-div p {
+    font-weight: 400;
+    font-size: 14px;
+    text-align: center;
+    color: #f2f2f2;
+  }
+  .card-div {
+    padding-top: 0px;
+    .p-tablist-tab-list {
+      justify-content: center;
+      background: #003768;
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
     }
-    .title-div {
-        margin: 0 auto;
-        padding: 15px;
+    .p-tab {
+      width: 20%;
+      text-align: center;
+      color: #ffffff;
     }
-    .title-div h4 {
-        font-weight: 600;
-        font-size: 23px;
-        margin-bottom: 15px;
-        text-align: center;
-        color: white;
+    .p-tab:not(.p-tab-active):not(.p-disabled):hover {
+      background: var(--p-tabs-tab-hover-background);
+      border-color: var(--p-tabs-tab-hover-border-color);
+      color: #ffffff;
     }
-    .title-div p {
-        font-weight: 400;
-        font-size: 14px;
-        text-align: center;
-        color: #F2F2F2;
+    .p-tablist-active-bar {
+      height: 4px;
+      background: #006dd3;
     }
-    .card-div {
-        padding-top: 0px;
-        .p-tablist-tab-list {
-            justify-content: center;
-            background: #003768;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-        }
-        .p-tab {
-            width: 20%;
-            text-align: center;
-            color: #FFFFFF;
-        }
-        .p-tab:not(.p-tab-active):not(.p-disabled):hover {
-            background: var(--p-tabs-tab-hover-background);
-            border-color: var(--p-tabs-tab-hover-border-color);
-            color: #FFFFFF;
-        }
-        .p-tablist-active-bar {
-            height: 4px;
-            background: #006DD3
-        }
-    }
+  }
 }

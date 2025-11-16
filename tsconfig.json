@@ -23,6 +23,12 @@
     "strictTemplates": true
   },
   "files": [],
+  // "paths": {
+  //   "@env/*": ["src/environments/*"],
+  //   "@core/*": ["src/app/core/*"],
+  //   "@shared/*": ["src/app/shared/*"],
+  //   "@features/*": ["src/app/features/*"]
+  // },
   "references": [
     {
       "path": "./tsconfig.app.json"

@@ -10,12 +10,17 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',
   standalone: true,
-  imports: [CommonModule, TabsModule, CardModule, SignInComponent, SignUpComponent, TranslateModule]
+  imports: [
+    CommonModule,
+    TabsModule,
+    CardModule,
+    SignInComponent,
+    SignUpComponent,
+    TranslateModule,
+  ],
 })
 export class AuthComponent {
-  
   constructor() {}
 
   ngOnInit() {}
-  
 }
