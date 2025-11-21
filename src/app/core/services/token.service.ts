@@ -9,9 +9,14 @@ export class TokenService {
   private readonly REFRESH_TOKEN_KEY = 'refresh_token';
   private readonly USER_KEY = 'user';
 
-  setTokens(accessToken: string, refreshToken: string): void {
+  setTokens(accessToken: string, refreshToken?: string | null): void {
     localStorage.setItem(this.ACCESS_TOKEN_KEY, accessToken);
-    localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
+
+    if (refreshToken) {
+      localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
+    } else {
+      localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+    }
   }
 
   getAccessToken(): string | null {

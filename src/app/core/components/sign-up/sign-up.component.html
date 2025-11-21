@@ -29,6 +29,15 @@
     </div>
     <div class="form">
       <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <!-- Global Error Message -->
+        @if (errorMessage()) {
+        <div class="mb-4 global-rrror">
+          <p-message severity="error">
+            {{ errorMessage() }}
+          </p-message>
+        </div>
+        }
+        <!-- First Name -->
         <div class="mb-4">
           <label for="firstName" class="font-bold mb-2 block">{{
             "firstName" | translate
@@ -49,6 +58,7 @@
           }}</p-message>
           }
         </div>
+        <!-- Last Name -->
         <div class="mb-4">
           <label for="lastName" class="font-bold mb-2 block">{{
             "lastName" | translate
@@ -69,48 +79,53 @@
           }}</p-message>
           }
         </div>
+        <!-- Phone Number -->
         <div class="mb-4">
           <label for="phoneNumber" class="font-bold mb-2 block">{{
             "phoneNumber" | translate
           }}</label>
           <input
-            type="text"
-            pInputText
-            [class.p-invalid]="phoneNumber?.invalid && phoneNumber?.touched"
-            id="phoneNumber"
             fluid
+            pInputText
+            type="text"
+            id="phoneNumber"
+            name="phoneNumber"
             [placeholder]="'enterPhoneNumber' | translate"
             formControlName="phoneNumber"
+            [invalid]="phoneNumber?.invalid && phoneNumber?.touched"
           />
-          @if (phoneNumber?.errors?.['required']) {
-          <small class="p-error">
-            {{ "requiredField" | translate }}
-          </small>
+          @if (phoneNumber?.errors?.['required'] && phoneNumber?.touched) {
+          <p-message severity="error" size="small" variant="simple">{{
+            "phoneNumberRequired" | translate
+          }}</p-message>
           }
         </div>
+        <!-- Email -->
         <div class="mb-4">
           <label for="email" class="font-bold mb-2 block">{{
             "email" | translate
           }}</label>
           <input
-            type="text"
-            pInputText
-            [class.p-invalid]="email?.invalid && email?.touched"
-            id="email"
             fluid
+            pInputText
+            type="email"
+            id="email"
+            name="email"
             [placeholder]="'enterEmail' | translate"
             formControlName="email"
+            [invalid]="email?.invalid && email?.touched"
           />
-          @if (email?.errors?.['required']) {
-          <small class="p-error">
-            {{ "requiredField" | translate }}
-          </small>
-          } @if (email?.errors?.['email']) {
-          <small class="p-error">
-            {{ "emailInvalid" | translate }}
-          </small>
+          @if (email?.errors?.['required'] && email?.touched) {
+          <p-message severity="error" size="small" variant="simple">{{
+            "emailRequired" | translate
+          }}</p-message>
+          } @if (email?.errors?.['email'] && email?.touched) {
+          <p-message severity="error" size="small" variant="simple">{{
+            "emailInvalid" | translate
+          }}</p-message>
           }
         </div>
+        <!-- Password -->
         <div class="mb-4">
           <label for="password" class="font-bold mb-2 block">{{
             "password" | translate
@@ -118,15 +133,18 @@
           <p-password
             [toggleMask]="true"
             [placeholder]="'enterPassword' | translate"
-            [class.p-invalid]="password?.invalid && password?.touched"
+            id="password"
+            name="password"
             formControlName="password"
-          />
-          @if (password?.errors?.['required']) {
-          <small class="p-error">
-            {{ "requiredField" | translate }}
-          </small>
+            [invalid]="password?.invalid && password?.touched"
+          ></p-password>
+          @if (password?.errors?.['required'] && password?.touched) {
+          <p-message severity="error" size="small" variant="simple">{{
+            "passwordRequired" | translate
+          }}</p-message>
           }
         </div>
+        <!-- Confirm Password -->
         <div class="mb-4">
           <label for="confirmPassword" class="font-bold mb-2 block">{{
             "confirmPassword" | translate
@@ -134,21 +152,32 @@
           <p-password
             [toggleMask]="true"
             [placeholder]="'enterPassword' | translate"
+            id="confirmPassword"
+            name="confirmPassword"
             formControlName="confirmPassword"
-            [class.p-invalid]="
-              confirmPassword?.invalid && confirmPassword?.touched
+            [invalid]="
+              (confirmPassword?.invalid && confirmPassword?.touched) ||
+              (signUpForm?.errors?.['notMatching'] && confirmPassword?.touched)
             "
-          />
-          @if (confirmPassword?.errors?.['required']) {
-          <small class="p-error">
-            {{ "passwordRequired" | translate }}
-          </small>
+          ></p-password>
+          @if (confirmPassword?.errors?.['required'] &&
+          confirmPassword?.touched) {
+          <p-message severity="error" size="small" variant="simple">{{
+            "confirmPasswordRequired" | translate
+          }}</p-message>
+          } @if (signUpForm?.errors?.['notMatching'] &&
+          confirmPassword?.touched) {
+          <p-message severity="error" size="small" variant="simple">
+            {{ "passwordsDoNotMatch" | translate }}
+          </p-message>
           }
         </div>
+        <!-- Accept Terms -->
         <div class="mb-4 privacy-div">
           <span class="forget">{{ "readPrivacy" | translate }}</span>
           <p-checkbox [binary]="true" formControlName="acceptTerms" />
         </div>
+        <!-- Submit Button -->
         <div class="mb-6">
           <p-button
             [label]="'login' | translate"

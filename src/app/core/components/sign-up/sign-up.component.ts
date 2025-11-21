@@ -15,6 +15,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { ToastModule } from 'primeng/toast';
 import { Message } from 'primeng/message';
+import { passwordMatchValidator } from '../../validators/password-match.validator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sign-up',
@@ -37,25 +39,31 @@ import { Message } from 'primeng/message';
 export class SignUpComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   signUpForm!: FormGroup;
   isLoading = signal(false);
   errorMessage = signal('');
 
   constructor() {
-    this.signUpForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      acceptTerms: [false, Validators.requiredTrue],
-      type: [1, Validators.required],
-    });
+    this.signUpForm = this.fb.group(
+      {
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', Validators.required],
+        confirmPassword: ['', Validators.required],
+        phoneNumber: ['', Validators.required],
+        acceptTerms: [false, Validators.requiredTrue],
+        type: [1, Validators.required],
+      },
+      { validators: passwordMatchValidator }
+    );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.errorMessage.set('');
+  }
 
   get firstName() {
     return this.signUpForm.get('firstName');
@@ -100,11 +108,29 @@ export class SignUpComponent {
         console.log(response);
         // const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
         // this.router.navigate([returnUrl]);
+        this.router.navigate(['/otp-verification'], {
+          // Pass data using the state property
+          state: {
+            phoneNumber: this.phoneNumber?.value,
+            fromRegistration: true,
+            // You might also pass: userId: apiResponse.userId
+          },
+        });
       },
       error: (error) => {
-        this.errorMessage.set(
-          error.message || 'Login failed. Please try again.'
-        );
+        let friendlyMessage = 'Registration failed. Please try again.';
+        if (error?.error && typeof error.error === 'object') {
+          // Attempt to extract a user-friendly message from the error title
+          // Prefer "title" property which is the backend's explanation string
+          if (error.error.title) {
+            friendlyMessage = error.error.title;
+          }
+        } else if (typeof error === 'string') {
+          friendlyMessage = error;
+        } else if (error?.message) {
+          friendlyMessage = error.message;
+        }
+        this.errorMessage.set(friendlyMessage);
         this.isLoading.set(false);
       },
     });

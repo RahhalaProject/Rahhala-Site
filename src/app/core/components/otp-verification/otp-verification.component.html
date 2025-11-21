@@ -1,29 +1,49 @@
 <div class="header-div"></div>
 <div class="container">
-    <p-card class="box">
-        <div class="header mb-5">
-            <h2>{{ 'otpVerification' | translate }}</h2>
-            <p>
-                {{ 'enterCodeSentTo' | translate }} <br />
-                <span>966000000000+</span>
-            </p>
-            <span class="timer">02:31</span>
-        </div>
-        <div class="form">
-            <div class="mb-5">
-                <p-inputotp [length]="6" />
-            </div>
-            <div class="mb-6">
-                <p-button
-                    [label]="'submit' | translate"
-                    severity="contrast"
-                    size="small"
-                    routerLink="/otp-verification"
-                />
-            </div>
-        </div>
-    </p-card>
+  <p-card class="box">
+    <div class="header mb-5">
+      <h2>{{ "otpVerification" | translate }}</h2>
+      <p>
+        {{ "enterCodeSentTo" | translate }} <br />
+        <span>{{ phoneNumber() || ("unknownPhoneNumber" | translate) }}</span>
+      </p>
+      <span class="timer"
+        >{{ minutes() }}:{{ seconds() | number : "2.0" }}</span
+      >
+    </div>
+    <form class="form" [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+      <div class="mb-5">
+        <p-inputotp formControlName="otp" [length]="6"></p-inputotp>
+        <small
+          class="error-text"
+          *ngIf="otp?.invalid && (otp?.dirty || otp?.touched)"
+        >
+          {{ "otpRequired" | translate }}
+        </small>
+      </div>
+      <div class="mb-6">
+        <p-button
+          [label]="'submit' | translate"
+          severity="contrast"
+          size="small"
+          [loading]="isLoading()"
+          [disabled]="otpForm.invalid || isLoading()"
+          (onClick)="onSubmit()"
+        >
+        </p-button>
+      </div>
+      @if (errorMessage()) {
+      <div class="mb-4 global-rrror pt-3">
+        <p-message severity="error">
+          {{ errorMessage() }}
+        </p-message>
+      </div>
+      }
+    </form>
+  </p-card>
 </div>
 <div class="return-btn">
-    <a routerLink="/auth"><i class="pi pi-arrow-right"></i> {{ 'backToLogin' | translate }}</a>
+  <a routerLink="/auth"
+    ><i class="pi pi-arrow-right"></i> {{ "backToLogin" | translate }}</a
+  >
 </div>

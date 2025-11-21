@@ -118,6 +118,8 @@
   "submit": "تقديم",
   "otpVerification": "التحقق من OTP",
   "enterCodeSentTo": "أدخل الرمز من الرسالة النصية المسلة إلى",
+  "otpRequired": "يرجى إدخال رمز التحقق المكون من 6 أرقام.",
+  "unknownPhoneNumber": "رقم الجوال غير متوفر",
   "recoverPassword": "استعادة كلمة السر",
   "otpSentTo": "لقد قمنا بإرسال رمز التحقق الى",
   "continue": "استمرار",
@@ -273,5 +275,13 @@
   "lastName": "الاسم الاخير",
   "enterLastName": "ادخل الاسم الاخير",
   "firstNameRequired": "الاسم الأول مطلوب",
-  "lastNameRequired": "الاسم الاخير مطلوب"
+  "lastNameRequired": "الاسم الاخير مطلوب",
+  "phoneNumberRequired": "رقم الهاتف مطلوب",
+  "emailRequired": "البريد الإلكتروني مطلوب",
+  "emailInvalid": "البريد الإلكتروني غير صالح",
+  "passwordRequired": "كلمة المرور مطلوبة",
+  "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
+  "requiredField": "هذا الحقل مطلوب",
+  "passwordsDoNotMatch": "الرقم السري غير مطابق",
+  "enterPhoneNumber": "ادخل رقم الجوال"
 }
