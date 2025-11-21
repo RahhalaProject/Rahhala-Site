@@ -18,7 +18,7 @@
       pRipple
       class="flex items-center p-megamenu-item-link"
       *ngIf="item.root"
-      [href]="'#' + item.section"
+      [routerLink]="'/' + item.section"
     >
       <span>{{ item.label | translate }}</span>
     </a>
@@ -60,7 +60,7 @@
         pRipple
         class="flex items-center p-megamenu-item-link"
         *ngIf="item.root"
-        [href]="'#' + item.section"
+        [routerLink]="'/' + item.section"
       >
         <span>{{ item.label | translate }}</span>
       </a>

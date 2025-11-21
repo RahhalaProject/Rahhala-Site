@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import { Inject } from '@angular/core';
 import { PopoverModule } from 'primeng/popover';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'header',
   templateUrl: './header.component.html',
@@ -40,7 +41,8 @@ export class HeaderComponent {
   constructor(
     readonly config: PrimeNG,
     readonly translateService: TranslateService,
-    @Inject(DOCUMENT) readonly document: Document
+    @Inject(DOCUMENT) readonly document: Document,
+    readonly authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -53,7 +55,7 @@ export class HeaderComponent {
       {
         label: 'ourServices',
         root: true,
-        section: 'service',
+        section: 'our-services',
       },
       {
         label: 'aboutUs',
@@ -72,6 +74,10 @@ export class HeaderComponent {
     ];
 
     this.selectedLanguage = this.supportLanguages[0];
+  }
+
+  get isLoggedIn() {
+    return this.authService.isLoggedIn;
   }
 
   useLang(lang: any) {

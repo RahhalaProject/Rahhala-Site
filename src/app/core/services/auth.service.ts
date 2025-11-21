@@ -11,7 +11,6 @@ import { APP_CONFIG, AppConfig } from '../config/app.config';
 import { RegisterRequest } from '../models/register-request.model';
 import { RefreshTokenRequest } from '../models/refresh-token-request.model';
 import { VerifyOtpRequest } from '../models/verify-otp-request.model';
-import { VerifyOtpResponse } from '../models/verify-otp-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -100,32 +99,14 @@ export class AuthService {
   }
 
   private handleAuthResponse(response: LoginResponse): void {
-    this.tokenService.setTokens(response.accessToken, response.refreshToken);
+    this.tokenService.setTokens(response.token, response.refreshToken);
 
     const user: User = {
       userId: response.userId,
       email: response.email,
-      fullName: response.fullName,
+      firstName: response.firstName,
+      lastName: response.lastName,
       roles: response.roles,
-    };
-
-    this.tokenService.setUser(user);
-    this.currentUserSubject.next(user);
-    this.isAuthenticated.set(true);
-  }
-
-  private handleOtpVerificationResponse(response: VerifyOtpResponse): void {
-    this.tokenService.setTokens(response.token);
-
-    const fullName = `${response.firstName ?? ''} ${response.lastName ?? ''}`
-      .trim()
-      .replace(/\s+/g, ' ');
-
-    const user: User = {
-      userId: response.id,
-      email: response.email,
-      fullName: fullName || response.email,
-      roles: [],
     };
 
     this.tokenService.setUser(user);
@@ -157,21 +138,18 @@ export class AuthService {
     return this.http
       .post<LoginResponse>(`${this.apiUrl}/v1/Otp/send-register-otp`, request)
       .pipe(
-        tap((response) => this.handleAuthResponse(response)),
+        // tap((response) => this.handleAuthResponse(response)),
         catchError((error) => {
           console.error('Registration error:', error);
           return throwError(() => error);
         })
       );
   }
-  VerifyRegisterOtp(request: VerifyOtpRequest): Observable<VerifyOtpResponse> {
+  VerifyRegisterOtp(request: VerifyOtpRequest): Observable<LoginResponse> {
     return this.http
-      .post<VerifyOtpResponse>(
-        `${this.apiUrl}/v1/Otp/Authentication/register`,
-        request
-      )
+      .post<LoginResponse>(`${this.apiUrl}/v1/Authentication/register`, request)
       .pipe(
-        tap((response) => this.handleOtpVerificationResponse(response)),
+        tap((response) => this.handleAuthResponse(response)),
         catchError((error) => {
           console.error('OTP verification error:', error);
           return throwError(() => error);
@@ -179,14 +157,11 @@ export class AuthService {
       );
   }
 
-  VerifyLoginOtp(request: VerifyOtpRequest): Observable<VerifyOtpResponse> {
+  VerifyLoginOtp(request: VerifyOtpRequest): Observable<LoginResponse> {
     return this.http
-      .post<VerifyOtpResponse>(
-        `${this.apiUrl}/v1/Otp/Authentication/login`,
-        request
-      )
+      .post<LoginResponse>(`${this.apiUrl}/v1/Authentication/login`, request)
       .pipe(
-        tap((response) => this.handleOtpVerificationResponse(response)),
+        tap((response) => this.handleAuthResponse(response)),
         catchError((error) => {
           console.error('OTP verification error:', error);
           return throwError(() => error);

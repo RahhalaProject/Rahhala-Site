@@ -48,7 +48,7 @@ export class OTPVerificationComponent implements OnInit, OnDestroy {
   private readonly TIMER_DURATION = 120; // 2 minutes in seconds
 
   otpForm: FormGroup = this.fb.group({
-    otp: ['', [Validators.required, Validators.minLength(6)]],
+    otp: ['', [Validators.required, Validators.minLength(4)]],
     phoneNumber: ['', [Validators.required]],
   });
 
@@ -130,11 +130,11 @@ export class OTPVerificationComponent implements OnInit, OnDestroy {
 
     const verification$ = this.fromRegistration
       ? this.authService.VerifyRegisterOtp({
-          otp: this.otp?.value,
+          otpCode: this.otp?.value,
           phoneNumber: this.phoneNumberControl.value,
         })
       : this.authService.VerifyLoginOtp({
-          otp: this.otp?.value,
+          otpCode: this.otp?.value,
           phoneNumber: this.phoneNumberControl.value,
         });
 
