@@ -69,6 +69,19 @@ export class OTPVerificationComponent implements OnInit, OnDestroy {
       this.otpForm.get('phoneNumber')?.setValue(state.phoneNumber);
       // Start the timer
       this.startTimer();
+      // Optionally clear state after use (for certain browsers/environments)
+      if (
+        window &&
+        window.history &&
+        typeof window.history.replaceState === 'function'
+      ) {
+        // Overwrites the current history entry state, effectively 'clearing' the state for future navigations
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname + window.location.search
+        );
+      }
     } else {
       this.errorMessage.set(
         'Missing phone number. Please restart registration.'
@@ -79,6 +92,22 @@ export class OTPVerificationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.stopTimer();
+    // Remove sensitive/used data
+    this.otpForm.get('phoneNumber')?.setValue('');
+    this.phoneNumber.set('');
+    this.fromRegistration = false;
+    // Optionally clear state again on destroy
+    if (
+      window &&
+      window.history &&
+      typeof window.history.replaceState === 'function'
+    ) {
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname + window.location.search
+      );
+    }
   }
 
   private startTimer(): void {

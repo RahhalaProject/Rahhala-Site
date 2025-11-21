@@ -2,6 +2,10 @@ import { Routes } from '@angular/router';
 import { HomeLayoutComponent } from './core/layouts/home-layout/home-layout.component';
 import { AuthLayoutComponent } from './core/layouts/auth-layout/auth-layout.component';
 import { MainLayoutComponent } from './core/layouts/main-layout/main-layout.component';
+import { authGuard } from './core/guards/auth.guard';
+
+// canActivate: [authGuard, roleGuard],
+//     data: { roles: ['Admin'] }
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -62,6 +66,7 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: 'our-services',

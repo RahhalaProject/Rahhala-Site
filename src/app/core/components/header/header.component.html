@@ -1,3 +1,39 @@
+<ng-template #userProfileMenu>
+  <p-avatar
+    image="./images/profile.png"
+    shape="circle"
+    style="cursor: pointer"
+    (click)="popover.toggle($event)"
+  />
+  <p-popover #popover [dismissable]="true">
+    <div class="profile-menu">
+      <div class="header">
+        <p-avatar image="./images/profile.png" shape="circle"></p-avatar>
+        <div class="info">
+          <div class="username">{{ displayName }}</div>
+          <div class="email">{{ userEmail }}</div>
+        </div>
+      </div>
+
+      <ul class="menu-items">
+        <li><i class="pi pi-cog"></i> {{ "profileSettings" | translate }}</li>
+        <li><i class="pi pi-shopping-bag"></i> {{ "myOrders" | translate }}</li>
+        <li><i class="pi pi-wallet"></i> {{ "wallet" | translate }}</li>
+        <li (click)="changeLang()">
+          <i class="pi pi-globe"></i> {{ "language" | translate }}
+        </li>
+        <li>
+          <i class="pi pi-question-circle"></i>
+          {{ "supportAndHelp" | translate }}
+        </li>
+        <li (click)="logout()">
+          <i class="pi pi-sign-out"></i> {{ "logout" | translate }}
+        </li>
+      </ul>
+    </div>
+  </p-popover>
+</ng-template>
+
 @if(isHomeLayout) {
 <p-megamenu
   [model]="items"
@@ -23,23 +59,33 @@
       <span>{{ item.label | translate }}</span>
     </a>
     <div class="flex items-center gap-2 auth-btn-inMenu" *ngIf="!item.root">
+      @if(isLoggedIn()){
+      <ng-container *ngTemplateOutlet="userProfileMenu"></ng-container>
+      } @else{
       <p-button
         [label]="'login' | translate"
         severity="contrast"
         size="small"
         routerLink="/auth"
       />
+      }
     </div>
   </ng-template>
 
   <ng-template #end let-root="root">
     <div class="flex items-center gap-2 auth-btn">
+      @if(isLoggedIn()){
+      <ng-container *ngTemplateOutlet="userProfileMenu"></ng-container>
+      } @else{
+
       <p-button
         [label]="'login' | translate"
         severity="contrast"
         size="small"
         routerLink="/auth"
       />
+
+      }
     </div>
   </ng-template>
 </p-megamenu>
@@ -65,43 +111,9 @@
         <span>{{ item.label | translate }}</span>
       </a>
     </ng-template>
-    @if(true){
+    @if(isLoggedIn()){
     <ng-template #end>
-      <p-avatar
-        image="./images/profile.png"
-        shape="circle"
-        style="cursor: pointer"
-        (click)="popover.toggle($event)"
-      />
-      <p-popover #popover [dismissable]="true">
-        <div class="profile-menu">
-          <div class="header">
-            <p-avatar image="./images/profile.png" shape="circle"></p-avatar>
-            <div class="info">
-              <div class="username">username</div>
-              <div class="email">usernamemail.com</div>
-            </div>
-          </div>
-
-          <ul class="menu-items">
-            <li>
-              <i class="pi pi-cog"></i> {{ "profileSettings" | translate }}
-            </li>
-            <li>
-              <i class="pi pi-shopping-bag"></i> {{ "myOrders" | translate }}
-            </li>
-            <li><i class="pi pi-wallet"></i> {{ "wallet" | translate }}</li>
-            <li (click)="changeLang()">
-              <i class="pi pi-globe"></i> {{ "language" | translate }}
-            </li>
-            <li>
-              <i class="pi pi-question-circle"></i>
-              {{ "supportAndHelp" | translate }}
-            </li>
-            <li><i class="pi pi-sign-out"></i> {{ "logout" | translate }}</li>
-          </ul>
-        </div>
-      </p-popover>
+      <ng-container *ngTemplateOutlet="userProfileMenu"></ng-container>
     </ng-template>
     }
   </p-megamenu>

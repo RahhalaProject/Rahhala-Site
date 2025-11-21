@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MegaMenuItem, MessageService } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
@@ -13,6 +13,8 @@ import { DOCUMENT } from '@angular/common';
 import { Inject } from '@angular/core';
 import { PopoverModule } from 'primeng/popover';
 import { AuthService } from '../../services/auth.service';
+import { User } from '../../models/user.model';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'header',
   templateUrl: './header.component.html',
@@ -32,12 +34,13 @@ import { AuthService } from '../../services/auth.service';
   ],
   providers: [TranslateService],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   @Input() isHomeLayout: boolean = true;
   items: MegaMenuItem[] | undefined;
   supportLanguages = ['en', 'ar'];
   selectedLanguage!: string;
-  items2: any;
+  currentUser: User | null = null;
+  private subscriptions = new Subscription();
   constructor(
     readonly config: PrimeNG,
     readonly translateService: TranslateService,
@@ -73,11 +76,54 @@ export class HeaderComponent {
       },
     ];
 
-    this.selectedLanguage = this.supportLanguages[0];
+    this.selectedLanguage =
+      this.translateService.currentLang ||
+      localStorage.getItem('lang') ||
+      this.supportLanguages[0];
+
+    this.subscriptions.add(
+      this.authService.currentUser$.subscribe((user) => {
+        this.currentUser = user;
+      })
+    );
+
+    if (!this.currentUser && this.authService.isLoggedIn()) {
+      this.currentUser = this.authService.currentUserValue;
+    }
   }
 
-  get isLoggedIn() {
-    return this.authService.isLoggedIn;
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
+  get displayName(): string {
+    if (!this.currentUser) return '';
+    const { firstName, lastName } = this.currentUser;
+    return (
+      `${firstName ?? ''} ${lastName ?? ''}`.trim() || this.currentUser.email
+    );
+  }
+
+  get userEmail(): string {
+    return this.currentUser?.email || '';
+  }
+
+  get userInitials(): string {
+    if (!this.currentUser) return '';
+    const first = this.currentUser.firstName?.charAt(0) ?? '';
+    const last = this.currentUser.lastName?.charAt(0) ?? '';
+    return (
+      `${first}${last}`.toUpperCase() ||
+      this.currentUser.email.charAt(0).toUpperCase()
+    );
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 
   useLang(lang: any) {
