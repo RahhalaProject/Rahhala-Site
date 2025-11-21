@@ -328,5 +328,11 @@
   "pickupLocation": "Pickup Location",
   "fromHQ": "From HQ",
   "myLocation": "My Location",
-  "map": "Map"
+  "map": "Map",
+  "firstName": "First Name",
+  "enterFirstName": "Enter First Name",
+  "lastName": "Last Name",
+  "enterLastName": "Enter Last Name",
+  "firstNameRequired": "First name is required",
+  "lastNameRequired": "Last name is required"
 }

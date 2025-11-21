@@ -265,5 +265,13 @@
   "pickupLocation": "موقع الاستلام",
   "fromHQ": "من المقر",
   "myLocation": "موقعي",
-  "map": "الخريطة"
+  "map": "الخريطة",
+  "orSignupWithEmail": "أو تسجيل بالبريد الإلكتروني",
+  "readPrivacy": "لقد قرأت سياسة الخصوصية",
+  "firstName": "الاسم الاول",
+  "enterFirstName": "ادخل الاسم الاول",
+  "lastName": "الاسم الاخير",
+  "enterLastName": "ادخل الاسم الاخير",
+  "firstNameRequired": "الاسم الأول مطلوب",
+  "lastNameRequired": "الاسم الاخير مطلوب"
 }

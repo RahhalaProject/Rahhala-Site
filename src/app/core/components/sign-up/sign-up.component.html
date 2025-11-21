@@ -1,40 +1,164 @@
 <div class="sign-up-container">
-    <p-card class="sign-up-box" [header]="'createAccount' | translate">
-        <div class="btns-div">
-            <button pButton [rounded]="true" [raised]="true" severity="secondary" [text]="true">
-                <span pButtonLabel>{{ 'continueWith' | translate }}</span>
-                <img src="/icons/google.svg" alt="google" pButtonIcon>
-            </button>
-            <button pButton [rounded]="true" [raised]="true" severity="secondary" [text]="true">
-                <span pButtonLabel>{{ 'continueWith' | translate }}</span>
-                <img src="/icons/apple.svg" alt="Apple" pButtonIcon>
-            </button>
+  <p-card class="sign-up-box" [header]="'createAccount' | translate">
+    <div class="btns-div">
+      <button
+        pButton
+        [rounded]="true"
+        [raised]="true"
+        severity="secondary"
+        [text]="true"
+      >
+        <span pButtonLabel>{{ "continueWith" | translate }}</span>
+        <img src="/icons/google.svg" alt="google" pButtonIcon />
+      </button>
+      <button
+        pButton
+        [rounded]="true"
+        [raised]="true"
+        severity="secondary"
+        [text]="true"
+      >
+        <span pButtonLabel>{{ "continueWith" | translate }}</span>
+        <img src="/icons/apple.svg" alt="Apple" pButtonIcon />
+      </button>
+    </div>
+    <div class="social-login-separator">
+      <div class="line"></div>
+      <span class="or-text">{{ "orSignupWithEmail" | translate }}</span>
+      <div class="line"></div>
+    </div>
+    <div class="form">
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+          <label for="firstName" class="font-bold mb-2 block">{{
+            "firstName" | translate
+          }}</label>
+          <input
+            fluid
+            pInputText
+            type="text"
+            id="firstName"
+            name="firstName"
+            [placeholder]="'enterFirstName' | translate"
+            formControlName="firstName"
+            [invalid]="firstName?.invalid && firstName?.touched"
+          />
+          @if (firstName?.errors?.['required'] && firstName?.touched) {
+          <p-message severity="error" size="small" variant="simple">{{
+            "firstNameRequired" | translate
+          }}</p-message>
+          }
         </div>
-        <div class="social-login-separator">
-            <div class="line"></div>
-            <span class="or-text">{{ 'orSignupWithEmail' | translate }}</span>
-            <div class="line"></div>
+        <div class="mb-4">
+          <label for="lastName" class="font-bold mb-2 block">{{
+            "lastName" | translate
+          }}</label>
+          <input
+            fluid
+            pInputText
+            type="text"
+            id="lastName"
+            name="lastName"
+            [placeholder]="'enterLastName' | translate"
+            formControlName="lastName"
+            [invalid]="lastName?.invalid && lastName?.touched"
+          />
+          @if (lastName?.errors?.['required'] && lastName?.touched) {
+          <p-message severity="error" size="small" variant="simple">{{
+            "lastNameRequired" | translate
+          }}</p-message>
+          }
         </div>
-        <div class="form">
-            <div class="mb-4">
-                <label for="username" class="font-bold mb-2 block">{{ 'username' | translate }}</label>
-                <input type="text" pInputText id="username" fluid [placeholder]="'enterUsername' | translate"/>
-            </div>
-            <div class="mb-4">
-                <label for="password" class="font-bold mb-2 block">{{ 'password' | translate }}</label>
-                <p-password [toggleMask]="true" [placeholder]="'enterPassword' | translate"/>
-            </div>
-            <div class="mb-4">
-                <label for="confirmPassword" class="font-bold mb-2 block">{{ 'confirmPassword' | translate }}</label>
-                <p-password [toggleMask]="true" [placeholder]="'enterPassword' | translate"/>
-            </div>
-            <div class="mb-4 privacy-div">
-                <span class="forget">{{ 'readPrivacy' | translate }}</span>
-                <p-checkbox [binary]="true" />
-            </div>
-            <div class="mb-6">
-                <p-button [label]="'login' | translate" severity="contrast" size="small" routerLink="/otp-verification"/>
-            </div>
+        <div class="mb-4">
+          <label for="phoneNumber" class="font-bold mb-2 block">{{
+            "phoneNumber" | translate
+          }}</label>
+          <input
+            type="text"
+            pInputText
+            [class.p-invalid]="phoneNumber?.invalid && phoneNumber?.touched"
+            id="phoneNumber"
+            fluid
+            [placeholder]="'enterPhoneNumber' | translate"
+            formControlName="phoneNumber"
+          />
+          @if (phoneNumber?.errors?.['required']) {
+          <small class="p-error">
+            {{ "requiredField" | translate }}
+          </small>
+          }
         </div>
-    </p-card>
+        <div class="mb-4">
+          <label for="email" class="font-bold mb-2 block">{{
+            "email" | translate
+          }}</label>
+          <input
+            type="text"
+            pInputText
+            [class.p-invalid]="email?.invalid && email?.touched"
+            id="email"
+            fluid
+            [placeholder]="'enterEmail' | translate"
+            formControlName="email"
+          />
+          @if (email?.errors?.['required']) {
+          <small class="p-error">
+            {{ "requiredField" | translate }}
+          </small>
+          } @if (email?.errors?.['email']) {
+          <small class="p-error">
+            {{ "emailInvalid" | translate }}
+          </small>
+          }
+        </div>
+        <div class="mb-4">
+          <label for="password" class="font-bold mb-2 block">{{
+            "password" | translate
+          }}</label>
+          <p-password
+            [toggleMask]="true"
+            [placeholder]="'enterPassword' | translate"
+            [class.p-invalid]="password?.invalid && password?.touched"
+            formControlName="password"
+          />
+          @if (password?.errors?.['required']) {
+          <small class="p-error">
+            {{ "requiredField" | translate }}
+          </small>
+          }
+        </div>
+        <div class="mb-4">
+          <label for="confirmPassword" class="font-bold mb-2 block">{{
+            "confirmPassword" | translate
+          }}</label>
+          <p-password
+            [toggleMask]="true"
+            [placeholder]="'enterPassword' | translate"
+            formControlName="confirmPassword"
+            [class.p-invalid]="
+              confirmPassword?.invalid && confirmPassword?.touched
+            "
+          />
+          @if (confirmPassword?.errors?.['required']) {
+          <small class="p-error">
+            {{ "passwordRequired" | translate }}
+          </small>
+          }
+        </div>
+        <div class="mb-4 privacy-div">
+          <span class="forget">{{ "readPrivacy" | translate }}</span>
+          <p-checkbox [binary]="true" formControlName="acceptTerms" />
+        </div>
+        <div class="mb-6">
+          <p-button
+            [label]="'login' | translate"
+            severity="contrast"
+            size="small"
+            [disabled]="isLoading() || signUpForm.invalid"
+            (onClick)="onSubmit()"
+          />
+        </div>
+      </form>
+    </div>
+  </p-card>
 </div>

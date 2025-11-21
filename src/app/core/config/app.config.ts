@@ -9,5 +9,5 @@ export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
 
 export const appConfig: AppConfig = {
   production: false,
-  apiUrl: 'http://rahalah.com.sa/api',
+  apiUrl: 'https://rahalah.com.sa/api',
 };

@@ -22,7 +22,8 @@ export class AuthService {
   private tokenService = inject(TokenService);
 
   private config = inject(APP_CONFIG);
-  private apiUrl = `${this.config.apiUrl}/auth`;
+  //private apiUrl = `${this.config.apiUrl}/auth`;
+  private apiUrl = `${this.config.apiUrl}`;
 
   // Signal for reactive state management
   private currentUserSubject = new BehaviorSubject<User | null>(
@@ -131,4 +132,18 @@ export class AuthService {
   hasAnyRole(roles: string[]): boolean {
     return this.tokenService.hasAnyRole(roles);
   }
+
+  //#region Custom Methods
+  SendRegisterOtp(request: RegisterRequest): Observable<LoginResponse> {
+    return this.http
+      .post<LoginResponse>(`${this.apiUrl}/v1/Otp/send-register-otp`, request)
+      .pipe(
+        tap((response) => this.handleAuthResponse(response)),
+        catchError((error) => {
+          console.error('Registration error:', error);
+          return throwError(() => error);
+        })
+      );
+  }
+  //#endregion
 }
