@@ -189,5 +189,16 @@ export class AuthService {
         })
       );
   }
+
+  VerifyForgotPasswordOtp(request: VerifyOtpRequest): Observable<void> {
+    return this.http
+      .post<void>(`${this.apiUrl}/v1/Otp/verify-forget-password-otp`, request)
+      .pipe(
+        catchError((error) => {
+          console.error('OTP verification error:', error);
+          return throwError(() => error);
+        })
+      );
+  }
   //#endregion
 }
