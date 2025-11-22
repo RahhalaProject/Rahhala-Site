@@ -145,6 +145,16 @@ export class AuthService {
         })
       );
   }
+  SendLoginOtp(request: LoginRequest): Observable<LoginResponse> {
+    return this.http
+      .post<LoginResponse>(`${this.apiUrl}/v1/Otp/send-login-otp`, request)
+      .pipe(
+        catchError((error) => {
+          console.error('Registration error:', error);
+          return throwError(() => error);
+        })
+      );
+  }
   VerifyRegisterOtp(request: VerifyOtpRequest): Observable<LoginResponse> {
     return this.http
       .post<LoginResponse>(`${this.apiUrl}/v1/Authentication/register`, request)

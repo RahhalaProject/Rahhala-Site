@@ -12,6 +12,8 @@ import {
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
+import { Message } from 'primeng/message';
+import { PasswordModule } from 'primeng/password';
 @Component({
   selector: 'sign-in',
   templateUrl: './sign-in.component.html',
@@ -25,6 +27,8 @@ import { AuthService } from '../../services/auth.service';
     RouterModule,
     TranslateModule,
     ReactiveFormsModule,
+    Message,
+    PasswordModule,
   ],
 })
 export class SignInComponent {
@@ -39,13 +43,14 @@ export class SignInComponent {
 
   constructor() {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      phoneNumber: ['', [Validators.required]],
       password: ['', Validators.required],
     });
+    this.errorMessage.set('');
   }
 
-  get email() {
-    return this.loginForm.get('email');
+  get phoneNumber() {
+    return this.loginForm.get('phoneNumber');
   }
 
   get password() {
@@ -58,15 +63,31 @@ export class SignInComponent {
     this.isLoading.set(true);
     this.errorMessage.set('');
 
-    this.authService.login(this.loginForm.value).subscribe({
-      next: () => {
-        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-        this.router.navigate([returnUrl]);
+    this.authService.SendLoginOtp(this.loginForm.value).subscribe({
+      next: (response) => {
+        this.router.navigate(['/otp-verification'], {
+          // Pass data using the state property
+          state: {
+            phoneNumber: this.phoneNumber?.value,
+            fromRegistration: false,
+            // You might also pass: userId: apiResponse.userId
+          },
+        });
       },
       error: (error) => {
-        this.errorMessage.set(
-          error.message || 'Login failed. Please try again.'
-        );
+        let friendlyMessage = 'Login failed. Please try again.';
+        if (error?.error && typeof error.error === 'object') {
+          // Attempt to extract a user-friendly message from the error title
+          // Prefer "title" property which is the backend's explanation string
+          if (error.error.title) {
+            friendlyMessage = error.error.title;
+          }
+        } else if (typeof error === 'string') {
+          friendlyMessage = error;
+        } else if (error?.message) {
+          friendlyMessage = error.message;
+        }
+        this.errorMessage.set(friendlyMessage);
         this.isLoading.set(false);
       },
     });

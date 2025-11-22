@@ -1,109 +1,112 @@
 :host ::ng-deep {
-    .sign-in-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        padding: 80px 20px;
-        box-sizing: border-box; /* Include padding in the element's total width and height */
-    }
+  .sign-in-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 80px 20px;
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+  }
 
+  .sign-in-box {
+    background-color: #ffffff;
+    padding: 60px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px; /* Max width for larger screens */
+  }
+
+  .sign-in-box .form label {
+    font-weight: 600;
+    color: #013767;
+  }
+  .sign-in-box .form .p-inputtext {
+    font-weight: 400;
+    background: #ffffff;
+    color: #afafaf;
+    border: 0px;
+    box-shadow: 0px 2px 2px 0px #0000001f;
+    padding: 12px;
+  }
+  .sign-in-box .form .forget {
+    font-weight: 400;
+    color: #afafaf;
+  }
+  .sign-in-box .form ::placeholder {
+    color: #afafaf;
+    opacity: 1;
+  }
+
+  .sign-in-box .form .p-button {
+    width: 100%;
+    padding: 12px;
+    background: #003768;
+    display: block;
+    margin-top: 20px;
+  }
+
+  .sign-in-box .form .p-button-label {
+    font-weight: 600;
+    font-size: 13px;
+    color: #ffffff;
+  }
+
+  /* Container for the entire social login section */
+  .social-login-separator {
+    display: flex; /* Enables flexbox for horizontal alignment */
+    align-items: center; /* Vertically aligns items in the middle */
+    gap: 15px; /* Adds space between the lines and the text */
+    width: 80%;
+    margin: 80px auto 0px;
+  }
+
+  .social-login-separator .line {
+    flex-grow: 1; /* Allows the lines to take up available space */
+    height: 1px; /* Thickness of the line */
+    background-color: #003768; /* Color of the line */
+  }
+
+  .social-login-separator .or-text {
+    white-space: nowrap; /* Prevents the text from wrapping */
+    color: #013769; /* Color of the text */
+    font-size: 14px; /* Font size of the text */
+    font-weight: 600;
+  }
+
+  /* Container for the social icons */
+  .social-icons {
+    display: flex; /* Enables flexbox for horizontal alignment */
+    justify-content: center; /* Centers the icons horizontally */
+    gap: 25px; /* Space between the social icons */
+    margin-top: 20px; /* Space above the icons */
+  }
+
+  .social-icons img {
+    width: 30px; /* Size of the social media icons */
+    height: 30px; /* Ensures the icons are square */
+    object-fit: contain; /* Scales the image to fit within the element's box without cropping or stretching */
+    cursor: pointer; /* Indicates the icons are clickable */
+  }
+  /* For screens smaller than 600px */
+  @media (max-width: 600px) {
     .sign-in-box {
-        background-color: #ffffff;
-        padding: 60px;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 600px; /* Max width for larger screens */
+      padding: 20px; /* Reduce padding on smaller screens */
+      border-radius: 5px; /* Slightly less rounded corners */
+    }
+  }
+
+  /* For very small screens, further adjustments if needed */
+  @media (max-width: 320px) {
+    .sign-in-box {
+      padding: 10px;
     }
 
-    .sign-in-box .form label {
-        font-weight: 600;
-        color: #013767;
+    .sign-in-box h2 {
+      margin-bottom: 15px;
     }
-    .sign-in-box .form .p-inputtext {
-        font-weight: 400;
-        background: #FFFFFF;
-        color: #AFAFAF;
-        border: 0px;
-        box-shadow: 0px 2px 2px 0px #0000001F;
-        padding: 12px;
-    }
-    .sign-in-box .form .forget {
-        font-weight: 400;
-        color: #AFAFAF;
-    }
-    .sign-in-box .form ::placeholder {
-        color: #AFAFAF;
-        opacity: 1;
-    }
-
-    .sign-in-box .form .p-button {
-        width: 100%;
-        padding: 12px;
-        background: #003768;
-        display: block;
-        margin-top: 20px
-    }
-
-    .sign-in-box .form .p-button-label {
-        font-weight: 600;
-        font-size: 13px;
-        color: #FFFFFF;
-    }
-
-    /* Container for the entire social login section */
-    .social-login-separator {
-        display: flex; /* Enables flexbox for horizontal alignment */
-        align-items: center; /* Vertically aligns items in the middle */
-        gap: 15px; /* Adds space between the lines and the text */
-        width: 80%;
-        margin: 80px auto 0px;
-    }
-
-    .social-login-separator .line {
-        flex-grow: 1; /* Allows the lines to take up available space */
-        height: 1px; /* Thickness of the line */
-        background-color: #003768; /* Color of the line */
-    }
-
-    .social-login-separator .or-text {
-        white-space: nowrap; /* Prevents the text from wrapping */
-        color: #013769 ; /* Color of the text */
-        font-size: 14px; /* Font size of the text */
-        font-weight: 600;
-    }
-
-    /* Container for the social icons */
-    .social-icons {
-        display: flex; /* Enables flexbox for horizontal alignment */
-        justify-content: center; /* Centers the icons horizontally */
-        gap: 25px; /* Space between the social icons */
-        margin-top: 20px; /* Space above the icons */
-    }
-
-    .social-icons img {
-        width: 30px; /* Size of the social media icons */
-        height: 30px; /* Ensures the icons are square */
-        object-fit: contain; /* Scales the image to fit within the element's box without cropping or stretching */
-        cursor: pointer; /* Indicates the icons are clickable */
-    }
-    /* For screens smaller than 600px */
-    @media (max-width: 600px) {
-        .sign-in-box {
-            padding: 20px; /* Reduce padding on smaller screens */
-            border-radius: 5px; /* Slightly less rounded corners */
-        }
-    }
-
-    /* For very small screens, further adjustments if needed */
-    @media (max-width: 320px) {
-        .sign-in-box {
-            padding: 10px;
-        }
-
-        .sign-in-box h2 {
-            margin-bottom: 15px;
-        }
-    }
+  }
+  .global-rrror .p-message-content {
+    justify-content: center;
+  }
 }

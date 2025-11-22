@@ -2,50 +2,59 @@
   <p-card class="sign-in-box">
     <div class="form">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Global Error Message -->
+        @if (errorMessage()) {
+        <div class="mb-4 global-rrror">
+          <p-message severity="error">
+            {{ errorMessage() }}
+          </p-message>
+        </div>
+        }
+        <!-- PhoneNumber -->
         <div class="mb-4">
-          <label for="email" class="font-bold mb-2 block">{{
-            "email" | translate
+          <label for="phoneNumber" class="font-bold mb-2 block">{{
+            "phoneNumber" | translate
           }}</label>
           <input
-            type="email"
-            pInputText
-            [class.p-invalid]="email?.invalid && email?.touched"
-            id="email"
             fluid
-            [placeholder]="'enterEmail' | translate"
-            formControlName="email"
+            pInputText
+            type="phoneNumber"
+            id="phoneNumber"
+            name="text"
+            [placeholder]="'enterPhoneNumber' | translate"
+            formControlName="phoneNumber"
+            [invalid]="phoneNumber?.invalid && phoneNumber?.touched"
           />
-          @if (email?.errors?.['required']) {
-          <small class="p-error">
-            {{ "emailRequired" | translate }}
-          </small>
-          } @if (email?.errors?.['email']) {
-          <small class="p-error">
-            {{ "emailInvalid" | translate }}
-          </small>
+          @if (phoneNumber?.errors?.['required'] && phoneNumber?.touched) {
+          <p-message severity="error" size="small" variant="simple">{{
+            "phoneNumberRequired" | translate
+          }}</p-message>
           }
         </div>
+        <!-- Password -->
         <div class="mb-4">
           <label for="password" class="font-bold mb-2 block">{{
             "password" | translate
           }}</label>
-          <input
-            type="password"
-            pInputText
-            [class.p-invalid]="password?.invalid && password?.touched"
-            id="password"
+          <p-password
             fluid
+            [toggleMask]="true"
             [placeholder]="'enterPassword' | translate"
+            id="password"
+            name="password"
             formControlName="password"
-          />
-          @if (password?.errors?.['required']) {
-          <small class="p-error">
-            {{ "passwordRequired" | translate }}
-          </small>
+            [invalid]="password?.invalid && password?.touched"
+          ></p-password>
+          @if (password?.errors?.['required'] && password?.touched) {
+          <p-message severity="error" size="small" variant="simple">{{
+            "passwordRequired" | translate
+          }}</p-message>
           }
         </div>
         <div class="mb-6">
-          <span class="forget">{{ "forgotPassword" | translate }}</span>
+          <a class="forget" [routerLink]="['/forgot-password']">{{
+            "forgotPassword" | translate
+          }}</a>
           <p-button
             [label]="'login' | translate"
             severity="contrast"
