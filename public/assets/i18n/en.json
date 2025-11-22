@@ -344,5 +344,6 @@
   "confirmPasswordRequired": "Confirm Password is required",
   "requiredField": "This field is required",
   "passwordsDoNotMatch": "Passwords do not match",
-  "enterPhoneNumber": "Enter phoneNumber"
+  "enterPhoneNumber": "Enter phoneNumber",
+  "emailOrPhoneRequired": "Email or phone required"
 }

@@ -283,5 +283,6 @@
   "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
   "requiredField": "هذا الحقل مطلوب",
   "passwordsDoNotMatch": "الرقم السري غير مطابق",
-  "enterPhoneNumber": "ادخل رقم الجوال"
+  "enterPhoneNumber": "ادخل رقم الجوال",
+  "emailOrPhoneRequired": "رقم الجوال او الايميل مطلوب"
 }

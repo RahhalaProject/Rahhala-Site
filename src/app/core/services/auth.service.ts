@@ -178,5 +178,16 @@ export class AuthService {
         })
       );
   }
+
+  sendForgotPasswordOtp(request: { phoneNumber: string }): Observable<any> {
+    return this.http
+      .post<any>(`${this.apiUrl}/v1/Password/forget-password`, request)
+      .pipe(
+        catchError((error) => {
+          console.error('Forgot password error:', error);
+          return throwError(() => error);
+        })
+      );
+  }
   //#endregion
 }
