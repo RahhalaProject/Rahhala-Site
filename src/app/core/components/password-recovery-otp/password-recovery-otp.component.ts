@@ -39,12 +39,13 @@ export class PasswordRecoveryOTPComponent implements OnInit, OnDestroy {
   errorMessage = signal('');
   phoneNumber = signal('');
   fromForgotPassword = false;
-  private redirectUrl = '/reset-password';
+  private redirectUrl = 'reset-password';
 
   minutes = signal(5);
   seconds = signal(0);
   private timerInterval: any;
   private readonly TIMER_DURATION = 120; // 2 minutes in seconds
+  isResending = signal(false);
 
   otpForm: FormGroup = this.fb.group({
     otp: ['', [Validators.required, Validators.minLength(4)]],
@@ -95,18 +96,6 @@ export class PasswordRecoveryOTPComponent implements OnInit, OnDestroy {
     this.otpForm.get('phoneNumber')?.setValue('');
     this.phoneNumber.set('');
     this.fromForgotPassword = false;
-    // Optionally clear state again on destroy
-    if (
-      window &&
-      window.history &&
-      typeof window.history.replaceState === 'function'
-    ) {
-      window.history.replaceState(
-        {},
-        document.title,
-        window.location.pathname + window.location.search
-      );
-    }
   }
 
   private startTimer(): void {
@@ -136,6 +125,54 @@ export class PasswordRecoveryOTPComponent implements OnInit, OnDestroy {
     const secs = totalSeconds % 60;
     this.minutes.set(mins);
     this.seconds.set(secs);
+  }
+
+  isTimerExpired(): boolean {
+    return this.minutes() === 0 && this.seconds() === 0;
+  }
+
+  resendOtp(): void {
+    // Only allow resend if timer has expired
+    if (!this.isTimerExpired()) {
+      return;
+    }
+
+    if (!this.phoneNumber()) {
+      this.errorMessage.set(
+        'Phone number is missing. Please restart the process.'
+      );
+      return;
+    }
+
+    this.isResending.set(true);
+    this.errorMessage.set('');
+
+    this.authService
+      .ResendForgotPasswordOtp({
+        phoneNumber: this.phoneNumber(),
+        operationType: 1,
+      })
+      .subscribe({
+        next: () => {
+          this.isResending.set(false);
+          // Restart the timer
+          this.startTimer();
+        },
+        error: (error) => {
+          let friendlyMessage = 'Failed to resend OTP. Please try again.';
+          if (error?.error && typeof error.error === 'object') {
+            if (error.error.title) {
+              friendlyMessage = error.error.title;
+            }
+          } else if (typeof error === 'string') {
+            friendlyMessage = error;
+          } else if (error?.message) {
+            friendlyMessage = error.message;
+          }
+          this.errorMessage.set(friendlyMessage);
+          this.isResending.set(false);
+        },
+      });
   }
 
   get otp() {
@@ -169,7 +206,7 @@ export class PasswordRecoveryOTPComponent implements OnInit, OnDestroy {
     verification$.subscribe({
       next: () => {
         this.isLoading.set(false);
-        this.router.navigate([this.redirectUrl], {
+        this.router.navigate(['/reset-password'], {
           state: {
             phoneNumber: this.phoneNumberControl?.value,
             otp: this.otp?.value,

@@ -11,6 +11,8 @@ import { APP_CONFIG, AppConfig } from '../config/app.config';
 import { RegisterRequest } from '../models/register-request.model';
 import { RefreshTokenRequest } from '../models/refresh-token-request.model';
 import { VerifyOtpRequest } from '../models/verify-otp-request.model';
+import { ResendOtpRequest } from '../models/resend-otp-request.model';
+import { ResetPasswordRequest } from '../models/reset-password-request.model';
 
 @Injectable({
   providedIn: 'root',
@@ -190,12 +192,34 @@ export class AuthService {
       );
   }
 
+  ResendForgotPasswordOtp(request: ResendOtpRequest): Observable<any> {
+    return this.http
+      .post<any>(`${this.apiUrl}/v1/Otp/resend-otp`, request)
+      .pipe(
+        catchError((error) => {
+          console.error('Forgot password error:', error);
+          return throwError(() => error);
+        })
+      );
+  }
+
   VerifyForgotPasswordOtp(request: VerifyOtpRequest): Observable<void> {
     return this.http
       .post<void>(`${this.apiUrl}/v1/Otp/verify-forget-password-otp`, request)
       .pipe(
         catchError((error) => {
           console.error('OTP verification error:', error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  ResetPassword(request: ResetPasswordRequest): Observable<void> {
+    return this.http
+      .post<void>(`${this.apiUrl}/v1/Password/reset-password`, request)
+      .pipe(
+        catchError((error) => {
+          console.error('Reset Password error:', error);
           return throwError(() => error);
         })
       );

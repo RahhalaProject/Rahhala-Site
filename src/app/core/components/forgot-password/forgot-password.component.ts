@@ -67,7 +67,7 @@ export class ForgotPasswordComponent implements OnInit {
         console.log(response);
         this.router.navigate(['/password-recovery-otp'], {
           state: {
-            emailOrPhone: this.phoneNumber?.value,
+            phoneNumber: this.phoneNumber?.value,
             fromForgotPassword: true,
           },
         });
