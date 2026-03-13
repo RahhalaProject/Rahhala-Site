@@ -138,7 +138,10 @@ export class AuthService {
   //#region Custom Methods
   SendRegisterOtp(request: RegisterRequest): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>(`${this.apiUrl}/v1/Otp/send-register-otp`, request)
+      .post<LoginResponse>(`${this.apiUrl}/v1/Otp/send-register-otp`, {
+        ...request,
+        type: 1,
+      })
       .pipe(
         // tap((response) => this.handleAuthResponse(response)),
         catchError((error) => {
@@ -149,7 +152,10 @@ export class AuthService {
   }
   SendLoginOtp(request: LoginRequest): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>(`${this.apiUrl}/v1/Otp/send-login-otp`, request)
+      .post<LoginResponse>(`${this.apiUrl}/v1/Otp/send-login-otp`, {
+        ...request,
+        userType: 1,
+      })
       .pipe(
         catchError((error) => {
           console.error('Registration error:', error);
@@ -159,7 +165,10 @@ export class AuthService {
   }
   VerifyRegisterOtp(request: VerifyOtpRequest): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>(`${this.apiUrl}/v1/Authentication/register`, request)
+      .post<LoginResponse>(`${this.apiUrl}/v1/Authentication/register`, {
+        ...request,
+        userType: 1,
+      })
       .pipe(
         tap((response) => this.handleAuthResponse(response)),
         catchError((error) => {
@@ -171,7 +180,10 @@ export class AuthService {
 
   VerifyLoginOtp(request: VerifyOtpRequest): Observable<LoginResponse> {
     return this.http
-      .post<LoginResponse>(`${this.apiUrl}/v1/Authentication/login`, request)
+      .post<LoginResponse>(`${this.apiUrl}/v1/Authentication/login`, {
+        ...request,
+        userType: 1,
+      })
       .pipe(
         tap((response) => this.handleAuthResponse(response)),
         catchError((error) => {
@@ -194,7 +206,10 @@ export class AuthService {
 
   ResendForgotPasswordOtp(request: ResendOtpRequest): Observable<any> {
     return this.http
-      .post<any>(`${this.apiUrl}/v1/Otp/resend-otp`, request)
+      .post<any>(`${this.apiUrl}/v1/Otp/resend-otp`, {
+        ...request,
+        userType: 1,
+      })
       .pipe(
         catchError((error) => {
           console.error('Forgot password error:', error);
@@ -205,7 +220,10 @@ export class AuthService {
 
   VerifyForgotPasswordOtp(request: VerifyOtpRequest): Observable<void> {
     return this.http
-      .post<void>(`${this.apiUrl}/v1/Otp/verify-forget-password-otp`, request)
+      .post<void>(`${this.apiUrl}/v1/Otp/verify-forget-password-otp`, {
+        ...request,
+        userType: 1,
+      })
       .pipe(
         catchError((error) => {
           console.error('OTP verification error:', error);

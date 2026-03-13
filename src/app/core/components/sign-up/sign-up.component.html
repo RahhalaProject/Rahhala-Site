@@ -157,7 +157,7 @@
             formControlName="confirmPassword"
             [invalid]="
               (confirmPassword?.invalid && confirmPassword?.touched) ||
-              (signUpForm?.errors?.['notMatching'] && confirmPassword?.touched)
+              ((signUpForm.errors ?? {})['notMatching'] && confirmPassword?.touched)
             "
           ></p-password>
           @if (confirmPassword?.errors?.['required'] &&
@@ -165,7 +165,7 @@
           <p-message severity="error" size="small" variant="simple">{{
             "confirmPasswordRequired" | translate
           }}</p-message>
-          } @if (signUpForm?.errors?.['notMatching'] &&
+          } @if ((signUpForm.errors ?? {})['notMatching'] &&
           confirmPassword?.touched) {
           <p-message severity="error" size="small" variant="simple">
             {{ "passwordsDoNotMatch" | translate }}
