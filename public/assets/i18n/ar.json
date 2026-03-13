@@ -284,5 +284,6 @@
   "requiredField": "هذا الحقل مطلوب",
   "passwordsDoNotMatch": "الرقم السري غير مطابق",
   "enterPhoneNumber": "ادخل رقم الجوال",
-  "emailOrPhoneRequired": "رقم الجوال او الايميل مطلوب"
+  "emailOrPhoneRequired": "رقم الجوال او الايميل مطلوب",
+  "loadLookupsError": "فشل تحميل الخيارات"
 }

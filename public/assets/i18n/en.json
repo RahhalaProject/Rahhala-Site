@@ -345,5 +345,6 @@
   "requiredField": "This field is required",
   "passwordsDoNotMatch": "Passwords do not match",
   "enterPhoneNumber": "Enter phoneNumber",
-  "emailOrPhoneRequired": "Email or phone required"
+  "emailOrPhoneRequired": "Email or phone required",
+  "loadLookupsError": "Failed to load options"
 }
