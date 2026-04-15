@@ -130,6 +130,12 @@
           size="small"
           (onClick)="onOrderConfirmationClick()"
         />
+        <small
+          *ngIf="orderConfirmationValidationMessage"
+          class="p-error order-confirmation-validation-message"
+        >
+          {{ orderConfirmationValidationMessage }}
+        </small>
       </div>
     </div>
   </p-card>
@@ -157,7 +163,7 @@
               placeholder="{{ 'shipmentType' | translate }}"
               class="w-full md:w-56"
             />
-            <small *ngIf="showValidationErrors && !selectedShipmentType" class="p-error">
+            <small *ngIf="showShipmentErrors && !selectedShipmentType" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
@@ -199,7 +205,7 @@
               placeholder="{{ 'orderType' | translate }}"
               class="w-full md:w-56"
             />
-            <small *ngIf="showValidationErrors && !selectedRequestType" class="p-error">
+            <small *ngIf="showShipmentErrors && !selectedRequestType" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
@@ -212,7 +218,7 @@
                   [(ngModel)]="shipmentLength"
                   placeholder="{{ 'enterLength' | translate }}"
                 />
-                <small *ngIf="showValidationErrors && shipmentLength == null" class="p-error">
+                <small *ngIf="showShipmentErrors && shipmentLength == null" class="p-error">
                   {{ "requiredField" | translate }}
                 </small>
               </div>
@@ -223,7 +229,7 @@
                   [(ngModel)]="shipmentWidth"
                   placeholder="{{ 'enterWidth' | translate }}"
                 />
-                <small *ngIf="showValidationErrors && shipmentWidth == null" class="p-error">
+                <small *ngIf="showShipmentErrors && shipmentWidth == null" class="p-error">
                   {{ "requiredField" | translate }}
                 </small>
               </div>
@@ -234,7 +240,7 @@
                   [(ngModel)]="shipmentHeight"
                   placeholder="{{ 'enterHeight' | translate }}"
                 />
-                <small *ngIf="showValidationErrors && shipmentHeight == null" class="p-error">
+                <small *ngIf="showShipmentErrors && shipmentHeight == null" class="p-error">
                   {{ "requiredField" | translate }}
                 </small>
               </div>
@@ -292,6 +298,7 @@
             <p-fileupload
               name="demo[]"
               [customUpload]="true"
+              (onSelect)="onFilesSelected($event)"
               (uploadHandler)="onUpload($event)"
               [multiple]="true"
               accept="image/*"
@@ -316,8 +323,8 @@
     />
     <p-button
       label="{{ 'save' | translate }}"
-      (click)="visibleUpload = false"
-      (keydown.enter)="visibleUpload = false"
+      (click)="onUploadSaveClick()"
+      (keydown.enter)="onUploadSaveClick()"
     />
   </div>
 </p-dialog>
@@ -343,7 +350,7 @@
               [showIcon]="true"
               inputId="icondisplay"
             />
-            <small *ngIf="showValidationErrors && !date" class="p-error">
+            <small *ngIf="showDeliveryDateErrors && !date" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
@@ -389,7 +396,7 @@
               placeholder="{{ 'paymentMethod' | translate }}"
               class="w-full md:w-56"
             />
-            <small *ngIf="showValidationErrors && !selectedPaymentMethod" class="p-error">
+            <small *ngIf="showPaymentMethodErrors && !selectedPaymentMethod" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
@@ -448,7 +455,7 @@
               placeholder="{{ 'city' | translate }}"
               class="w-full md:w-56"
             />
-            <small *ngIf="showValidationErrors && !pickupCityId" class="p-error">
+            <small *ngIf="showLocationErrors && !pickupCityId" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
@@ -461,7 +468,7 @@
               placeholder="{{ 'districtName' | translate }}"
               class="w-full md:w-56"
             />
-            <small *ngIf="showValidationErrors && !pickupProvinceId" class="p-error">
+            <small *ngIf="showLocationErrors && !pickupProvinceId" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
@@ -472,7 +479,7 @@
               [(ngModel)]="pickupStreet"
               placeholder="{{ 'streetName' | translate }}"
             />
-            <small *ngIf="showValidationErrors && !pickupStreet.trim()" class="p-error">
+            <small *ngIf="showLocationErrors && !pickupStreet.trim()" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
@@ -486,7 +493,7 @@
               [(ngModel)]="recipientName"
               placeholder="{{ 'recipientName' | translate }}"
             />
-            <small *ngIf="showValidationErrors && !recipientName.trim()" class="p-error">
+            <small *ngIf="showLocationErrors && !recipientName.trim()" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
@@ -497,7 +504,7 @@
               [(ngModel)]="recipientPhone"
               placeholder="{{ 'phoneNumber' | translate }}"
             />
-            <small *ngIf="showValidationErrors && !recipientPhone.trim()" class="p-error">
+            <small *ngIf="showLocationErrors && !recipientPhone.trim()" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
@@ -520,7 +527,7 @@
               placeholder="{{ 'city' | translate }}"
               class="w-full md:w-56"
             />
-            <small *ngIf="showValidationErrors && !deliveryCityId" class="p-error">
+            <small *ngIf="showLocationErrors && !deliveryCityId" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
@@ -533,7 +540,7 @@
               placeholder="{{ 'neighborhood' | translate }}"
               class="w-full md:w-56"
             />
-            <small *ngIf="showValidationErrors && !deliveryProvinceId" class="p-error">
+            <small *ngIf="showLocationErrors && !deliveryProvinceId" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
@@ -544,7 +551,7 @@
               [(ngModel)]="deliveryStreet"
               placeholder="{{ 'streetName' | translate }}"
             />
-            <small *ngIf="showValidationErrors && !deliveryStreet.trim()" class="p-error">
+            <small *ngIf="showLocationErrors && !deliveryStreet.trim()" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>

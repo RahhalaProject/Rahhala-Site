@@ -112,7 +112,12 @@ export class OrderFormComponent implements OnInit {
   mapLng: number | null = null;
   mapSearchText = '';
   selectedLocationDescription = '';
+  orderConfirmationValidationMessage = '';
   showValidationErrors = false;
+  showShipmentValidationErrors = false;
+  showDeliveryDateValidationErrors = false;
+  showPaymentMethodValidationErrors = false;
+  showLocationValidationErrors = false;
   private readonly staticMapLocations = [
     {
       nameEn: 'Riyadh - Olaya',
@@ -211,6 +216,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   showShipmentDetailsDialog() {
+    this.showShipmentValidationErrors = false;
     this.visibleShipmentDetails = true;
   }
 
@@ -223,14 +229,17 @@ export class OrderFormComponent implements OnInit {
   }
 
   showLocationDialog() {
+    this.showLocationValidationErrors = false;
     this.visibleLocation = true;
   }
 
   showDeliveryDateDialog() {
+    this.showDeliveryDateValidationErrors = false;
     this.visibleDeliveryDate = true;
   }
 
   showPaymentMethodDialog() {
+    this.showPaymentMethodValidationErrors = false;
     this.visiblePaymentMethod = true;
   }
 
@@ -333,73 +342,140 @@ export class OrderFormComponent implements OnInit {
 
   onOrderConfirmationClick() {
     this.showValidationErrors = true;
+    this.showShipmentValidationErrors = true;
+    this.showDeliveryDateValidationErrors = true;
+    this.showPaymentMethodValidationErrors = true;
+    this.showLocationValidationErrors = true;
     const missingFields = this.getAllRequiredFieldErrors();
     if (missingFields.length) {
+      this.orderConfirmationValidationMessage = this.buildValidationMessage(missingFields);
       this.showValidationToast(missingFields);
       return;
     }
+    this.orderConfirmationValidationMessage = '';
 
-    const payload: CreateCargoShippingOrderRequest = {
-      shipmentDetails: {
-        description: null,
-        weight: 0,
-        pieces: 0,
-        shipmentTypeId: this.selectedShipmentType,
-        shipmentSpeed: this.shipmentSpeed,
-        length: this.shipmentLength,
-        width: this.shipmentWidth,
-        height: this.shipmentHeight,
-        additionalNotes: this.additionalNotes || null,
-      },
-      images: this.uploadedImages,
-      deliveryDate: this.date ? this.date.toISOString() : null,
-      paymentMethod: this.selectedPaymentMethod,
-      orderTypeId: this.selectedRequestType,
-      pickupAddress: {
-        cityId: this.pickupCityId,
-        provinceId: this.pickupProvinceId,
-        street: this.pickupStreet || null,
-        placeName: this.pickupPlaceName || null,
-        latitude: this.pickupLatitude,
-        longitude: this.pickupLongitude,
-      },
-      deliveryAddress: {
-        cityId: this.deliveryCityId,
-        provinceId: this.deliveryProvinceId,
-        street: this.deliveryStreet || null,
-        placeName: this.deliveryPlaceName || null,
-        latitude: this.deliveryLatitude,
-        longitude: this.deliveryLongitude,
-      },
-      receiver: {
-        name: this.recipientName || null,
-        phone: this.recipientPhone || null,
-      },
+    const submitOrder = (images: string[]) => {
+      const payload: CreateCargoShippingOrderRequest = {
+        shipmentDetails: {
+          description: this.additionalNotes?.trim() || 'Cargo shipment request',
+          weight: 0,
+          pieces: 0,
+          shipmentTypeId: this.selectedShipmentType,
+          shipmentSpeed: this.shipmentSpeed,
+          length: this.shipmentLength,
+          width: this.shipmentWidth,
+          height: this.shipmentHeight,
+          additionalNotes: this.additionalNotes || null,
+        },
+        images,
+        deliveryDate: this.date ? this.date.toISOString() : null,
+        paymentMethod: this.selectedPaymentMethod,
+        orderTypeId: this.selectedRequestType,
+        pickupAddress: {
+          cityId: this.pickupCityId,
+          provinceId: this.pickupProvinceId,
+          street: this.pickupStreet || null,
+          placeName: this.pickupPlaceName || null,
+          latitude: this.pickupLatitude,
+          longitude: this.pickupLongitude,
+        },
+        deliveryAddress: {
+          cityId: this.deliveryCityId,
+          provinceId: this.deliveryProvinceId,
+          street: this.deliveryStreet || null,
+          placeName: this.deliveryPlaceName || null,
+          latitude: this.deliveryLatitude,
+          longitude: this.deliveryLongitude,
+        },
+        receiver: {
+          name: this.recipientName || null,
+          phone: this.recipientPhone || null,
+        },
+      };
+
+      this.cargoShippingOrderService.createOrder(payload).subscribe({
+        next: (res) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: this.translate.instant('success') || 'Success',
+            detail: res.requestNo
+              ? `Order created successfully. Request No: ${res.requestNo}`
+              : 'Order created successfully.',
+          });
+        },
+        error: () => {
+          this.messageService.add({
+            severity: 'error',
+            summary: this.translate.instant('error') || 'Error',
+            detail:
+              this.translate.instant('orderCreateError') || 'Failed to create order.',
+          });
+        },
+      });
     };
 
-    this.cargoShippingOrderService.createOrder(payload).subscribe({
-      next: (res) => {
-        this.messageService.add({
-          severity: 'success',
-          summary: this.translate.instant('success') || 'Success',
-          detail: res.requestNo
-            ? `Order created successfully. Request No: ${res.requestNo}`
-            : 'Order created successfully.',
-        });
+    if (!this.uploadedFiles.length) {
+      submitOrder([]);
+      return;
+    }
+
+    this.cargoShippingOrderService.uploadMultipleImages(this.uploadedFiles).subscribe({
+      next: (imagePaths) => {
+        const images = imagePaths ?? [];
+        this.uploadedImages = images;
+        submitOrder(images);
       },
       error: () => {
         this.messageService.add({
           severity: 'error',
           summary: this.translate.instant('error') || 'Error',
           detail:
-            this.translate.instant('orderCreateError') || 'Failed to create order.',
+            this.translate.instant('uploadImageError') ||
+            'Failed to upload image(s).',
         });
       },
     });
   }
 
+  onFilesSelected(event: any): void {
+    const files = ((event?.files ?? event?.currentFiles ?? []) as File[]).filter(
+      Boolean
+    );
+    if (!files.length) {
+      return;
+    }
+    this.uploadedFiles = files;
+  }
+
+  onUploadSaveClick(): void {
+    this.visibleUpload = false;
+    if (!this.uploadedFiles.length) {
+      return;
+    }
+    this.messageService.add({
+      severity: 'info',
+      summary: this.translate.instant('save') || 'Save',
+      detail: `${this.uploadedFiles.length} file(s) ready for order confirmation.`,
+    });
+  }
+
+  onUpload(event: any) {
+    const files = ((event?.files ?? event?.currentFiles ?? []) as File[]).filter(
+      Boolean
+    );
+    if (!files.length) {
+      return;
+    }
+    this.uploadedFiles = files;
+    this.messageService.add({
+      severity: 'info',
+      summary: this.translate.instant('save') || 'Save',
+      detail: `${this.uploadedFiles.length} file(s) ready for order confirmation.`,
+    });
+  }
+
   onShipmentDetailsSaveClick(): void {
-    this.showValidationErrors = true;
+    this.showShipmentValidationErrors = true;
     const missingFields = this.getShipmentDetailsRequiredFieldErrors();
     if (missingFields.length) {
       this.showValidationToast(missingFields);
@@ -409,7 +485,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   onDeliveryDateSaveClick(): void {
-    this.showValidationErrors = true;
+    this.showDeliveryDateValidationErrors = true;
     const missingFields = this.getDeliveryDateRequiredFieldErrors();
     if (missingFields.length) {
       this.showValidationToast(missingFields);
@@ -419,7 +495,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   onPaymentMethodSaveClick(): void {
-    this.showValidationErrors = true;
+    this.showPaymentMethodValidationErrors = true;
     const missingFields = this.getPaymentMethodRequiredFieldErrors();
     if (missingFields.length) {
       this.showValidationToast(missingFields);
@@ -429,7 +505,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   onLocationSaveClick(): void {
-    this.showValidationErrors = true;
+    this.showLocationValidationErrors = true;
     const missingFields = this.getLocationRequiredFieldErrors();
     if (missingFields.length) {
       this.showValidationToast(missingFields);
@@ -522,38 +598,32 @@ export class OrderFormComponent implements OnInit {
   }
 
   private showValidationToast(missingFields: string[]): void {
+    const message = this.translate.instant('pleaseCompleteRequiredFields');
     this.messageService.add({
       severity: 'error',
       summary: this.translate.instant('error') || 'Error',
-      detail: `${this.translate.instant('pleaseCompleteRequiredFields')}\n${missingFields.join(', ')}`,
+      detail: message,
     });
   }
 
-  onUpload(event: any) {
-    const files = ((event?.files ?? []) as File[]).filter(Boolean);
-    if (!files.length) {
-      return;
-    }
-
-    this.uploadedFiles = files;
-    this.cargoShippingOrderService.uploadMultipleImages(files).subscribe({
-      next: (imagePaths) => {
-        this.uploadedImages = imagePaths ?? [];
-        this.messageService.add({
-          severity: 'success',
-          summary: 'File Uploaded',
-          detail: `${this.uploadedImages.length} image(s) uploaded successfully.`,
-        });
-      },
-      error: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: this.translate.instant('error') || 'Error',
-          detail:
-            this.translate.instant('uploadImageError') ||
-            'Failed to upload image(s).',
-        });
-      },
-    });
+  private buildValidationMessage(missingFields: string[]): string {
+    return this.translate.instant('pleaseCompleteRequiredFields');
   }
+
+  get showShipmentErrors(): boolean {
+    return this.showValidationErrors || this.showShipmentValidationErrors;
+  }
+
+  get showDeliveryDateErrors(): boolean {
+    return this.showValidationErrors || this.showDeliveryDateValidationErrors;
+  }
+
+  get showPaymentMethodErrors(): boolean {
+    return this.showValidationErrors || this.showPaymentMethodValidationErrors;
+  }
+
+  get showLocationErrors(): boolean {
+    return this.showValidationErrors || this.showLocationValidationErrors;
+  }
+
 }
