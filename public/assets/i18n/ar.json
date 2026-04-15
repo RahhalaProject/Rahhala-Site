@@ -285,5 +285,14 @@
   "passwordsDoNotMatch": "الرقم السري غير مطابق",
   "enterPhoneNumber": "ادخل رقم الجوال",
   "emailOrPhoneRequired": "رقم الجوال او الايميل مطلوب",
-  "loadLookupsError": "فشل تحميل الخيارات"
+  "loadLookupsError": "فشل تحميل الخيارات",
+  "mapStaticMode": "وضع خريطة تجريبي (بدون مفتاح API)",
+  "searchLocationPlaceholder": "ابحث عن موقع",
+  "selectedLocationTitle": "الموقع المحدد",
+  "selectedLocationDescEmpty": "لم يتم تحديد وصف للموقع بعد.",
+  "latitude": "خط العرض",
+  "longitude": "خط الطول",
+  "resetCurrentLocation": "إعادة تعيين الموقع الحالي",
+  "confirmLocation": "تاكيد الموقع",
+  "pleaseCompleteRequiredFields": "يرجى استكمال جميع الحقول المطلوبة:"
 }

@@ -346,5 +346,14 @@
   "passwordsDoNotMatch": "Passwords do not match",
   "enterPhoneNumber": "Enter phoneNumber",
   "emailOrPhoneRequired": "Email or phone required",
-  "loadLookupsError": "Failed to load options"
+  "loadLookupsError": "Failed to load options",
+  "mapStaticMode": "Static map mode (no API key)",
+  "searchLocationPlaceholder": "Search location",
+  "selectedLocationTitle": "Selected location",
+  "selectedLocationDescEmpty": "No location description selected yet.",
+  "latitude": "Latitude",
+  "longitude": "Longitude",
+  "resetCurrentLocation": "Reset current location",
+  "confirmLocation": "Confirm location",
+  "pleaseCompleteRequiredFields": "Please complete all required fields:"
 }

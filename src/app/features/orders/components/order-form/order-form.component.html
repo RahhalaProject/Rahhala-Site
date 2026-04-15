@@ -75,7 +75,12 @@
           ></i>
         </button>
 
-        <!-- requestPrivateTrip -->
+        <!--
+          Reserved for future use:
+          - request private trip trigger
+          - global map trigger
+        -->
+        <!--
         <button
           class="form-item"
           (click)="showRequestPrivateTripDialog()"
@@ -95,7 +100,6 @@
           ></i>
         </button>
 
-        <!-- map -->
         <button
           class="form-item"
           (click)="showLocationMapDialog()"
@@ -111,17 +115,20 @@
             aria-hidden="true"
           ></i>
         </button>
+        -->
 
         <p-button
           class="initialPricing-btn"
           [label]="'initialPricing' | translate"
           severity="contrast"
           size="small"
+          (onClick)="onInitialPricingClick()"
         />
         <p-button
           [label]="'orderConfirmation' | translate"
           severity="contrast"
           size="small"
+          (onClick)="onOrderConfirmationClick()"
         />
       </div>
     </div>
@@ -150,6 +157,9 @@
               placeholder="{{ 'shipmentType' | translate }}"
               class="w-full md:w-56"
             />
+            <small *ngIf="showValidationErrors && !selectedShipmentType" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
           </div>
           <div class="col-12 mb-3">
             <div class="checks">
@@ -157,14 +167,24 @@
                 <label for="ingredient1" class="ml-2">
                   {{ "express" | translate }}
                 </label>
-                <p-checkbox inputId="ingredient1" name="pizza" value="Cheese" />
+                  <p-checkbox
+                    inputId="shipmentSpeedExpress"
+                    name="shipmentSpeed"
+                    value="Express"
+                    [(ngModel)]="shipmentSpeed"
+                  />
               </div>
               <div style="margin: 0 5px"></div>
               <div class="flex items-center item">
                 <label for="ingredient1" class="ml-2">
                   {{ "normal" | translate }}
                 </label>
-                <p-checkbox inputId="ingredient1" name="pizza" value="Cheese" />
+                  <p-checkbox
+                    inputId="shipmentSpeedNormal"
+                    name="shipmentSpeed"
+                    value="Normal"
+                    [(ngModel)]="shipmentSpeed"
+                  />
               </div>
             </div>
           </div>
@@ -177,12 +197,30 @@
               placeholder="{{ 'orderType' | translate }}"
               class="w-full md:w-56"
             />
+            <small *ngIf="showValidationErrors && !selectedRequestType" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
           </div>
           <div class="col-12 mb-3">
             <div class="tags-div">
-              <p-tag severity="info" value="{{ 'enterLength' | translate }}" />
-              <p-tag severity="info" value="{{ 'enterWidth' | translate }}" />
-              <p-tag severity="info" value="{{ 'enterHeight' | translate }}" />
+              <input
+                type="number"
+                pInputText
+                [(ngModel)]="shipmentLength"
+                placeholder="{{ 'enterLength' | translate }}"
+              />
+              <input
+                type="number"
+                pInputText
+                [(ngModel)]="shipmentWidth"
+                placeholder="{{ 'enterWidth' | translate }}"
+              />
+              <input
+                type="number"
+                pInputText
+                [(ngModel)]="shipmentHeight"
+                placeholder="{{ 'enterHeight' | translate }}"
+              />
             </div>
           </div>
           <div class="col-12 mb-3">
@@ -236,8 +274,8 @@
             <p-toast />
             <p-fileupload
               name="demo[]"
-              url="https://www.primefaces.org/cdn/api/upload.php"
-              (onUpload)="onUpload($event)"
+              [customUpload]="true"
+              (uploadHandler)="onUpload($event)"
               [multiple]="true"
               accept="image/*"
               maxFileSize="1000000"
@@ -288,6 +326,9 @@
               [showIcon]="true"
               inputId="icondisplay"
             />
+            <small *ngIf="showValidationErrors && !date" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
           </div>
         </div>
       </div>
@@ -331,6 +372,9 @@
               placeholder="{{ 'paymentMethod' | translate }}"
               class="w-full md:w-56"
             />
+            <small *ngIf="showValidationErrors && !selectedPaymentMethod" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
           </div>
         </div>
       </div>
@@ -369,81 +413,129 @@
             <p class="title">{{ "pickupAddress" | translate }}</p>
           </div>
           <div class="col-12 mb-3">
-            <p-select
-              [options]="cities"
-              optionLabel="name"
-              placeholder="{{ 'city' | translate }}"
-              class="w-full md:w-56"
-            />
+            <button
+              class="form-item form-item-custom"
+              type="button"
+              (click)="openLocationMap('pickup')"
+            >
+              <span>{{ pickupPlaceName || ("useCurrentLocation" | translate) }}</span>
+              <i class="pi pi-send"></i>
+            </button>
+            <small *ngIf="showValidationErrors && !pickupPlaceName" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
           </div>
           <div class="col-12 mb-3">
             <p-select
               [options]="cities"
+              [(ngModel)]="pickupCityId"
               optionLabel="name"
+              optionValue="id"
+              placeholder="{{ 'city' | translate }}"
+              class="w-full md:w-56"
+            />
+            <small *ngIf="showValidationErrors && !pickupCityId" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
+          </div>
+          <div class="col-12 mb-3">
+            <p-select
+              [options]="provinces"
+              [(ngModel)]="pickupProvinceId"
+              optionLabel="name"
+              optionValue="id"
               placeholder="{{ 'districtName' | translate }}"
               class="w-full md:w-56"
             />
+            <small *ngIf="showValidationErrors && !pickupProvinceId" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
           </div>
           <div class="col-12 mb-3">
             <input
               type="text"
               pInputText
+              [(ngModel)]="pickupStreet"
               placeholder="{{ 'streetName' | translate }}"
             />
-          </div>
-          <div class="col-12 mb-3">
-            <button class="form-item form-item-custom" type="button">
-              <span>{{ "useCurrentLocation" | translate }}</span>
-              <i class="pi pi-send"></i>
-            </button>
+            <small *ngIf="showValidationErrors && !pickupStreet.trim()" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
           </div>
           <div class="col-12">
             <p class="title">{{ "recipientDetails" | translate }}</p>
           </div>
           <div class="col-12 mb-3">
-            <p-select
-              [options]="cities"
-              optionLabel="name"
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="recipientName"
               placeholder="{{ 'recipientName' | translate }}"
-              class="w-full md:w-56"
             />
+            <small *ngIf="showValidationErrors && !recipientName.trim()" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
           </div>
           <div class="col-12 mb-3">
             <input
               type="text"
               pInputText
+              [(ngModel)]="recipientPhone"
               placeholder="{{ 'phoneNumber' | translate }}"
             />
+            <small *ngIf="showValidationErrors && !recipientPhone.trim()" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
           </div>
           <div class="col-12 mb-3">
-            <button class="form-item form-item-custom" type="button">
-              <span>{{ "address" | translate }}</span>
+            <button
+              class="form-item form-item-custom"
+              type="button"
+              (click)="openLocationMap('delivery')"
+            >
+              <span>{{ deliveryPlaceName || ("address" | translate) }}</span>
               <i class="pi pi-map"></i>
             </button>
+            <small *ngIf="showValidationErrors && !deliveryPlaceName" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
           </div>
           <div class="col-12 mb-3">
             <p-select
               [options]="cities"
+              [(ngModel)]="deliveryCityId"
               optionLabel="name"
-              placeholder="{{ 'streetName' | translate }}"
-              class="w-full md:w-56"
-            />
-          </div>
-          <div class="col-12 mb-3">
-            <p-select
-              [options]="cities"
-              optionLabel="name"
+              optionValue="id"
               placeholder="{{ 'city' | translate }}"
               class="w-full md:w-56"
             />
+            <small *ngIf="showValidationErrors && !deliveryCityId" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
           </div>
           <div class="col-12 mb-3">
             <p-select
-              [options]="cities"
+              [options]="provinces"
+              [(ngModel)]="deliveryProvinceId"
               optionLabel="name"
+              optionValue="id"
               placeholder="{{ 'neighborhood' | translate }}"
               class="w-full md:w-56"
             />
+            <small *ngIf="showValidationErrors && !deliveryProvinceId" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
+          </div>
+          <div class="col-12 mb-3">
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="deliveryStreet"
+              placeholder="{{ 'streetName' | translate }}"
+            />
+            <small *ngIf="showValidationErrors && !deliveryStreet.trim()" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
           </div>
         </div>
       </div>
@@ -596,14 +688,62 @@
   [style]="{ width: '50rem' }"
   class="LocationMap-form"
 >
-  <div class="flex flex-col h-48 mb-3">
+  <div class="flex flex-col mb-3">
     <div
-      class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+      class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 p-4"
     >
-      <div class="flex justify-center card-cus">
+      <div class="flex justify-center card-cus w-full">
         <div class="row">
           <div class="col-12">
-            <app-map></app-map>
+            <div
+              class="w-full p-4 mb-3 border-round text-center"
+              style="background: #eef2ff; min-height: 220px"
+            >
+              <p class="mb-2">{{ "map" | translate }}</p>
+              <small>{{ "mapStaticMode" | translate }}</small>
+            </div>
+          </div>
+          <div class="col-12 mb-3">
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="mapSearchText"
+              placeholder="{{ 'searchLocationPlaceholder' | translate }}"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <div class="w-full p-2 border-round" style="background: #f8fafc">
+              <button
+                *ngFor="let location of filteredMapLocations"
+                class="form-item form-item-custom mb-2"
+                type="button"
+                (click)="selectMapLocation(location)"
+              >
+                <span>
+                  {{ currentLang === "ar" ? location.nameAr : location.nameEn }}
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            <p class="title">{{ "selectedLocationTitle" | translate }}</p>
+            <p>{{ selectedLocationDescription || ("selectedLocationDescEmpty" | translate) }}</p>
+          </div>
+          <div class="col-12 mb-3">
+            <input
+              type="number"
+              pInputText
+              [(ngModel)]="mapLat"
+              placeholder="{{ 'latitude' | translate }}"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <input
+              type="number"
+              pInputText
+              [(ngModel)]="mapLng"
+              placeholder="{{ 'longitude' | translate }}"
+            />
           </div>
         </div>
       </div>
@@ -611,15 +751,15 @@
   </div>
   <div class="flex w-full justify-between">
     <p-button
-      label="{{ 'cancel' | translate }}"
+      label="{{ 'resetCurrentLocation' | translate }}"
       severity="secondary"
-      (click)="visibleRequestPrivateTrip = false"
-      (keydown.enter)="visibleRequestPrivateTrip = false"
+      (click)="resetCurrentLocation()"
+      (keydown.enter)="resetCurrentLocation()"
     />
     <p-button
-      label="{{ 'save' | translate }}"
-      (click)="visibleRequestPrivateTrip = false"
-      (keydown.enter)="visibleRequestPrivateTrip = false"
+      label="{{ 'confirmLocation' | translate }}"
+      (click)="confirmLocation()"
+      (keydown.enter)="confirmLocation()"
     />
   </div>
 </p-dialog>

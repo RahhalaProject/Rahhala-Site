@@ -9,7 +9,6 @@ import { Checkbox } from 'primeng/checkbox';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
-import { Tag } from 'primeng/tag';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { TextareaModule } from 'primeng/textarea';
 import { Dialog } from 'primeng/dialog';
@@ -17,14 +16,11 @@ import { FileUpload } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { DatePickerModule } from 'primeng/datepicker';
-import { MapComponent } from '../map/map.component';
 import { LookupService } from '../../../../core/services/lookup.service';
 import { LookupItem } from '../../../../core/models/lookup-item.model';
-
-interface UploadEvent {
-  originalEvent: Event;
-  files: File[];
-}
+import { CargoShippingOrderService } from '../../../../core/services/cargo-shipping-order.service';
+import { CreateCargoShippingOrderRequest } from '../../../../core/models/cargo-shipping-order.model';
+import { LocationService } from '../../../../core/services/location.service';
 
 @Component({
   selector: 'order-form',
@@ -42,7 +38,6 @@ interface UploadEvent {
     InputGroupAddonModule,
     InputTextModule,
     CommonModule,
-    Tag,
     InputTextModule,
     IftaLabelModule,
     TextareaModule,
@@ -50,12 +45,13 @@ interface UploadEvent {
     FileUpload,
     ToastModule,
     DatePickerModule,
-    MapComponent,
   ],
   providers: [MessageService],
 })
 export class OrderFormComponent implements OnInit {
   private readonly lookupService = inject(LookupService);
+  private readonly cargoShippingOrderService = inject(CargoShippingOrderService);
+  private readonly locationService = inject(LocationService);
 
   currentLang: string;
   visibleShipmentDetails = false;
@@ -65,6 +61,7 @@ export class OrderFormComponent implements OnInit {
   visiblePaymentMethod = false;
   visibleLocationMap = false;
   uploadedFiles: File[] = [];
+  uploadedImages: string[] = [];
   date: Date | undefined;
   visibleRequestPrivateTrip = false;
 
@@ -77,7 +74,8 @@ export class OrderFormComponent implements OnInit {
   palletCapacityOptions: LookupItem[] = [];
   privateCarOptions: LookupItem[] = [];
   rentDurationOptions: LookupItem[] = [];
-  cities: LookupItem[] = []; // TODO: Replace with cities API when available
+  cities: LookupItem[] = [];
+  provinces: LookupItem[] = [];
 
   // Form selected values (ids from LookupItem when using optionValue="id")
   selectedShipmentType: string | null = null;
@@ -88,7 +86,59 @@ export class OrderFormComponent implements OnInit {
   selectedPalletCapacity: string | null = null;
   selectedPrivateCar: string | null = null;
   selectedRentDuration: string | null = null;
+  shipmentSpeed: string | null = null;
+  shipmentLength: number | null = null;
+  shipmentWidth: number | null = null;
+  shipmentHeight: number | null = null;
   additionalNotes = '';
+
+  pickupCityId: string | null = null;
+  pickupProvinceId: string | null = null;
+  pickupStreet = '';
+  pickupPlaceName = '';
+  pickupLatitude: number | null = null;
+  pickupLongitude: number | null = null;
+
+  recipientName = '';
+  recipientPhone = '';
+  deliveryCityId: string | null = null;
+  deliveryProvinceId: string | null = null;
+  deliveryStreet = '';
+  deliveryPlaceName = '';
+  deliveryLatitude: number | null = null;
+  deliveryLongitude: number | null = null;
+  private mapTarget: 'pickup' | 'delivery' = 'pickup';
+  mapLat: number | null = null;
+  mapLng: number | null = null;
+  mapSearchText = '';
+  selectedLocationDescription = '';
+  showValidationErrors = false;
+  private readonly staticMapLocations = [
+    {
+      nameEn: 'Riyadh - Olaya',
+      nameAr: 'الرياض - العليا',
+      descriptionEn: 'Commercial district in central Riyadh',
+      descriptionAr: 'حي تجاري في وسط الرياض',
+      lat: 24.711667,
+      lng: 46.674999,
+    },
+    {
+      nameEn: 'Jeddah - Al Hamra',
+      nameAr: 'جدة - الحمراء',
+      descriptionEn: 'Popular coastal district in Jeddah',
+      descriptionAr: 'حي ساحلي معروف في جدة',
+      lat: 21.543333,
+      lng: 39.172779,
+    },
+    {
+      nameEn: 'Dammam - Al Faisaliyah',
+      nameAr: 'الدمام - الفيصلية',
+      descriptionEn: 'Residential area in Dammam',
+      descriptionAr: 'منطقة سكنية في الدمام',
+      lat: 26.420683,
+      lng: 50.088795,
+    },
+  ];
 
   constructor(
     readonly translate: TranslateService,
@@ -99,11 +149,13 @@ export class OrderFormComponent implements OnInit {
     this.translate.onLangChange.subscribe((event) => {
       this.currentLang = event.lang;
       this.loadLookups();
+      this.loadLocations();
     });
   }
 
   ngOnInit(): void {
     this.loadLookups();
+    this.loadLocations();
   }
 
   private loadLookups(): void {
@@ -123,6 +175,36 @@ export class OrderFormComponent implements OnInit {
           severity: 'error',
           summary: 'Error',
           detail: this.translate.instant('loadLookupsError') || 'Failed to load options',
+        });
+      },
+    });
+  }
+
+  private loadLocations(): void {
+    this.locationService.getCities().subscribe({
+      next: (cities) => {
+        this.cities = cities;
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: this.translate.instant('loadCitiesError') || 'Failed to load cities',
+        });
+      },
+    });
+
+    this.locationService.getProvinces().subscribe({
+      next: (provinces) => {
+        this.provinces = provinces;
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail:
+            this.translate.instant('loadProvincesError') ||
+            'Failed to load provinces',
         });
       },
     });
@@ -148,12 +230,96 @@ export class OrderFormComponent implements OnInit {
     this.visiblePaymentMethod = true;
   }
 
-  showRequestPrivateTripDialog() {
-    this.visibleRequestPrivateTrip = true;
+  // Reserved for future trigger buttons in the main actions list.
+  // showRequestPrivateTripDialog() {
+  //   this.visibleRequestPrivateTrip = true;
+  // }
+
+  // Reserved for future trigger buttons in the main actions list.
+  // showLocationMapDialog() {
+  //   this.openLocationMap('pickup');
+  // }
+
+  openLocationMap(target: 'pickup' | 'delivery') {
+    this.mapTarget = target;
+    const targetLat =
+      target === 'pickup' ? this.pickupLatitude : this.deliveryLatitude;
+    const targetLng =
+      target === 'pickup' ? this.pickupLongitude : this.deliveryLongitude;
+
+    this.mapLat = targetLat ?? 24.7136;
+    this.mapLng = targetLng ?? 46.6753;
+    this.mapSearchText = '';
+    this.selectedLocationDescription =
+      target === 'pickup' ? this.pickupPlaceName : this.deliveryPlaceName;
+    this.visibleLocationMap = true;
   }
 
-  showLocationMapDialog() {
-    this.visibleLocationMap = true;
+  resetCurrentLocation() {
+    // Static fallback coordinates until real map/location service is integrated.
+    this.mapLat = 24.7136;
+    this.mapLng = 46.6753;
+    this.selectedLocationDescription =
+      this.currentLang === 'ar'
+        ? 'الموقع الحالي (وضع تجريبي)'
+        : 'Current location (mock mode)';
+    this.mapSearchText = '';
+  }
+
+  get filteredMapLocations() {
+    const q = this.mapSearchText.trim().toLowerCase();
+    if (!q) {
+      return this.staticMapLocations;
+    }
+
+    return this.staticMapLocations.filter((location) => {
+      const name = this.currentLang === 'ar' ? location.nameAr : location.nameEn;
+      const desc =
+        this.currentLang === 'ar'
+          ? location.descriptionAr
+          : location.descriptionEn;
+      return `${name} ${desc}`.toLowerCase().includes(q);
+    });
+  }
+
+  selectMapLocation(location: {
+    nameEn: string;
+    nameAr: string;
+    descriptionEn: string;
+    descriptionAr: string;
+    lat: number;
+    lng: number;
+  }) {
+    this.mapLat = location.lat;
+    this.mapLng = location.lng;
+    this.selectedLocationDescription =
+      this.currentLang === 'ar' ? location.descriptionAr : location.descriptionEn;
+  }
+
+  confirmLocation() {
+    if (this.mapLat == null || this.mapLng == null) {
+      this.resetCurrentLocation();
+    }
+
+    const lat = this.mapLat as number;
+    const lng = this.mapLng as number;
+    const placeName =
+      this.selectedLocationDescription ||
+      (this.currentLang === 'ar'
+        ? `الموقع المحدد (${lat.toFixed(6)}, ${lng.toFixed(6)})`
+        : `Selected location (${lat.toFixed(6)}, ${lng.toFixed(6)})`);
+
+    if (this.mapTarget === 'pickup') {
+      this.pickupLatitude = lat;
+      this.pickupLongitude = lng;
+      this.pickupPlaceName = placeName;
+    } else {
+      this.deliveryLatitude = lat;
+      this.deliveryLongitude = lng;
+      this.deliveryPlaceName = placeName;
+    }
+
+    this.visibleLocationMap = false;
   }
 
   onInitialPricingClick() {
@@ -162,19 +328,161 @@ export class OrderFormComponent implements OnInit {
   }
 
   onOrderConfirmationClick() {
-    // TODO: Implement order confirmation logic
-    console.log('Order confirmation button clicked');
+    this.showValidationErrors = true;
+    if (!this.validateRequiredFields()) {
+      return;
+    }
+
+    const payload: CreateCargoShippingOrderRequest = {
+      shipmentDetails: {
+        description: null,
+        weight: 0,
+        pieces: 0,
+        shipmentTypeId: this.selectedShipmentType,
+        shipmentSpeed: this.shipmentSpeed,
+        length: this.shipmentLength,
+        width: this.shipmentWidth,
+        height: this.shipmentHeight,
+        additionalNotes: this.additionalNotes || null,
+      },
+      images: this.uploadedImages,
+      deliveryDate: this.date ? this.date.toISOString() : null,
+      paymentMethod: this.selectedPaymentMethod,
+      orderTypeId: this.selectedRequestType,
+      pickupAddress: {
+        cityId: this.pickupCityId,
+        provinceId: this.pickupProvinceId,
+        street: this.pickupStreet || null,
+        placeName: this.pickupPlaceName || null,
+        latitude: this.pickupLatitude,
+        longitude: this.pickupLongitude,
+      },
+      deliveryAddress: {
+        cityId: this.deliveryCityId,
+        provinceId: this.deliveryProvinceId,
+        street: this.deliveryStreet || null,
+        placeName: this.deliveryPlaceName || null,
+        latitude: this.deliveryLatitude,
+        longitude: this.deliveryLongitude,
+      },
+      receiver: {
+        name: this.recipientName || null,
+        phone: this.recipientPhone || null,
+      },
+    };
+
+    this.cargoShippingOrderService.createOrder(payload).subscribe({
+      next: (res) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: this.translate.instant('success') || 'Success',
+          detail: res.requestNo
+            ? `Order created successfully. Request No: ${res.requestNo}`
+            : 'Order created successfully.',
+        });
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: this.translate.instant('error') || 'Error',
+          detail:
+            this.translate.instant('orderCreateError') || 'Failed to create order.',
+        });
+      },
+    });
   }
 
-  onUpload(event: any) {
-    for (let file of event.files) {
-      this.uploadedFiles.push(file);
+  private validateRequiredFields(): boolean {
+    const missingFields: string[] = [];
+
+    if (!this.selectedShipmentType) {
+      missingFields.push(this.translate.instant('shipmentType'));
+    }
+    if (!this.selectedRequestType) {
+      missingFields.push(this.translate.instant('orderType'));
+    }
+    if (!this.selectedPaymentMethod) {
+      missingFields.push(this.translate.instant('paymentMethod'));
+    }
+    if (!this.date) {
+      missingFields.push(this.translate.instant('deliveryDate'));
+    }
+    if (!this.pickupPlaceName) {
+      missingFields.push(this.translate.instant('pickupLocation'));
+    }
+    if (!this.pickupCityId) {
+      missingFields.push(`${this.translate.instant('pickupAddress')} - ${this.translate.instant('city')}`);
+    }
+    if (!this.pickupProvinceId) {
+      missingFields.push(
+        `${this.translate.instant('pickupAddress')} - ${this.translate.instant('districtName')}`
+      );
+    }
+    if (!this.pickupStreet.trim()) {
+      missingFields.push(
+        `${this.translate.instant('pickupAddress')} - ${this.translate.instant('streetName')}`
+      );
+    }
+    if (!this.recipientName.trim()) {
+      missingFields.push(this.translate.instant('recipientName'));
+    }
+    if (!this.recipientPhone.trim()) {
+      missingFields.push(this.translate.instant('phoneNumber'));
+    }
+    if (!this.deliveryPlaceName) {
+      missingFields.push(this.translate.instant('address'));
+    }
+    if (!this.deliveryCityId) {
+      missingFields.push(`${this.translate.instant('address')} - ${this.translate.instant('city')}`);
+    }
+    if (!this.deliveryProvinceId) {
+      missingFields.push(
+        `${this.translate.instant('address')} - ${this.translate.instant('neighborhood')}`
+      );
+    }
+    if (!this.deliveryStreet.trim()) {
+      missingFields.push(
+        `${this.translate.instant('address')} - ${this.translate.instant('streetName')}`
+      );
+    }
+
+    if (!missingFields.length) {
+      return true;
     }
 
     this.messageService.add({
-      severity: 'info',
-      summary: 'File Uploaded',
-      detail: '',
+      severity: 'error',
+      summary: this.translate.instant('error') || 'Error',
+      detail: `${this.translate.instant('pleaseCompleteRequiredFields')}\n${missingFields.join(', ')}`,
+    });
+    return false;
+  }
+
+  onUpload(event: any) {
+    const files = ((event?.files ?? []) as File[]).filter(Boolean);
+    if (!files.length) {
+      return;
+    }
+
+    this.uploadedFiles = files;
+    this.cargoShippingOrderService.uploadMultipleImages(files).subscribe({
+      next: (imagePaths) => {
+        this.uploadedImages = imagePaths ?? [];
+        this.messageService.add({
+          severity: 'success',
+          summary: 'File Uploaded',
+          detail: `${this.uploadedImages.length} image(s) uploaded successfully.`,
+        });
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: this.translate.instant('error') || 'Error',
+          detail:
+            this.translate.instant('uploadImageError') ||
+            'Failed to upload image(s).',
+        });
+      },
     });
   }
 }
