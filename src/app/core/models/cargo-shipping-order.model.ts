@@ -36,6 +36,11 @@ export interface CreateCargoShippingOrderRequest {
   images: string[];
 }
 
+/** Response from POST /FileUpload/multiple-Image — use `fileNames` as `images` on create order. */
+export interface MultipleImageUploadResponse {
+  fileNames: string[];
+}
+
 export interface CargoShippingOrderResponse {
   id: string;
   requestNo: string | null;

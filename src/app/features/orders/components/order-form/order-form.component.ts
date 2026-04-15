@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -13,7 +14,6 @@ import { IftaLabelModule } from 'primeng/iftalabel';
 import { TextareaModule } from 'primeng/textarea';
 import { Dialog } from 'primeng/dialog';
 import { FileUpload } from 'primeng/fileupload';
-import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { DatePickerModule } from 'primeng/datepicker';
 import { LookupService } from '../../../../core/services/lookup.service';
@@ -44,15 +44,14 @@ import { LocationService } from '../../../../core/services/location.service';
     TextareaModule,
     Dialog,
     FileUpload,
-    ToastModule,
     DatePickerModule,
   ],
-  providers: [MessageService],
 })
 export class OrderFormComponent implements OnInit {
   private readonly lookupService = inject(LookupService);
   private readonly cargoShippingOrderService = inject(CargoShippingOrderService);
   private readonly locationService = inject(LocationService);
+  private readonly router = inject(Router);
 
   currentLang: string;
   visibleShipmentDetails = false;
@@ -463,12 +462,22 @@ export class OrderFormComponent implements OnInit {
 
       this.cargoShippingOrderService.createOrder(payload).subscribe({
         next: (res) => {
-          this.messageService.add({
-            severity: 'success',
-            summary: this.translate.instant('success') || 'Success',
-            detail: res.requestNo
-              ? `Order created successfully. Request No: ${res.requestNo}`
-              : 'Order created successfully.',
+          this.router.navigate(['/our-services']).then(() => {
+            const detail = res.requestNo
+              ? this.translate.instant('orderAddedSuccessDetail', {
+                  requestNo: res.requestNo,
+                })
+              : this.translate.instant('orderAddedSuccessDetailPlain');
+            this.messageService.add({
+              severity: 'success',
+              summary:
+                this.translate.instant('orderAddedSuccessSummary') || 'Success',
+              detail:
+                detail ||
+                (res.requestNo
+                  ? `Request submitted. Request No: ${res.requestNo}`
+                  : 'Request submitted successfully.'),
+            });
           });
         },
         error: () => {

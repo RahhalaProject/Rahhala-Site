@@ -1,10 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { APP_CONFIG } from '../config/app.config';
 import {
   CargoShippingOrderResponse,
   CreateCargoShippingOrderRequest,
+  MultipleImageUploadResponse,
 } from '../models/cargo-shipping-order.model';
 
 @Injectable({
@@ -33,8 +34,12 @@ export class CargoShippingOrderService {
     files.forEach((file) => formData.append('files', file, file.name));
 
     return this.http
-      .post<string[]>(`${this.apiUrl}/FileUpload/multiple-Image`, formData)
+      .post<MultipleImageUploadResponse>(
+        `${this.apiUrl}/FileUpload/multiple-Image`,
+        formData
+      )
       .pipe(
+        map((res) => res?.fileNames ?? []),
         catchError((err) => {
           console.error('Multiple image upload error:', err);
           return throwError(() => err);

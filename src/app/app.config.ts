@@ -20,9 +20,11 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { APP_CONFIG, appConfig } from './core/config/app.config';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
+import { MessageService } from 'primeng/api';
 
 export const config: ApplicationConfig = {
   providers: [
+    MessageService,
     { provide: APP_CONFIG, useValue: appConfig },
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
