@@ -20,6 +20,7 @@ import { LookupService } from '../../../../core/services/lookup.service';
 import { LookupItem } from '../../../../core/models/lookup-item.model';
 import { CargoShippingOrderService } from '../../../../core/services/cargo-shipping-order.service';
 import { CreateCargoShippingOrderRequest } from '../../../../core/models/cargo-shipping-order.model';
+import { PaymentMethod } from '../../../../core/models/payment-method.enum';
 import { LocationService } from '../../../../core/services/location.service';
 
 @Component({
@@ -62,13 +63,16 @@ export class OrderFormComponent implements OnInit {
   visibleLocationMap = false;
   uploadedFiles: File[] = [];
   uploadedImages: string[] = [];
+  /** Earliest selectable delivery day (start of tomorrow); today and past dates are disabled. */
+  minDeliveryDate!: Date;
   date: Date | undefined;
   visibleRequestPrivateTrip = false;
 
   // Lookup options (id + name)
   shipmentTypeOptions: LookupItem[] = [];
   requestTypeOptions: LookupItem[] = [];
-  paymentMethodOptions: LookupItem[] = [];
+  /** Labels from i18n; `value` is backend PaymentMethod enum (1–3). */
+  paymentMethodOptions: { name: string; value: PaymentMethod }[] = [];
   carTypeOptions: LookupItem[] = [];
   weightInTonOptions: LookupItem[] = [];
   palletCapacityOptions: LookupItem[] = [];
@@ -80,7 +84,7 @@ export class OrderFormComponent implements OnInit {
   // Form selected values (ids from LookupItem when using optionValue="id")
   selectedShipmentType: string | null = null;
   selectedRequestType: string | null = null;
-  selectedPaymentMethod: string | null = null;
+  selectedPaymentMethod: PaymentMethod | null = null;
   selectedCarType: string | null = null;
   selectedWeightInTon: string | null = null;
   selectedPalletCapacity: string | null = null;
@@ -153,14 +157,58 @@ export class OrderFormComponent implements OnInit {
       this.translate.currentLang || this.translate.getDefaultLang();
     this.translate.onLangChange.subscribe((event) => {
       this.currentLang = event.lang;
+      this.buildPaymentMethodOptions();
       this.loadLookups();
       this.loadLocations();
     });
   }
 
   ngOnInit(): void {
+    this.refreshMinDeliveryDate();
+    this.date = new Date(this.minDeliveryDate);
+    this.buildPaymentMethodOptions();
     this.loadLookups();
     this.loadLocations();
+  }
+
+  /** Tomorrow 00:00:00 local time — minimum allowed delivery date (excludes today). */
+  private refreshMinDeliveryDate(): void {
+    const t = new Date();
+    t.setDate(t.getDate() + 1);
+    t.setHours(0, 0, 0, 0);
+    this.minDeliveryDate = t;
+  }
+
+  private normalizeDeliveryDateIfNeeded(): void {
+    if (!this.date) {
+      return;
+    }
+    const minMs = this.startOfLocalDayMs(this.minDeliveryDate);
+    const curMs = this.startOfLocalDayMs(this.date);
+    if (curMs < minMs) {
+      this.date = new Date(this.minDeliveryDate);
+    }
+  }
+
+  private startOfLocalDayMs(d: Date): number {
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+  }
+
+  private buildPaymentMethodOptions(): void {
+    this.paymentMethodOptions = [
+      {
+        value: PaymentMethod.Cash,
+        name: this.translate.instant('paymentMethodCash'),
+      },
+      {
+        value: PaymentMethod.Visa,
+        name: this.translate.instant('paymentMethodVisa'),
+      },
+      {
+        value: PaymentMethod.Walet,
+        name: this.translate.instant('paymentMethodWalet'),
+      },
+    ];
   }
 
   private loadLookups(): void {
@@ -168,7 +216,6 @@ export class OrderFormComponent implements OnInit {
       next: (res) => {
         this.shipmentTypeOptions = res.ShipmentType ?? [];
         this.requestTypeOptions = res.RequestType ?? [];
-        this.paymentMethodOptions = res.PaymentMethod ?? [];
         this.carTypeOptions = res.CarType ?? [];
         this.weightInTonOptions = res.WeightInTon ?? [];
         this.palletCapacityOptions = res.PalletCapacity ?? [];
@@ -224,6 +271,22 @@ export class OrderFormComponent implements OnInit {
     this.shipmentSpeed = speed;
   }
 
+  /**
+   * UI "Express" → API "Fast"; "Normal" → "Normal" (ShipmentSpeed enum names).
+   */
+  private getShipmentSpeedForApi(): string {
+    return this.shipmentSpeed === 'Express' ? 'Fast' : 'Normal';
+  }
+
+  /** Maps selected payment to API string: "Cash" | "Visa" | "Walet". */
+  private getPaymentMethodNameForApi(): string | null {
+    if (this.selectedPaymentMethod == null) {
+      return null;
+    }
+    const key = PaymentMethod[this.selectedPaymentMethod];
+    return typeof key === 'string' ? key : null;
+  }
+
   showUploadDialog() {
     this.visibleUpload = true;
   }
@@ -235,6 +298,8 @@ export class OrderFormComponent implements OnInit {
 
   showDeliveryDateDialog() {
     this.showDeliveryDateValidationErrors = false;
+    this.refreshMinDeliveryDate();
+    this.normalizeDeliveryDateIfNeeded();
     this.visibleDeliveryDate = true;
   }
 
@@ -354,14 +419,17 @@ export class OrderFormComponent implements OnInit {
     }
     this.orderConfirmationValidationMessage = '';
 
+    this.refreshMinDeliveryDate();
+    this.normalizeDeliveryDateIfNeeded();
+
     const submitOrder = (images: string[]) => {
       const payload: CreateCargoShippingOrderRequest = {
         shipmentDetails: {
           description: this.additionalNotes?.trim() || 'Cargo shipment request',
-          weight: 0,
-          pieces: 0,
+          weight: 1,
+          pieces: 1,
           shipmentTypeId: this.selectedShipmentType,
-          shipmentSpeed: this.shipmentSpeed,
+          shipmentSpeed: this.getShipmentSpeedForApi(),
           length: this.shipmentLength,
           width: this.shipmentWidth,
           height: this.shipmentHeight,
@@ -369,7 +437,7 @@ export class OrderFormComponent implements OnInit {
         },
         images,
         deliveryDate: this.date ? this.date.toISOString() : null,
-        paymentMethod: this.selectedPaymentMethod,
+        paymentMethod: this.getPaymentMethodNameForApi(),
         orderTypeId: this.selectedRequestType,
         pickupAddress: {
           cityId: this.pickupCityId,
@@ -485,6 +553,8 @@ export class OrderFormComponent implements OnInit {
   }
 
   onDeliveryDateSaveClick(): void {
+    this.refreshMinDeliveryDate();
+    this.normalizeDeliveryDateIfNeeded();
     this.showDeliveryDateValidationErrors = true;
     const missingFields = this.getDeliveryDateRequiredFieldErrors();
     if (missingFields.length) {
@@ -545,7 +615,7 @@ export class OrderFormComponent implements OnInit {
 
   private getPaymentMethodRequiredFieldErrors(): string[] {
     const missingFields: string[] = [];
-    if (!this.selectedPaymentMethod) {
+    if (this.selectedPaymentMethod == null) {
       missingFields.push(this.translate.instant('paymentMethod'));
     }
     return missingFields;

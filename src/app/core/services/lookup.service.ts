@@ -44,13 +44,12 @@ export class LookupService {
 
   /**
    * Convenience: load lookups needed for order forms.
-   * Returns ShipmentType, RequestType, PaymentMethod, CarType, WeightInTon, PalletCapacity, PrivateCar, RentDuration.
+   * Returns ShipmentType, RequestType, CarType, WeightInTon, PalletCapacity, PrivateCar, RentDuration.
    */
   getOrderFormLookups(): Observable<LookupResponse> {
     const ids = [
       LookupCategory.ShipmentType,
       LookupCategory.RequestType,
-      LookupCategory.PaymentMethod,
       LookupCategory.CarType,
       LookupCategory.WeightInTon,
       LookupCategory.PalletCapacity,

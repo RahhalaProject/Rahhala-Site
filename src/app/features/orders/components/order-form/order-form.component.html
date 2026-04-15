@@ -346,6 +346,7 @@
           <div class="col-12 mb-3">
             <p-datepicker
               [(ngModel)]="date"
+              [minDate]="minDeliveryDate"
               [iconDisplay]="'input'"
               [showIcon]="true"
               inputId="icondisplay"
@@ -392,11 +393,11 @@
               [options]="paymentMethodOptions"
               [(ngModel)]="selectedPaymentMethod"
               optionLabel="name"
-              optionValue="id"
+              optionValue="value"
               placeholder="{{ 'paymentMethod' | translate }}"
               class="w-full md:w-56"
             />
-            <small *ngIf="showPaymentMethodErrors && !selectedPaymentMethod" class="p-error">
+            <small *ngIf="showPaymentMethodErrors && selectedPaymentMethod == null" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
