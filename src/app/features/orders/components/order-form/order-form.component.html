@@ -170,8 +170,9 @@
                   <p-checkbox
                     inputId="shipmentSpeedExpress"
                     name="shipmentSpeed"
-                    value="Express"
-                    [(ngModel)]="shipmentSpeed"
+                    [binary]="true"
+                    [ngModel]="shipmentSpeed === 'Express'"
+                    (onChange)="setShipmentSpeed('Express')"
                   />
               </div>
               <div style="margin: 0 5px"></div>
@@ -182,8 +183,9 @@
                   <p-checkbox
                     inputId="shipmentSpeedNormal"
                     name="shipmentSpeed"
-                    value="Normal"
-                    [(ngModel)]="shipmentSpeed"
+                    [binary]="true"
+                    [ngModel]="shipmentSpeed === 'Normal'"
+                    (onChange)="setShipmentSpeed('Normal')"
                   />
               </div>
             </div>
@@ -203,24 +205,39 @@
           </div>
           <div class="col-12 mb-3">
             <div class="tags-div">
-              <input
-                type="number"
-                pInputText
-                [(ngModel)]="shipmentLength"
-                placeholder="{{ 'enterLength' | translate }}"
-              />
-              <input
-                type="number"
-                pInputText
-                [(ngModel)]="shipmentWidth"
-                placeholder="{{ 'enterWidth' | translate }}"
-              />
-              <input
-                type="number"
-                pInputText
-                [(ngModel)]="shipmentHeight"
-                placeholder="{{ 'enterHeight' | translate }}"
-              />
+              <div class="dimension-field">
+                <input
+                  type="number"
+                  pInputText
+                  [(ngModel)]="shipmentLength"
+                  placeholder="{{ 'enterLength' | translate }}"
+                />
+                <small *ngIf="showValidationErrors && shipmentLength == null" class="p-error">
+                  {{ "requiredField" | translate }}
+                </small>
+              </div>
+              <div class="dimension-field">
+                <input
+                  type="number"
+                  pInputText
+                  [(ngModel)]="shipmentWidth"
+                  placeholder="{{ 'enterWidth' | translate }}"
+                />
+                <small *ngIf="showValidationErrors && shipmentWidth == null" class="p-error">
+                  {{ "requiredField" | translate }}
+                </small>
+              </div>
+              <div class="dimension-field">
+                <input
+                  type="number"
+                  pInputText
+                  [(ngModel)]="shipmentHeight"
+                  placeholder="{{ 'enterHeight' | translate }}"
+                />
+                <small *ngIf="showValidationErrors && shipmentHeight == null" class="p-error">
+                  {{ "requiredField" | translate }}
+                </small>
+              </div>
             </div>
           </div>
           <div class="col-12 mb-3">
@@ -250,8 +267,8 @@
     />
     <p-button
       label="{{ 'save' | translate }}"
-      (click)="visibleShipmentDetails = false"
-      (keydown.enter)="visibleShipmentDetails = false"
+      (click)="onShipmentDetailsSaveClick()"
+      (keydown.enter)="onShipmentDetailsSaveClick()"
     />
   </div>
 </p-dialog>
@@ -343,8 +360,8 @@
     />
     <p-button
       label="{{ 'save' | translate }}"
-      (click)="visibleDeliveryDate = false"
-      (keydown.enter)="visibleDeliveryDate = false"
+      (click)="onDeliveryDateSaveClick()"
+      (keydown.enter)="onDeliveryDateSaveClick()"
     />
   </div>
 </p-dialog>
@@ -389,8 +406,8 @@
     />
     <p-button
       label="{{ 'save' | translate }}"
-      (click)="visiblePaymentMethod = false"
-      (keydown.enter)="visiblePaymentMethod = false"
+      (click)="onPaymentMethodSaveClick()"
+      (keydown.enter)="onPaymentMethodSaveClick()"
     />
   </div>
 </p-dialog>
@@ -421,9 +438,6 @@
               <span>{{ pickupPlaceName || ("useCurrentLocation" | translate) }}</span>
               <i class="pi pi-send"></i>
             </button>
-            <small *ngIf="showValidationErrors && !pickupPlaceName" class="p-error">
-              {{ "requiredField" | translate }}
-            </small>
           </div>
           <div class="col-12 mb-3">
             <p-select
@@ -496,9 +510,6 @@
               <span>{{ deliveryPlaceName || ("address" | translate) }}</span>
               <i class="pi pi-map"></i>
             </button>
-            <small *ngIf="showValidationErrors && !deliveryPlaceName" class="p-error">
-              {{ "requiredField" | translate }}
-            </small>
           </div>
           <div class="col-12 mb-3">
             <p-select
@@ -550,8 +561,8 @@
     />
     <p-button
       label="{{ 'save' | translate }}"
-      (click)="visibleLocation = false"
-      (keydown.enter)="visibleLocation = false"
+      (click)="onLocationSaveClick()"
+      (keydown.enter)="onLocationSaveClick()"
     />
   </div>
 </p-dialog>

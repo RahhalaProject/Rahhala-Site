@@ -86,7 +86,7 @@ export class OrderFormComponent implements OnInit {
   selectedPalletCapacity: string | null = null;
   selectedPrivateCar: string | null = null;
   selectedRentDuration: string | null = null;
-  shipmentSpeed: string | null = null;
+  shipmentSpeed: 'Express' | 'Normal' = 'Express';
   shipmentLength: number | null = null;
   shipmentWidth: number | null = null;
   shipmentHeight: number | null = null;
@@ -214,6 +214,10 @@ export class OrderFormComponent implements OnInit {
     this.visibleShipmentDetails = true;
   }
 
+  setShipmentSpeed(speed: 'Express' | 'Normal'): void {
+    this.shipmentSpeed = speed;
+  }
+
   showUploadDialog() {
     this.visibleUpload = true;
   }
@@ -329,7 +333,9 @@ export class OrderFormComponent implements OnInit {
 
   onOrderConfirmationClick() {
     this.showValidationErrors = true;
-    if (!this.validateRequiredFields()) {
+    const missingFields = this.getAllRequiredFieldErrors();
+    if (missingFields.length) {
+      this.showValidationToast(missingFields);
       return;
     }
 
@@ -392,7 +398,47 @@ export class OrderFormComponent implements OnInit {
     });
   }
 
-  private validateRequiredFields(): boolean {
+  onShipmentDetailsSaveClick(): void {
+    this.showValidationErrors = true;
+    const missingFields = this.getShipmentDetailsRequiredFieldErrors();
+    if (missingFields.length) {
+      this.showValidationToast(missingFields);
+      return;
+    }
+    this.visibleShipmentDetails = false;
+  }
+
+  onDeliveryDateSaveClick(): void {
+    this.showValidationErrors = true;
+    const missingFields = this.getDeliveryDateRequiredFieldErrors();
+    if (missingFields.length) {
+      this.showValidationToast(missingFields);
+      return;
+    }
+    this.visibleDeliveryDate = false;
+  }
+
+  onPaymentMethodSaveClick(): void {
+    this.showValidationErrors = true;
+    const missingFields = this.getPaymentMethodRequiredFieldErrors();
+    if (missingFields.length) {
+      this.showValidationToast(missingFields);
+      return;
+    }
+    this.visiblePaymentMethod = false;
+  }
+
+  onLocationSaveClick(): void {
+    this.showValidationErrors = true;
+    const missingFields = this.getLocationRequiredFieldErrors();
+    if (missingFields.length) {
+      this.showValidationToast(missingFields);
+      return;
+    }
+    this.visibleLocation = false;
+  }
+
+  private getShipmentDetailsRequiredFieldErrors(): string[] {
     const missingFields: string[] = [];
 
     if (!this.selectedShipmentType) {
@@ -401,15 +447,36 @@ export class OrderFormComponent implements OnInit {
     if (!this.selectedRequestType) {
       missingFields.push(this.translate.instant('orderType'));
     }
-    if (!this.selectedPaymentMethod) {
-      missingFields.push(this.translate.instant('paymentMethod'));
+    if (this.shipmentLength == null) {
+      missingFields.push(this.translate.instant('enterLength'));
     }
+    if (this.shipmentWidth == null) {
+      missingFields.push(this.translate.instant('enterWidth'));
+    }
+    if (this.shipmentHeight == null) {
+      missingFields.push(this.translate.instant('enterHeight'));
+    }
+    return missingFields;
+  }
+
+  private getDeliveryDateRequiredFieldErrors(): string[] {
+    const missingFields: string[] = [];
     if (!this.date) {
       missingFields.push(this.translate.instant('deliveryDate'));
     }
-    if (!this.pickupPlaceName) {
-      missingFields.push(this.translate.instant('pickupLocation'));
+    return missingFields;
+  }
+
+  private getPaymentMethodRequiredFieldErrors(): string[] {
+    const missingFields: string[] = [];
+    if (!this.selectedPaymentMethod) {
+      missingFields.push(this.translate.instant('paymentMethod'));
     }
+    return missingFields;
+  }
+
+  private getLocationRequiredFieldErrors(): string[] {
+    const missingFields: string[] = [];
     if (!this.pickupCityId) {
       missingFields.push(`${this.translate.instant('pickupAddress')} - ${this.translate.instant('city')}`);
     }
@@ -429,9 +496,6 @@ export class OrderFormComponent implements OnInit {
     if (!this.recipientPhone.trim()) {
       missingFields.push(this.translate.instant('phoneNumber'));
     }
-    if (!this.deliveryPlaceName) {
-      missingFields.push(this.translate.instant('address'));
-    }
     if (!this.deliveryCityId) {
       missingFields.push(`${this.translate.instant('address')} - ${this.translate.instant('city')}`);
     }
@@ -445,17 +509,24 @@ export class OrderFormComponent implements OnInit {
         `${this.translate.instant('address')} - ${this.translate.instant('streetName')}`
       );
     }
+    return missingFields;
+  }
 
-    if (!missingFields.length) {
-      return true;
-    }
+  private getAllRequiredFieldErrors(): string[] {
+    return [
+      ...this.getShipmentDetailsRequiredFieldErrors(),
+      ...this.getDeliveryDateRequiredFieldErrors(),
+      ...this.getPaymentMethodRequiredFieldErrors(),
+      ...this.getLocationRequiredFieldErrors(),
+    ];
+  }
 
+  private showValidationToast(missingFields: string[]): void {
     this.messageService.add({
       severity: 'error',
       summary: this.translate.instant('error') || 'Error',
       detail: `${this.translate.instant('pleaseCompleteRequiredFields')}\n${missingFields.join(', ')}`,
     });
-    return false;
   }
 
   onUpload(event: any) {
