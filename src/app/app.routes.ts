@@ -83,6 +83,13 @@ export const routes: Routes = [
           ).then((m) => m.OrderFormComponent),
       },
       {
+        path: 'car-rental-request',
+        loadComponent: () =>
+          import(
+            './features/orders/components/car-rental-request/car-rental-request.component'
+          ).then((m) => m.CarRentalRequestComponent),
+      },
+      {
         path: 'wallet',
         loadComponent: () =>
           import('./features/orders/components/wallet/wallet.component').then(

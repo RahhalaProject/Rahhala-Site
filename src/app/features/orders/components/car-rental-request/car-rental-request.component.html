@@ -1,0 +1,566 @@
+<div class="title-sec">
+  <div class="title-div">
+    <h4>{{ "carRentalRequest" | translate }}</h4>
+  </div>
+</div>
+<div class="container">
+  <p-card class="box">
+    <div class="form">
+      <div class="mb-6">
+        <p class="title form-section-heading">{{ "requestType" | translate }}</p>
+        <div class="checks">
+          <div class="flex items-center item">
+            <label for="reqPersonal" class="ml-2">
+              {{ "requestTypePersonal" | translate }}
+            </label>
+            <p-checkbox
+              inputId="reqPersonal"
+              [binary]="true"
+              [ngModel]="requestKind === 'personal'"
+              (onChange)="onRequestKindPersonal($event.checked)"
+            />
+          </div>
+          <div class="checks-spacer"></div>
+          <div class="flex items-center item">
+            <label for="reqCorporate" class="ml-2">
+              {{ "requestTypeCorporate" | translate }}
+            </label>
+            <p-checkbox
+              inputId="reqCorporate"
+              [binary]="true"
+              [ngModel]="requestKind === 'corporate'"
+              (onChange)="onRequestKindCorporate($event.checked)"
+            />
+          </div>
+        </div>
+
+        <div class="form-field-block company-name-field" *ngIf="requestKind === 'corporate'">
+          <p class="title-cum field-label">{{ "companyNameLabel" | translate }}</p>
+          <input
+            pInputText
+            type="text"
+            class="company-name-input w-full"
+            [(ngModel)]="companyName"
+            [placeholder]="'companyNamePlaceholder' | translate"
+          />
+          <small
+            *ngIf="showValidationErrors && !companyName?.trim()"
+            class="p-error"
+          >
+            {{ "requiredField" | translate }}
+          </small>
+        </div>
+
+        <div class="form-field-block">
+          <p class="title-cum field-label">{{ "carType" | translate }}</p>
+          <p-select
+            [options]="carTypeOptions"
+            [(ngModel)]="selectedCarType"
+            optionLabel="name"
+            optionValue="id"
+            [placeholder]="'carType' | translate"
+            class="w-full"
+          />
+          <small
+            *ngIf="showValidationErrors && !selectedCarType"
+            class="p-error"
+          >
+            {{ "requiredField" | translate }}
+          </small>
+        </div>
+
+        <div class="form-field-block">
+          <p class="title-cum field-label">{{ "shipmentType" | translate }}</p>
+          <p-select
+            [options]="shipmentTypeOptions"
+            [(ngModel)]="selectedShipmentType"
+            (ngModelChange)="onShipmentTypeIdChange($event)"
+            optionLabel="name"
+            optionValue="id"
+            [placeholder]="'shipmentType' | translate"
+            class="w-full"
+          />
+          <small
+            *ngIf="showValidationErrors && !selectedShipmentType"
+            class="p-error"
+          >
+            {{ "requiredField" | translate }}
+          </small>
+        </div>
+
+        <div class="form-field-block" *ngIf="isDryShipmentSelected">
+          <p class="title-cum field-label">{{ "dryBoxType" | translate }}</p>
+          <p-select
+            [options]="dryBoxTypeOptions"
+            [(ngModel)]="selectedDryBoxType"
+            optionLabel="name"
+            optionValue="value"
+            [placeholder]="'dryBoxType' | translate"
+            class="w-full"
+          />
+          <small
+            *ngIf="showValidationErrors && selectedDryBoxType == null"
+            class="p-error"
+          >
+            {{ "requiredField" | translate }}
+          </small>
+        </div>
+
+        <div class="form-field-block">
+          <p class="title-cum field-label">{{ "weightTons" | translate }}</p>
+          <p-select
+            [options]="weightInTonOptions"
+            [(ngModel)]="selectedWeightInTon"
+            optionLabel="name"
+            optionValue="id"
+            [placeholder]="'weightTons' | translate"
+            class="w-full"
+          />
+          <small
+            *ngIf="showValidationErrors && !selectedWeightInTon"
+            class="p-error"
+          >
+            {{ "requiredField" | translate }}
+          </small>
+        </div>
+
+        <div class="form-field-block">
+          <p class="title-cum field-label">{{ "loadByPallet" | translate }}</p>
+          <p-select
+            [options]="palletCapacityOptions"
+            [(ngModel)]="selectedPalletCapacity"
+            optionLabel="name"
+            optionValue="id"
+            [placeholder]="'loadByPallet' | translate"
+            class="w-full"
+          />
+          <small
+            *ngIf="showValidationErrors && !selectedPalletCapacity"
+            class="p-error"
+          >
+            {{ "requiredField" | translate }}
+          </small>
+        </div>
+
+        <div class="form-field-block">
+          <p class="title-cum field-label">{{ "rentDuration" | translate }}</p>
+          <p-select
+            [options]="rentDurationOptions"
+            [(ngModel)]="selectedRentDuration"
+            optionLabel="name"
+            optionValue="id"
+            [placeholder]="'rentDuration' | translate"
+            class="w-full"
+          />
+          <small
+            *ngIf="showValidationErrors && !selectedRentDuration"
+            class="p-error"
+          >
+            {{ "requiredField" | translate }}
+          </small>
+        </div>
+
+        <div class="form-field-block date-range-fields">
+          <p class="title form-section-heading date-range-title">
+            {{ "rentalPeriodDates" | translate }}
+          </p>
+          <p class="date-range-hint">{{ "dateRangeHint" | translate }}</p>
+          <div class="date-range-panel">
+            <div class="row g-3 g-md-4 align-items-end">
+              <div class="col-12 col-md-5">
+                <p class="title-cum field-label">{{ "fromDate" | translate }}</p>
+                <p-datepicker
+                  [(ngModel)]="fromDate"
+                  (ngModelChange)="onFromDateChange()"
+                  [minDate]="minDate"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  [placeholder]="'selectDate' | translate"
+                  inputId="carRentalFromDate"
+                  class="w-full date-field-control"
+                  [inputStyle]="{ width: '100%' }"
+                  appendTo="body"
+                />
+                <small *ngIf="showValidationErrors && !fromDate" class="p-error">
+                  {{ "requiredField" | translate }}
+                </small>
+              </div>
+              <div
+                class="col-12 col-md-2 d-none d-md-flex justify-content-center align-items-center pb-2 date-range-sep"
+                aria-hidden="true"
+              >
+                <i
+                  class="pi date-range-sep-icon"
+                  [ngClass]="
+                    currentLang === 'ar' ? 'pi-arrow-left' : 'pi-arrow-right'
+                  "
+                ></i>
+              </div>
+              <div class="col-12 col-md-5">
+                <p class="title-cum field-label">{{ "toDate" | translate }}</p>
+                <p-datepicker
+                  [(ngModel)]="toDate"
+                  [minDate]="minToDate"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  [placeholder]="'selectDate' | translate"
+                  inputId="carRentalToDate"
+                  class="w-full date-field-control"
+                  [inputStyle]="{ width: '100%' }"
+                  appendTo="body"
+                />
+                <small *ngIf="showValidationErrors && !toDate" class="p-error">
+                  {{ "requiredField" | translate }}
+                </small>
+                <small
+                  *ngIf="
+                    showValidationErrors &&
+                    fromDate &&
+                    toDate &&
+                    !isToAfterFrom()
+                  "
+                  class="p-error"
+                >
+                  {{ "toDateMustBeAfterFromDate" | translate }}
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="title form-section-heading pickup-heading">
+          {{ "pickupLocation" | translate }}
+        </p>
+        <div class="checks">
+          <div class="flex items-center item">
+            <label for="pickupHq" class="ml-2">
+              {{ "fromHQ" | translate }}
+            </label>
+            <p-checkbox
+              inputId="pickupHq"
+              [binary]="true"
+              [ngModel]="pickupSource === 'hq'"
+              (onChange)="onPickupHqChange($event.checked)"
+            />
+          </div>
+          <div class="checks-spacer"></div>
+          <div class="flex items-center item">
+            <label for="pickupMy" class="ml-2">
+              {{ "myLocation" | translate }}
+            </label>
+            <p-checkbox
+              inputId="pickupMy"
+              [binary]="true"
+              [ngModel]="pickupSource === 'my'"
+              (onChange)="onPickupMyChange($event.checked)"
+            />
+          </div>
+        </div>
+
+        <div class="pickup-my-block" *ngIf="pickupSource === 'my'">
+          <p class="title-cum field-label pickup-address-instruction">
+            {{ "pickupAddressWriteLabel" | translate }}
+          </p>
+          <div class="mb-3">
+            <button
+              type="button"
+              class="form-item form-item-custom"
+              (click)="openPickupLocationMap()"
+            >
+              <span>{{ pickupMapButtonText }}</span>
+              <i class="pi pi-send"></i>
+            </button>
+          </div>
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "placeName" | translate }}</p>
+            <input
+              pInputText
+              type="text"
+              class="w-full pickup-text-input"
+              [(ngModel)]="pickupPlaceNameText"
+              [placeholder]="'placeName' | translate"
+            />
+            <small
+              *ngIf="
+                showValidationErrors &&
+                pickupSource === 'my' &&
+                !pickupPlaceNameText?.trim()
+              "
+              class="p-error"
+            >
+              {{ "requiredField" | translate }}
+            </small>
+          </div>
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "streetName" | translate }}</p>
+            <input
+              pInputText
+              type="text"
+              class="w-full pickup-text-input"
+              [(ngModel)]="pickupStreetText"
+              [placeholder]="'streetName' | translate"
+            />
+            <small
+              *ngIf="
+                showValidationErrors &&
+                pickupSource === 'my' &&
+                !pickupStreetText?.trim()
+              "
+              class="p-error"
+            >
+              {{ "requiredField" | translate }}
+            </small>
+          </div>
+        </div>
+
+        <!-- Upload image: disabled until feature is enabled
+        <button
+          type="button"
+          class="form-item dashed"
+          (click)="showUploadDialog()"
+        >
+          <span
+            ><i class="pi pi-camera"></i>{{ "uploadImage" | translate }}</span
+          >
+        </button>
+        -->
+
+        <button
+          type="button"
+          class="form-item"
+          (click)="showPaymentMethodDialog()"
+          [attr.aria-label]="'paymentMethod' | translate"
+        >
+          <span
+            ><i class="pi pi-credit-card"></i
+            >{{ "paymentMethod" | translate }}</span
+          >
+          <i
+            class="pi"
+            [ngClass]="
+              currentLang === 'ar' ? 'pi-angle-left' : 'pi-angle-right'
+            "
+            aria-hidden="true"
+          ></i>
+        </button>
+        <small
+          *ngIf="
+            showPaymentMethodValidationErrors && selectedPaymentMethod == null
+          "
+          class="p-error"
+        >
+          {{ "requiredField" | translate }}
+        </small>
+
+        <p-button
+          class="initialPricing-btn"
+          [label]="'initialPricing' | translate"
+          severity="contrast"
+          size="small"
+          (onClick)="onInitialPricingClick()"
+        />
+        <p-button
+          [label]="'orderConfirmation' | translate"
+          severity="contrast"
+          size="small"
+          (onClick)="onConfirmOrder()"
+        />
+
+        <div class="flex w-full justify-between gap-3 flex-wrap cancel-actions">
+          <p-button
+            label="{{ 'cancel' | translate }}"
+            severity="secondary"
+            (onClick)="onCancel()"
+          />
+        </div>
+      </div>
+    </div>
+  </p-card>
+</div>
+
+<p-dialog
+  [modal]="true"
+  [(visible)]="visiblePaymentMethod"
+  [style]="{ width: '50rem' }"
+  class="PaymentMethod-form"
+>
+  <div class="flex flex-col h-48 mb-3">
+    <div
+      class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+    >
+      <div class="flex justify-center card-cus">
+        <div class="row">
+          <div class="col-12 mb-3">
+            <p-select
+              [options]="paymentMethodOptions"
+              [(ngModel)]="selectedPaymentMethod"
+              optionLabel="name"
+              optionValue="value"
+              placeholder="{{ 'paymentMethod' | translate }}"
+              class="w-full md:w-56"
+            />
+            <small
+              *ngIf="showPaymentMethodValidationErrors && selectedPaymentMethod == null"
+              class="p-error"
+            >
+              {{ "requiredField" | translate }}
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex w-full justify-between">
+    <p-button
+      label="{{ 'cancel' | translate }}"
+      severity="secondary"
+      (click)="visiblePaymentMethod = false"
+      (keydown.enter)="visiblePaymentMethod = false"
+    />
+    <p-button
+      label="{{ 'save' | translate }}"
+      (click)="onPaymentMethodSaveClick()"
+      (keydown.enter)="onPaymentMethodSaveClick()"
+    />
+  </div>
+</p-dialog>
+
+<p-dialog
+  [modal]="true"
+  [(visible)]="visibleLocationMap"
+  [style]="{ width: '50rem' }"
+  class="LocationMap-form"
+  [header]="('setLocationOnMap' | translate)"
+>
+  <div class="flex flex-col mb-3">
+    <div
+      class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 p-4"
+    >
+      <div class="flex justify-center card-cus w-full">
+        <div class="row w-100">
+          <div class="col-12">
+            <div
+              class="w-full p-4 mb-3 border-round text-center"
+              style="background: #eef2ff; min-height: 220px"
+            >
+              <p class="mb-2">{{ "map" | translate }}</p>
+              <small>{{ "mapStaticMode" | translate }}</small>
+            </div>
+          </div>
+          <div class="col-12 mb-3">
+            <input
+              type="text"
+              pInputText
+              class="w-full"
+              [(ngModel)]="mapSearchText"
+              [placeholder]="'searchLocationPlaceholder' | translate"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <div class="w-full p-2 border-round" style="background: #f8fafc">
+              <button
+                *ngFor="let location of filteredMapLocations"
+                class="form-item form-item-custom mb-2"
+                type="button"
+                (click)="selectMapLocation(location)"
+              >
+                <span>
+                  {{ currentLang === "ar" ? location.nameAr : location.nameEn }}
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            <p class="title">{{ "selectedLocationTitle" | translate }}</p>
+            <p>
+              {{
+                selectedLocationDescription ||
+                  ("selectedLocationDescEmpty" | translate)
+              }}
+            </p>
+          </div>
+          <div class="col-12 mb-3">
+            <input
+              type="number"
+              pInputText
+              class="w-full"
+              [(ngModel)]="mapLat"
+              [placeholder]="'latitude' | translate"
+            />
+          </div>
+          <div class="col-12 mb-3">
+            <input
+              type="number"
+              pInputText
+              class="w-full"
+              [(ngModel)]="mapLng"
+              [placeholder]="'longitude' | translate"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex w-full justify-between">
+    <p-button
+      label="{{ 'resetCurrentLocation' | translate }}"
+      severity="secondary"
+      (click)="resetPickupMapLocation()"
+      (keydown.enter)="resetPickupMapLocation()"
+    />
+    <p-button
+      label="{{ 'confirmLocation' | translate }}"
+      (click)="confirmPickupLocation()"
+      (keydown.enter)="confirmPickupLocation()"
+    />
+  </div>
+</p-dialog>
+
+<!-- Upload dialog: disabled with upload button until feature is enabled
+<p-dialog
+  [modal]="true"
+  [(visible)]="visibleUpload"
+  [style]="{ width: '50rem' }"
+  class="Upload-form"
+>
+  <div class="flex flex-col h-48 mb-3">
+    <div
+      class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+    >
+      <div class="flex justify-center card-cus">
+        <div class="row">
+          <div class="col-12 mb-3">
+            <p-fileupload
+              name="carRentalImages[]"
+              [customUpload]="true"
+              (onSelect)="onFilesSelected($event)"
+              (uploadHandler)="onUpload($event)"
+              [multiple]="true"
+              accept="image/*"
+              maxFileSize="1000000"
+              mode="advanced"
+            >
+              <ng-template #empty>
+                <div>Drag and drop files to here to upload.</div>
+              </ng-template>
+            </p-fileupload>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex w-full justify-between">
+    <p-button
+      label="{{ 'cancel' | translate }}"
+      severity="secondary"
+      (click)="visibleUpload = false"
+      (keydown.enter)="visibleUpload = false"
+    />
+    <p-button
+      label="{{ 'save' | translate }}"
+      (click)="onUploadSaveClick()"
+      (keydown.enter)="onUploadSaveClick()"
+    />
+  </div>
+</p-dialog>
+-->

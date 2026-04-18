@@ -7,4 +7,6 @@ export interface LookupItem {
   name: string;
   nameAr?: string;
   nameEn?: string;
+  /** Shipment type discriminator from API, e.g. `"Dry"`. */
+  key?: string;
 }

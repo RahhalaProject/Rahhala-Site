@@ -1,0 +1,318 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 80px 20px 40px 20px;
+  box-sizing: border-box;
+}
+
+.box {
+  background-color: #ffffff;
+  padding: 60px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Match order-form: stacked action rows */
+.form-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #003768;
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 12px;
+  background: #fff;
+  cursor: pointer;
+  width: 100%;
+}
+
+.form-item.dashed {
+  border: 2px dashed #003768;
+  background: #fafafa;
+  cursor: pointer;
+}
+
+.form-item span {
+  color: #013769;
+  font-family: var(--btn-font-family);
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.form-item span i {
+  margin: 0 10px;
+}
+
+.form-section-heading {
+  font-family: var(--btn-font-family);
+  font-weight: 600;
+  font-size: 14px;
+  color: #003768;
+  text-align: center;
+  margin-bottom: 0.65rem;
+}
+
+.pickup-heading {
+  margin-top: 0.25rem;
+}
+
+.form-field-block {
+  margin-bottom: 1rem;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.checks-spacer {
+  margin: 0 5px;
+  flex-shrink: 0;
+}
+
+.cancel-actions {
+  margin-top: 0.25rem;
+}
+
+.company-name-field {
+  width: 100%;
+  max-width: 100%;
+}
+
+.pickup-my-block {
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed rgba(0, 55, 104, 0.25);
+}
+
+.pickup-address-instruction {
+  text-align: center;
+  margin-bottom: 0.65rem;
+}
+
+.form-item-custom {
+  display: inline-flex;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  background: var(--p-select-background);
+  border: 1px solid var(--p-select-border-color);
+  transition: background var(--p-select-transition-duration),
+    color var(--p-select-transition-duration),
+    border-color var(--p-select-transition-duration),
+    outline-color var(--p-select-transition-duration),
+    box-shadow var(--p-select-transition-duration);
+  border-radius: var(--p-select-border-radius);
+  outline-color: transparent;
+  box-shadow: var(--p-select-shadow);
+  padding: var(--p-select-padding-y) var(--p-select-padding-x);
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.form-item-custom span {
+  color: var(--p-select-placeholder-color);
+  font-size: 1rem;
+}
+
+/* فترة الإيجار: من / إلى */
+.date-range-fields {
+  margin-bottom: 1.25rem;
+
+  .row {
+    margin-inline: 0;
+  }
+}
+
+.date-range-title {
+  margin-bottom: 0.35rem;
+}
+
+.date-range-hint {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: #4b5563;
+  text-align: center;
+  margin: 0 0 0.85rem;
+  padding: 0 0.25rem;
+}
+
+.date-range-panel {
+  border: 1px solid rgba(0, 55, 104, 0.2);
+  border-radius: 10px;
+  background: #fafbfc;
+  padding: 1rem 1rem 1.1rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.date-range-sep-icon {
+  font-size: 1.25rem;
+  color: #003768;
+  opacity: 0.85;
+}
+
+:host ::ng-deep {
+  .box .form .p-button {
+    width: 100%;
+    padding: 12px;
+    background: #003768;
+    display: block;
+    margin-top: 20px;
+  }
+
+  .box .form .p-button-label {
+    font-weight: 600;
+    font-size: 13px;
+    color: #ffffff;
+  }
+
+  .box .form .initialPricing-btn .p-button {
+    background: #707070;
+  }
+
+  .box .form .cancel-actions .p-button {
+    width: 100%;
+    margin-top: 20px;
+    background: var(--p-secondary-background, #e5e7eb);
+    color: var(--p-secondary-color, #374151);
+    border: 1px solid var(--p-secondary-border-color, #d1d5db);
+  }
+
+  .box .form .cancel-actions .p-button .p-button-label {
+    color: inherit;
+    font-weight: 600;
+  }
+
+  .card-cus {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .p-select {
+    width: 100%;
+  }
+
+  .checks {
+    display: flex;
+    margin-bottom: 12px;
+
+    .item {
+      width: 50%;
+      padding: var(--p-select-padding-y) var(--p-select-padding-x);
+      border: 1px solid var(--p-select-border-color);
+      transition: background var(--p-select-transition-duration),
+        color var(--p-select-transition-duration),
+        border-color var(--p-select-transition-duration),
+        outline-color var(--p-select-transition-duration),
+        box-shadow var(--p-select-transition-duration);
+      border-radius: var(--p-select-border-radius);
+      outline-color: transparent;
+      box-shadow: var(--p-select-shadow) 0 0 #0000, 0 0 #0000,
+        0 1px 2px 0 rgba(18, 18, 23, 0.05);
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .title,
+  .title-cum {
+    font-family: var(--btn-font-family);
+    font-weight: 600;
+    font-style: Sans One Bold;
+    font-size: 14px;
+    color: #003768;
+  }
+
+  .title.form-section-heading {
+    text-align: center;
+  }
+
+  .title-cum.field-label {
+    text-align: inherit;
+  }
+
+  .p-datepicker {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+  }
+
+  .date-range-fields .p-datepicker,
+  .date-range-fields .date-field-control.p-datepicker {
+    width: 100%;
+  }
+
+  .date-range-fields .p-datepicker .p-inputtext,
+  .date-range-fields .p-datepicker input.p-inputtext {
+    width: 100% !important;
+    min-width: 0;
+    box-sizing: border-box;
+    min-height: 2.75rem;
+  }
+
+  .date-range-fields .p-datepicker .p-datepicker-input-icon {
+    flex-shrink: 0;
+  }
+
+  .Upload-form .p-datepicker-panel,
+  .PaymentMethod-form .p-datepicker-panel,
+  .DeliveryDate-form .p-datepicker .p-datepicker-panel,
+  .date-range-fields .p-datepicker-panel {
+    position: fixed !important;
+  }
+
+  .p-inputtext {
+    width: inherit;
+  }
+
+  .company-name-field .company-name-input.p-inputtext,
+  .company-name-field input.company-name-input {
+    width: 100% !important;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: block;
+    min-height: 2.75rem;
+  }
+
+  .pickup-text-input.p-inputtext,
+  .pickup-my-block input.p-inputtext {
+    width: 100% !important;
+    box-sizing: border-box;
+    min-height: 2.75rem;
+  }
+
+  .LocationMap-form .title {
+    font-family: var(--btn-font-family);
+    font-weight: 600;
+    font-size: 14px;
+    color: #003768;
+  }
+}
+
+:host ::ng-deep .p-error {
+  display: block;
+  margin-top: 0.35rem;
+  margin-inline-start: 0.15rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #dc2626;
+}
+
+@media (max-width: 600px) {
+  .box {
+    padding: 20px;
+    border-radius: 5px;
+  }
+}
+
+@media (max-width: 320px) {
+  .box {
+    padding: 10px;
+  }
+}

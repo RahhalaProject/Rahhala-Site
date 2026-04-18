@@ -65,18 +65,12 @@ export class OrderFormComponent implements OnInit {
   /** Earliest selectable delivery day (start of tomorrow); today and past dates are disabled. */
   minDeliveryDate!: Date;
   date: Date | undefined;
-  visibleRequestPrivateTrip = false;
 
   // Lookup options (id + name)
   shipmentTypeOptions: LookupItem[] = [];
   requestTypeOptions: LookupItem[] = [];
   /** Labels from i18n; `value` is backend PaymentMethod enum (1–3). */
   paymentMethodOptions: { name: string; value: PaymentMethod }[] = [];
-  carTypeOptions: LookupItem[] = [];
-  weightInTonOptions: LookupItem[] = [];
-  palletCapacityOptions: LookupItem[] = [];
-  privateCarOptions: LookupItem[] = [];
-  rentDurationOptions: LookupItem[] = [];
   cities: LookupItem[] = [];
   provinces: LookupItem[] = [];
 
@@ -84,11 +78,6 @@ export class OrderFormComponent implements OnInit {
   selectedShipmentType: string | null = null;
   selectedRequestType: string | null = null;
   selectedPaymentMethod: PaymentMethod | null = null;
-  selectedCarType: string | null = null;
-  selectedWeightInTon: string | null = null;
-  selectedPalletCapacity: string | null = null;
-  selectedPrivateCar: string | null = null;
-  selectedRentDuration: string | null = null;
   shipmentSpeed: 'Express' | 'Normal' = 'Express';
   shipmentLength: number | null = null;
   shipmentWidth: number | null = null;
@@ -215,11 +204,6 @@ export class OrderFormComponent implements OnInit {
       next: (res) => {
         this.shipmentTypeOptions = res.ShipmentType ?? [];
         this.requestTypeOptions = res.RequestType ?? [];
-        this.carTypeOptions = res.CarType ?? [];
-        this.weightInTonOptions = res.WeightInTon ?? [];
-        this.palletCapacityOptions = res.PalletCapacity ?? [];
-        this.privateCarOptions = res.PrivateCar ?? [];
-        this.rentDurationOptions = res.RentDuration ?? [];
       },
       error: () => {
         this.messageService.add({
@@ -306,16 +290,6 @@ export class OrderFormComponent implements OnInit {
     this.showPaymentMethodValidationErrors = false;
     this.visiblePaymentMethod = true;
   }
-
-  // Reserved for future trigger buttons in the main actions list.
-  // showRequestPrivateTripDialog() {
-  //   this.visibleRequestPrivateTrip = true;
-  // }
-
-  // Reserved for future trigger buttons in the main actions list.
-  // showLocationMapDialog() {
-  //   this.openLocationMap('pickup');
-  // }
 
   openLocationMap(target: 'pickup' | 'delivery') {
     this.mapTarget = target;
