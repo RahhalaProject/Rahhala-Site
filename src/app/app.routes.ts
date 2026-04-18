@@ -103,6 +103,13 @@ export const routes: Routes = [
             './features/orders/components/order-track/order-track.component'
           ).then((m) => m.OrderTrackComponent),
       },
+      {
+        path: 'my-orders',
+        loadComponent: () =>
+          import(
+            './features/orders/components/my-orders/my-orders.component'
+          ).then((m) => m.MyOrdersComponent),
+      },
     ],
   },
   { path: '**', redirectTo: 'home' },

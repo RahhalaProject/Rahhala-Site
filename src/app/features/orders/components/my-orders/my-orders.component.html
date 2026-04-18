@@ -1,0 +1,43 @@
+<div class="title-sec">
+  <div class="title-div">
+    <h4>{{ "myOrdersPageTitle" | translate }}</h4>
+  </div>
+</div>
+
+<div class="container my-orders-page">
+  <p-card class="box">
+    <div class="my-orders-toolbar">
+      <label class="toolbar-label" for="orderStatusFilter">{{
+        "filterByOrderStatus" | translate
+      }}</label>
+      <p-select
+        inputId="orderStatusFilter"
+        [options]="statusFilterOptions"
+        [(ngModel)]="selectedOrderStatus"
+        optionLabel="label"
+        optionValue="value"
+        [placeholder]="'orderStatusAll' | translate"
+        class="status-filter"
+        (ngModelChange)="onStatusFilterChange()"
+      />
+      <p-button
+        type="button"
+        [outlined]="true"
+        icon="pi pi-refresh"
+        [label]="'refresh' | translate"
+        (onClick)="loadOrders()"
+        styleClass="toolbar-refresh-btn"
+      />
+    </div>
+
+    <app-entity-table
+      [items]="orders"
+      [columns]="tableColumns"
+      dataKey="orderId"
+      [loading]="loading"
+      [globalFilterFields]="globalFilterFields"
+      searchPlaceholderKey="entityTableSearchPlaceholder"
+      emptyMessageKey="entityTableEmpty"
+    />
+  </p-card>
+</div>

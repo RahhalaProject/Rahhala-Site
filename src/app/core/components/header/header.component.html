@@ -17,7 +17,9 @@
 
       <ul class="menu-items">
         <li><i class="pi pi-cog"></i> {{ "profileSettings" | translate }}</li>
-        <li><i class="pi pi-shopping-bag"></i> {{ "myOrders" | translate }}</li>
+        <li routerLink="/my-orders" class="profile-menu-link">
+          <i class="pi pi-shopping-bag"></i> {{ "myOrders" | translate }}
+        </li>
         <li><i class="pi pi-wallet"></i> {{ "wallet" | translate }}</li>
         <li (click)="changeLang()">
           <i class="pi pi-globe"></i> {{ "language" | translate }}

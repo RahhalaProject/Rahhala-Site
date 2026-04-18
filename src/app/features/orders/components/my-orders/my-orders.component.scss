@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  padding: 80px 20px 40px;
+  box-sizing: border-box;
+}
+
+.box {
+  background-color: #ffffff;
+  padding: 40px 48px 48px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1200px;
+}
+
+.my-orders-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.toolbar-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #003768;
+  margin: 0;
+}
+
+.status-filter {
+  min-width: 220px;
+  flex: 1 1 200px;
+}
+
+:host ::ng-deep .toolbar-refresh-btn {
+  border-color: #003768 !important;
+  color: #003768 !important;
+}
+
+:host ::ng-deep .toolbar-refresh-btn:hover {
+  background: rgba(0, 55, 104, 0.06) !important;
+}
+
+@media (max-width: 600px) {
+  .box {
+    padding: 20px 16px 24px;
+  }
+}
+
+:host ::ng-deep {
+  .status-filter.p-select,
+  .status-filter .p-select {
+    width: 100%;
+  }
+}
