@@ -123,7 +123,6 @@ export class MyOrdersComponent implements OnInit {
               o.orderTypeName?.trim() ||
               this.translate.instant(`orderType_${o.orderType}`),
           }));
-          console.log(this.orders);
           this.loading = false;
         },
         error: () => {
