@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { TranslateModule } from '@ngx-translate/core';
@@ -8,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrls: ['./home.component.scss'],
   templateUrl: './home.component.html',
   standalone: true,
-  imports: [CardModule, ButtonModule, TranslateModule]
+  imports: [CardModule, ButtonModule, TranslateModule, RouterLink]
 })
 export class HomeComponent {
 

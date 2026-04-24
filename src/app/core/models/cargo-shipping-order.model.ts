@@ -16,13 +16,16 @@ export interface ReceiverRequest {
 
 export interface ShipmentDetailsRequest {
   description: string | null;
-  weight: number;
-  pieces: number;
+  requestTypeId: string | null;
+  weight: number | null;
+  pieces: number | null;
   shipmentTypeId: string | null;
-  dryBoxTypeId?: number | null;
-  carTypeId?: string | null;
-  weightInTonId?: string | null;
-  palletCapacityId?: string | null;
+  privateTripDetails?: {
+    carTypeId?: string | null;
+    weightInTonId?: string | null;
+    palletCapacityId?: string | null;
+    dryBoxTypeId?: number | null;
+  } | null;
   shipmentSpeed: string | null;
   length: number | null;
   width: number | null;
@@ -38,7 +41,6 @@ export interface CreateCargoShippingOrderRequest {
   deliveryDate: string | null;
   /** Backend PaymentMethod enum value: 1 Cash, 2 Visa, 3 Walet. */
   paymentMethod: PaymentMethod | null;
-  orderTypeId: string | null;
   images: string[];
 }
 

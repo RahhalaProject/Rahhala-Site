@@ -10,7 +10,12 @@
                 {{ 'homeSliderText' | translate }}
             </p>
             <div class="add-btn">
-                <p-button [label]="'createOrder' | translate" severity="secondary" [outlined]="true" />
+                <p-button
+                  [label]="'createOrder' | translate"
+                  severity="secondary"
+                  [outlined]="true"
+                  routerLink="/request-form"
+                />
             </div>
         </div>
     </div>

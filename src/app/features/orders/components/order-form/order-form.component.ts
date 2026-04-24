@@ -398,17 +398,24 @@ export class OrderFormComponent implements OnInit {
       const payload: CreateCargoShippingOrderRequest = {
         shipmentDetails: {
           description: this.additionalNotes?.trim() || 'Cargo shipment request',
-          weight: this.weight as number,
-          pieces: this.showPiecesInput ? (this.pieces as number) : 1,
+          requestTypeId: this.selectedRequestType,
+          weight: this.weight,
+          pieces: this.showPiecesInput ? this.pieces : null,
           shipmentTypeId: this.selectedShipmentType,
-          ...(this.isDryShipmentSelected && this.selectedDryBoxType != null
-            ? { dryBoxTypeId: this.selectedDryBoxType }
-            : {}),
-          ...(this.isPrivateTripSelected
+          ...(this.isPrivateTripSelected || this.isDryShipmentSelected
             ? {
-                carTypeId: this.selectedCarTypeId,
-                weightInTonId: this.selectedWeightInTonId,
-                palletCapacityId: this.selectedPalletCapacityId,
+                privateTripDetails: {
+                  ...(this.isPrivateTripSelected
+                    ? {
+                        carTypeId: this.selectedCarTypeId,
+                        weightInTonId: this.selectedWeightInTonId,
+                        palletCapacityId: this.selectedPalletCapacityId,
+                      }
+                    : {}),
+                  ...(this.isDryShipmentSelected && this.selectedDryBoxType != null
+                    ? { dryBoxTypeId: this.selectedDryBoxType }
+                    : {}),
+                },
               }
             : {}),
           shipmentSpeed: this.getShipmentSpeedForApi(),
@@ -420,7 +427,6 @@ export class OrderFormComponent implements OnInit {
         images,
         deliveryDate: this.date ? this.date.toISOString() : null,
         paymentMethod: this.getPaymentMethodValueForApi(),
-        orderTypeId: this.selectedRequestType,
         pickupAddress: {
           cityId: this.pickupCityId,
           provinceId: this.pickupProvinceId,
