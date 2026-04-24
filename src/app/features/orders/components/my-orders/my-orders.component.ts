@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { Select } from 'primeng/select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 import { OrderService } from '../../../../core/services/order.service';
 import { MyOrderResponse } from '../../../../core/models/my-order.model';
 import { AppEntityTableComponent } from '../../../../shared/components/app-entity-table/app-entity-table.component';
@@ -35,6 +36,7 @@ export class MyOrdersComponent implements OnInit {
   private readonly orderService = inject(OrderService);
   private readonly translate = inject(TranslateService);
   private readonly messageService = inject(MessageService);
+  private readonly router = inject(Router);
 
   orders: MyOrderResponse[] = [];
   loading = false;
@@ -57,7 +59,13 @@ export class MyOrdersComponent implements OnInit {
     {
       field: 'orderTypeName',
       headerKey: 'orderType',
-      type: 'text',
+      type: 'tag',
+      tagSeverityField: 'orderType',
+      tagSeverityMap: {
+        '0': 'info',
+        '1': 'success',
+        '2': 'warn',
+      },
     },
     {
       field: 'originCity',
@@ -79,6 +87,23 @@ export class MyOrdersComponent implements OnInit {
       headerKey: 'orderStatus',
       type: 'status',
       statusTranslationPrefix: 'orderStatus_',
+      tagSeverityMap: {
+        '1': 'warn',
+        '2': 'success',
+        '3': 'info',
+        '4': 'danger',
+        '5': 'danger',
+        '6': 'secondary',
+      },
+    },
+    {
+      field: 'actions',
+      headerKey: 'actions',
+      type: 'action',
+      sortable: false,
+      actionName: 'view',
+      actionIcon: 'pi pi-eye',
+      actionLabelKey: 'view',
     },
   ];
 
@@ -137,5 +162,16 @@ export class MyOrdersComponent implements OnInit {
           });
         },
       });
+  }
+
+  onRowAction(event: { action: string; row: unknown }): void {
+    if (event.action !== 'view') {
+      return;
+    }
+    const row = event.row as MyOrderResponse;
+    if (!row?.orderId) {
+      return;
+    }
+    this.router.navigate(['/order-details', row.orderId]);
   }
 }

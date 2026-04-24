@@ -110,6 +110,13 @@ export const routes: Routes = [
             './features/orders/components/my-orders/my-orders.component'
           ).then((m) => m.MyOrdersComponent),
       },
+      {
+        path: 'order-details/:orderId',
+        loadComponent: () =>
+          import(
+            './features/orders/components/order-details/order-details.component'
+          ).then((m) => m.OrderDetailsComponent),
+      },
     ],
   },
   { path: '**', redirectTo: 'home' },

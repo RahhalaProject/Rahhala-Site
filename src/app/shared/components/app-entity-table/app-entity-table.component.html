@@ -45,7 +45,28 @@
   <ng-template pTemplate="body" let-row>
     <tr>
       <td *ngFor="let col of colDefs; trackBy: trackByField">
-        {{ formatCell(row, col) }}
+        <ng-container *ngIf="isActionColumn(col); else tagOrPlain">
+          <p-button
+            [text]="true"
+            severity="secondary"
+            [icon]="col.actionIcon || 'pi pi-eye'"
+            [attr.aria-label]="
+              col.actionLabelKey ? (col.actionLabelKey | translate) : 'Action'
+            "
+            (onClick)="onRowAction(col, row)"
+          />
+        </ng-container>
+        <ng-template #tagOrPlain>
+          <ng-container *ngIf="isTagColumn(col); else plainCell">
+            <p-tag
+              [value]="formatCell(row, col)"
+              [severity]="getTagSeverity(row, col)"
+            />
+          </ng-container>
+        </ng-template>
+        <ng-template #plainCell>
+          {{ formatCell(row, col) }}
+        </ng-template>
       </td>
     </tr>
   </ng-template>

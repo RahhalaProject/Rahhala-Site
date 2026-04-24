@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { APP_CONFIG } from '../config/app.config';
 import { MyOrderResponse } from '../models/my-order.model';
+import { OrderDetailsResponse } from '../models/order-details.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,20 @@ export class OrderService {
       .pipe(
         catchError((err) => {
           console.error('Order my-orders error:', err);
+          return throwError(() => err);
+        })
+      );
+  }
+
+  /**
+   * GET /Order/order-details/{orderId}
+   */
+  getOrderDetails(orderId: string): Observable<OrderDetailsResponse> {
+    return this.http
+      .get<OrderDetailsResponse>(`${this.apiUrl}/Order/order-details/${orderId}`)
+      .pipe(
+        catchError((err) => {
+          console.error('Order details error:', err);
           return throwError(() => err);
         })
       );

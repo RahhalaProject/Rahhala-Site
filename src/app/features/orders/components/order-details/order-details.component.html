@@ -1,0 +1,94 @@
+<div class="title-sec">
+  <div class="title-div">
+    <h4>{{ "orderDetails" | translate }}</h4>
+  </div>
+</div>
+
+<div class="container">
+  <p-card class="box">
+    <div class="mb-3">
+      <p-button
+        type="button"
+        [text]="true"
+        icon="pi pi-arrow-left"
+        [label]="'myOrders' | translate"
+        routerLink="/my-orders"
+      />
+    </div>
+
+    <div *ngIf="loading">{{ "loading" | translate }}</div>
+
+    <div *ngIf="!loading && details" class="details-grid">
+      <div *ngIf="hasValue(details.requestNo)"><strong>{{ "orderNumber" | translate }}:</strong> {{ details.requestNo }}</div>
+      <div *ngIf="hasValue(details.createdOnUtc)">
+        <strong>{{ "orderDate" | translate }}:</strong>
+        {{ details.createdOnUtc | date : "medium" }}
+      </div>
+      <div *ngIf="hasValue(details.orderType)">
+        <strong>{{ "orderType" | translate }}:</strong>
+        <p-tag [value]="orderTypeText" [severity]="orderTypeSeverity" />
+      </div>
+      <div *ngIf="hasValue(details.statusName)">
+        <strong>{{ "orderStatus" | translate }}:</strong>
+        <p-tag [value]="statusText" [severity]="statusSeverity" />
+      </div>
+      <div *ngIf="hasValue(details.paymentMethodName)"><strong>{{ "paymentMethod" | translate }}:</strong> {{ details.paymentMethodName }}</div>
+      <div *ngIf="hasValue(details.cancelReason)"><strong>{{ "cancelReason" | translate }}:</strong> {{ details.cancelReason }}</div>
+
+      <ng-container *ngIf="isCarRentalOrder">
+        <div *ngIf="hasValue(details.carRental?.companyName)"><strong>{{ "orderCompany" | translate }}:</strong> {{ details.carRental?.companyName }}</div>
+        <div *ngIf="hasValue(details.carRental?.carTypeName)"><strong>{{ "carType" | translate }}:</strong> {{ details.carRental?.carTypeName }}</div>
+        <div *ngIf="hasValue(details.carRental?.shipmentTypeName)"><strong>{{ "shipmentType" | translate }}:</strong> {{ details.carRental?.shipmentTypeName }}</div>
+        <div *ngIf="hasValue(details.carRental?.weightInTonName)"><strong>{{ "weightTons" | translate }}:</strong> {{ details.carRental?.weightInTonName }}</div>
+        <div *ngIf="hasValue(details.carRental?.palletCapacityName)"><strong>{{ "loadByPallet" | translate }}:</strong> {{ details.carRental?.palletCapacityName }}</div>
+        <div *ngIf="hasValue(details.carRental?.rentDurationName)"><strong>{{ "rentDuration" | translate }}:</strong> {{ details.carRental?.rentDurationName }}</div>
+        <div *ngIf="hasValue(details.carRental?.dryBoxTypeName)"><strong>{{ "dryBoxType" | translate }}:</strong> {{ details.carRental?.dryBoxTypeName }}</div>
+        <div *ngIf="hasValue(details.carRental?.fromDate)">
+          <strong>{{ "fromDate" | translate }}:</strong>
+          {{ details.carRental?.fromDate | date : "mediumDate" }}
+        </div>
+        <div *ngIf="hasValue(details.carRental?.toDate)">
+          <strong>{{ "toDate" | translate }}:</strong>
+          {{ details.carRental?.toDate | date : "mediumDate" }}
+        </div>
+        <div *ngIf="details.carRental?.isFromHeadquarters != null">
+          <strong>{{ "pickupSource" | translate }}:</strong>
+          {{ pickupSourceText }}
+        </div>
+        <div *ngIf="hasValue(details.carRental?.deliveryAddress?.cityName)"><strong>{{ "city" | translate }}:</strong> {{ details.carRental?.deliveryAddress?.cityName }}</div>
+        <div *ngIf="hasValue(details.carRental?.deliveryAddress?.provinceName)"><strong>{{ "districtName" | translate }}:</strong> {{ details.carRental?.deliveryAddress?.provinceName }}</div>
+        <div *ngIf="hasValue(details.carRental?.deliveryAddress?.placeName)"><strong>{{ "pickupPlace" | translate }}:</strong> {{ details.carRental?.deliveryAddress?.placeName }}</div>
+        <div *ngIf="hasValue(details.carRental?.deliveryAddress?.street)"><strong>{{ "pickupStreet" | translate }}:</strong> {{ details.carRental?.deliveryAddress?.street }}</div>
+      </ng-container>
+
+      <ng-container *ngIf="isCargoShippingOrder">
+        <div *ngIf="hasValue(details.cargoShipping?.pickupAddress?.cityName)"><strong>{{ "originCity" | translate }}:</strong> {{ details.cargoShipping?.pickupAddress?.cityName }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.pickupAddress?.provinceName)"><strong>{{ "districtName" | translate }}:</strong> {{ details.cargoShipping?.pickupAddress?.provinceName }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.pickupAddress?.street)"><strong>{{ "pickupStreet" | translate }}:</strong> {{ details.cargoShipping?.pickupAddress?.street }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.pickupAddress?.placeName)"><strong>{{ "pickupPlace" | translate }}:</strong> {{ details.cargoShipping?.pickupAddress?.placeName }}</div>
+
+        <div *ngIf="hasValue(details.cargoShipping?.deliveryAddress?.cityName)"><strong>{{ "destinationCity" | translate }}:</strong> {{ details.cargoShipping?.deliveryAddress?.cityName }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.deliveryAddress?.provinceName)"><strong>{{ "neighborhood" | translate }}:</strong> {{ details.cargoShipping?.deliveryAddress?.provinceName }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.deliveryAddress?.street)"><strong>{{ "streetName" | translate }}:</strong> {{ details.cargoShipping?.deliveryAddress?.street }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.deliveryAddress?.placeName)"><strong>{{ "address" | translate }}:</strong> {{ details.cargoShipping?.deliveryAddress?.placeName }}</div>
+
+        <div *ngIf="hasValue(details.cargoShipping?.receiver?.name)"><strong>{{ "receiverName" | translate }}:</strong> {{ details.cargoShipping?.receiver?.name }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.receiver?.phone)"><strong>{{ "phoneNumber" | translate }}:</strong> {{ details.cargoShipping?.receiver?.phone }}</div>
+
+        <div *ngIf="hasValue(details.cargoShipping?.shipmentDetails?.requestTypeName)"><strong>{{ "requestType" | translate }}:</strong> {{ details.cargoShipping?.shipmentDetails?.requestTypeName }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.shipmentDetails?.shipmentTypeName)"><strong>{{ "shipmentType" | translate }}:</strong> {{ details.cargoShipping?.shipmentDetails?.shipmentTypeName }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.shipmentDetails?.shipmentSpeed)"><strong>{{ "shipmentSpeed" | translate }}:</strong> {{ details.cargoShipping?.shipmentDetails?.shipmentSpeed }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.shipmentDetails?.weight)"><strong>{{ "weight" | translate }}:</strong> {{ details.cargoShipping?.shipmentDetails?.weight }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.shipmentDetails?.pieces)"><strong>{{ "pieces" | translate }}:</strong> {{ details.cargoShipping?.shipmentDetails?.pieces }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.shipmentDetails?.length)"><strong>{{ "enterLength" | translate }}:</strong> {{ details.cargoShipping?.shipmentDetails?.length }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.shipmentDetails?.width)"><strong>{{ "enterWidth" | translate }}:</strong> {{ details.cargoShipping?.shipmentDetails?.width }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.shipmentDetails?.height)"><strong>{{ "enterHeight" | translate }}:</strong> {{ details.cargoShipping?.shipmentDetails?.height }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.shipmentDetails?.additionalNotes)"><strong>{{ "additionalNotes" | translate }}:</strong> {{ details.cargoShipping?.shipmentDetails?.additionalNotes }}</div>
+        <div *ngIf="hasValue(details.cargoShipping?.deliveryDate)">
+          <strong>{{ "deliveryDate" | translate }}:</strong>
+          {{ details.cargoShipping?.deliveryDate | date : "mediumDate" }}
+        </div>
+      </ng-container>
+    </div>
+  </p-card>
+</div>

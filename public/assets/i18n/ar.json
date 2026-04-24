@@ -341,5 +341,20 @@
   "orderType_2": "أخرى",
   "entityTableSearchPlaceholder": "بحث…",
   "entityTableEmpty": "لا توجد سجلات للعرض.",
-  "myOrdersLoadError": "تعذر تحميل طلباتك. يرجى المحاولة مرة أخرى."
+  "myOrdersLoadError": "تعذر تحميل طلباتك. يرجى المحاولة مرة أخرى.",
+  "orderDetails": "تفاصيل الطلب",
+  "orderDetailsLoadError": "تعذر تحميل تفاصيل الطلب.",
+  "cancelReason": "سبب الإلغاء",
+  "pickupSource": "مصدر الاستلام",
+  "pickupPlace": "مكان الاستلام",
+  "pickupStreet": "شارع الاستلام",
+  "headquarters": "المقر الرئيسي",
+  "loading": "جاري التحميل...",
+  "actions": "الإجراءات",
+  "view": "عرض"
+  ,
+  "receiverName": "اسم المستلم",
+  "shipmentSpeed": "سرعة الشحنة",
+  "weight": "الوزن",
+  "pieces": "القطع"
 }

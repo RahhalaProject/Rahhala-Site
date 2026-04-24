@@ -402,5 +402,20 @@
   "orderType_2": "Other",
   "entityTableSearchPlaceholder": "Search…",
   "entityTableEmpty": "No records to display.",
-  "myOrdersLoadError": "Could not load your orders. Please try again."
+  "myOrdersLoadError": "Could not load your orders. Please try again.",
+  "orderDetails": "Order details",
+  "orderDetailsLoadError": "Failed to load order details.",
+  "cancelReason": "Cancel reason",
+  "pickupSource": "Pickup source",
+  "pickupPlace": "Pickup place",
+  "pickupStreet": "Pickup street",
+  "headquarters": "Headquarters",
+  "loading": "Loading...",
+  "actions": "Actions",
+  "view": "View"
+  ,
+  "receiverName": "Receiver name",
+  "shipmentSpeed": "Shipment speed",
+  "weight": "Weight",
+  "pieces": "Pieces"
 }

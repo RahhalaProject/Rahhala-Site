@@ -3,12 +3,16 @@ import {
   Input,
   inject,
   ViewChild,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableModule, Table } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
+import { TagModule } from 'primeng/tag';
+import { ButtonModule } from 'primeng/button';
 import { EntityTableColumn } from '../../models/entity-table-column.model';
 
 /**
@@ -24,6 +28,8 @@ import { EntityTableColumn } from '../../models/entity-table-column.model';
     TranslateModule,
     TableModule,
     InputTextModule,
+    TagModule,
+    ButtonModule,
   ],
   providers: [DatePipe],
   templateUrl: './app-entity-table.component.html',
@@ -59,6 +65,7 @@ export class AppEntityTableComponent {
 
   /** Fields included in global filter (usually same as column fields). */
   @Input() globalFilterFields: string[] = [];
+  @Output() rowAction = new EventEmitter<{ action: string; row: unknown }>();
 
   /**
    * Use in all `p-table` templates (header/body). PrimeNG injects a template variable
@@ -92,6 +99,32 @@ export class AppEntityTableComponent {
       return t !== key ? t : String(v);
     }
     return String(v);
+  }
+
+  isTagColumn(col: EntityTableColumn): boolean {
+    return col.type === 'status' || col.type === 'tag';
+  }
+
+  isActionColumn(col: EntityTableColumn): boolean {
+    return col.type === 'action';
+  }
+
+  getTagSeverity(row: unknown, col: EntityTableColumn): string | undefined {
+    if (!this.isTagColumn(col) || !col.tagSeverityMap) {
+      return undefined;
+    }
+    const r = row as Record<string, unknown>;
+    const severityField = col.tagSeverityField || col.field;
+    const raw = r[severityField];
+    if (raw === null || raw === undefined) {
+      return undefined;
+    }
+    return col.tagSeverityMap[String(raw)];
+  }
+
+  onRowAction(col: EntityTableColumn, row: unknown): void {
+    const action = col.actionName || 'action';
+    this.rowAction.emit({ action, row });
   }
 
   trackByField(index: number, col: EntityTableColumn): string {
