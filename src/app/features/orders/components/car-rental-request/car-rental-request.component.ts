@@ -272,12 +272,8 @@ export class CarRentalRequestComponent implements OnInit {
     ).toISOString();
   }
 
-  private getPaymentMethodNameForApi(): string | null {
-    if (this.selectedPaymentMethod == null) {
-      return null;
-    }
-    const key = PaymentMethod[this.selectedPaymentMethod];
-    return typeof key === 'string' ? key : null;
+  private getPaymentMethodValueForApi(): PaymentMethod | null {
+    return this.selectedPaymentMethod;
   }
 
   private loadLookups(): void {
@@ -479,7 +475,7 @@ export class CarRentalRequestComponent implements OnInit {
       fromDate: this.toDateOnlyUtcIso(this.fromDate!),
       toDate: this.toDateOnlyUtcIso(this.toDate!),
       isFromHeadquarters: this.pickupSource === 'hq',
-      paymentMethod: this.getPaymentMethodNameForApi(),
+      paymentMethod: this.getPaymentMethodValueForApi(),
     };
 
     const submit = (images: string[]) => {
@@ -540,7 +536,7 @@ export class CarRentalRequestComponent implements OnInit {
   }
 
   private onOrderSuccess(res: { requestNo?: string | null }): void {
-    void this.router.navigate(['/our-services']).then(() => {
+    void this.router.navigate(['/my-orders']).then(() => {
       const detail = res.requestNo
         ? this.translate.instant('orderAddedSuccessDetail', {
             requestNo: res.requestNo,

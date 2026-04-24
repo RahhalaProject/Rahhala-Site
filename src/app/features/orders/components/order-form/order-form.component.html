@@ -105,6 +105,7 @@
   [(visible)]="visibleShipmentDetails"
   [style]="{ width: '50rem' }"
   class="ShipmentDetails-form"
+  [header]="'shipmentDetails' | translate"
 >
   <div class="flex flex-col h-48 mb-3">
     <div
@@ -114,32 +115,33 @@
         <div class="row">
           <div class="col-12 mb-3">
             <p-select
-              [options]="shipmentTypeOptions"
-              [(ngModel)]="selectedShipmentType"
+              [options]="requestTypeOptions"
+              [(ngModel)]="selectedRequestType"
+              (ngModelChange)="onRequestTypeIdChange($event)"
               optionLabel="name"
               optionValue="id"
-              placeholder="{{ 'shipmentType' | translate }}"
+              placeholder="{{ 'orderType' | translate }}"
               class="w-full md:w-56"
             />
-            <small *ngIf="showShipmentErrors && !selectedShipmentType" class="p-error">
+            <small *ngIf="showShipmentErrors && !selectedRequestType" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
+          </div>
+          <div class="col-12 mb-3" *ngIf="showPiecesInput">
+            <input
+              type="number"
+              pInputText
+              [(ngModel)]="pieces"
+              class="w-full md:w-56"
+              placeholder="ادخل العدد"
+            />
+            <small *ngIf="showShipmentErrors && pieces == null" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
           <div class="col-12 mb-3">
+            <p class="title-cum mb-2 text-center">{{ "shipmentSpeed" | translate }}</p>
             <div class="checks">
-              <div class="flex items-center item">
-                <label for="ingredient1" class="ml-2">
-                  {{ "express" | translate }}
-                </label>
-                  <p-checkbox
-                    inputId="shipmentSpeedExpress"
-                    name="shipmentSpeed"
-                    [binary]="true"
-                    [ngModel]="shipmentSpeed === 'Express'"
-                    (onChange)="setShipmentSpeed('Express')"
-                  />
-              </div>
-              <div style="margin: 0 5px"></div>
               <div class="flex items-center item">
                 <label for="ingredient1" class="ml-2">
                   {{ "normal" | translate }}
@@ -152,22 +154,101 @@
                     (onChange)="setShipmentSpeed('Normal')"
                   />
               </div>
+              <div style="margin: 0 5px"></div>
+              <div class="flex items-center item">
+                <label for="ingredient1" class="ml-2">
+                  {{ "express" | translate }}
+                </label>
+                  <p-checkbox
+                    inputId="shipmentSpeedExpress"
+                    name="shipmentSpeed"
+                    [binary]="true"
+                    [ngModel]="shipmentSpeed === 'Express'"
+                    (onChange)="setShipmentSpeed('Express')"
+                  />
+              </div>
             </div>
           </div>
           <div class="col-12 mb-3">
             <p-select
-              [options]="requestTypeOptions"
-              [(ngModel)]="selectedRequestType"
+              [options]="shipmentTypeOptions"
+              [(ngModel)]="selectedShipmentType"
+              (ngModelChange)="onShipmentTypeIdChange($event)"
               optionLabel="name"
               optionValue="id"
-              placeholder="{{ 'orderType' | translate }}"
+              placeholder="{{ 'shipmentType' | translate }}"
               class="w-full md:w-56"
             />
-            <small *ngIf="showShipmentErrors && !selectedRequestType" class="p-error">
+            <small *ngIf="showShipmentErrors && !selectedShipmentType" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
+          </div>
+          <div class="col-12 mb-3" *ngIf="isDryShipmentSelected">
+            <p-select
+              [options]="dryBoxTypeOptions"
+              [(ngModel)]="selectedDryBoxType"
+              optionLabel="name"
+              optionValue="value"
+              placeholder="{{ 'dryBoxType' | translate }}"
+              class="w-full md:w-56"
+            />
+            <small *ngIf="showShipmentErrors && selectedDryBoxType == null" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
+          </div>
+          <div class="col-12 mb-3" *ngIf="isPrivateTripSelected">
+            <p-select
+              [options]="carTypeOptions"
+              [(ngModel)]="selectedCarTypeId"
+              optionLabel="name"
+              optionValue="id"
+              placeholder="{{ 'carType' | translate }}"
+              class="w-full md:w-56"
+            />
+            <small *ngIf="showShipmentErrors && !selectedCarTypeId" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
+          </div>
+          <div class="col-12 mb-3" *ngIf="isPrivateTripSelected">
+            <p-select
+              [options]="weightInTonOptions"
+              [(ngModel)]="selectedWeightInTonId"
+              optionLabel="name"
+              optionValue="id"
+              placeholder="{{ 'weightTons' | translate }}"
+              class="w-full md:w-56"
+            />
+            <small *ngIf="showShipmentErrors && !selectedWeightInTonId" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
+          </div>
+          <div class="col-12 mb-3" *ngIf="isPrivateTripSelected">
+            <p-select
+              [options]="palletCapacityOptions"
+              [(ngModel)]="selectedPalletCapacityId"
+              optionLabel="name"
+              optionValue="id"
+              placeholder="{{ 'loadByPallet' | translate }}"
+              class="w-full md:w-56"
+            />
+            <small *ngIf="showShipmentErrors && !selectedPalletCapacityId" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
           <div class="col-12 mb-3">
+            <input
+              type="number"
+              pInputText
+              [(ngModel)]="weight"
+              class="w-full md:w-56"
+              placeholder="ادخل الوزن (كجم)"
+            />
+            <small *ngIf="showShipmentErrors && weight == null" class="p-error">
+              {{ "requiredField" | translate }}
+            </small>
+          </div>
+          <div class="col-12 mb-3">
+            <p class="title-cum mb-2 text-center">{{ "dimensionsInCm" | translate }}</p>
             <div class="tags-div">
               <div class="dimension-field">
                 <input
@@ -244,6 +325,7 @@
   [(visible)]="visibleUpload"
   [style]="{ width: '50rem' }"
   class="Upload-form"
+  [header]="'uploadImage' | translate"
 >
   <div class="flex flex-col h-48 mb-3">
     <div
@@ -293,6 +375,7 @@
   [(visible)]="visibleDeliveryDate"
   [style]="{ width: '50rem' }"
   class="DeliveryDate-form"
+  [header]="'deliveryDate' | translate"
 >
   <div class="flex flex-col h-48 mb-3">
     <div
@@ -338,6 +421,7 @@
   [(visible)]="visiblePaymentMethod"
   [style]="{ width: '50rem' }"
   class="PaymentMethod-form"
+  [header]="'paymentMethod' | translate"
 >
   <div class="flex flex-col h-48 mb-3">
     <div
@@ -384,6 +468,7 @@
   [(visible)]="visibleLocation"
   [style]="{ width: '50rem' }"
   class="Location-form"
+  [header]="'pickupAndDeliveryLocation' | translate"
 >
   <div class="flex flex-col h-48 mb-3">
     <div

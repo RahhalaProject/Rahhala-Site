@@ -1,4 +1,5 @@
 import { DryBoxType } from './dry-box-type.enum';
+import { PaymentMethod } from './payment-method.enum';
 
 /** Matches `CarRentalDeliveryAddressRequest` when `isFromHeadquarters` is false. */
 export interface CarRentalDeliveryAddressRequest {
@@ -24,7 +25,7 @@ export interface CreatePersonalCarRentalOrderRequest {
   isFromHeadquarters: boolean;
   /** When picking up from customer location (`isFromHeadquarters: false`). */
   deliveryAddress?: CarRentalDeliveryAddressRequest | null;
-  paymentMethod: string | null;
+  paymentMethod: PaymentMethod | null;
   images: string[];
 }
 

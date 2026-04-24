@@ -1,3 +1,5 @@
+import { PaymentMethod } from './payment-method.enum';
+
 export interface AddressRequest {
   cityId: string | null;
   provinceId: string | null;
@@ -17,6 +19,10 @@ export interface ShipmentDetailsRequest {
   weight: number;
   pieces: number;
   shipmentTypeId: string | null;
+  dryBoxTypeId?: number | null;
+  carTypeId?: string | null;
+  weightInTonId?: string | null;
+  palletCapacityId?: string | null;
   shipmentSpeed: string | null;
   length: number | null;
   width: number | null;
@@ -30,8 +36,8 @@ export interface CreateCargoShippingOrderRequest {
   receiver: ReceiverRequest;
   shipmentDetails: ShipmentDetailsRequest;
   deliveryDate: string | null;
-  /** Backend PaymentMethod as enum name string: "Cash" | "Visa" | "Walet". */
-  paymentMethod: string | null;
+  /** Backend PaymentMethod enum value: 1 Cash, 2 Visa, 3 Walet. */
+  paymentMethod: PaymentMethod | null;
   orderTypeId: string | null;
   images: string[];
 }

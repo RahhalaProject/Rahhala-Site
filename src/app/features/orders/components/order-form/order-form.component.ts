@@ -23,6 +23,7 @@ import { CreateCargoShippingOrderRequest } from '../../../../core/models/cargo-s
 import { PaymentMethod } from '../../../../core/models/payment-method.enum';
 import { LocationService } from '../../../../core/services/location.service';
 import { LocationMapDialogComponent } from '../../../../shared/components/location-map-dialog/location-map-dialog.component';
+import { DryBoxType } from '../../../../core/models/dry-box-type.enum';
 
 @Component({
   selector: 'order-form',
@@ -69,8 +70,12 @@ export class OrderFormComponent implements OnInit {
   date: Date | undefined;
 
   // Lookup options (id + name)
+  carTypeOptions: LookupItem[] = [];
   shipmentTypeOptions: LookupItem[] = [];
   requestTypeOptions: LookupItem[] = [];
+  weightInTonOptions: LookupItem[] = [];
+  palletCapacityOptions: LookupItem[] = [];
+  dryBoxTypeOptions: { name: string; value: DryBoxType }[] = [];
   /** Labels from i18n; `value` is backend PaymentMethod enum (1–3). */
   paymentMethodOptions: { name: string; value: PaymentMethod }[] = [];
   cities: LookupItem[] = [];
@@ -78,12 +83,18 @@ export class OrderFormComponent implements OnInit {
 
   // Form selected values (ids from LookupItem when using optionValue="id")
   selectedShipmentType: string | null = null;
+  selectedDryBoxType: DryBoxType | null = null;
   selectedRequestType: string | null = null;
+  selectedCarTypeId: string | null = null;
+  selectedWeightInTonId: string | null = null;
+  selectedPalletCapacityId: string | null = null;
   selectedPaymentMethod: PaymentMethod | null = null;
-  shipmentSpeed: 'Express' | 'Normal' = 'Express';
+  shipmentSpeed: 'Express' | 'Normal' = 'Normal';
   shipmentLength: number | null = null;
   shipmentWidth: number | null = null;
   shipmentHeight: number | null = null;
+  weight: number | null = null;
+  pieces: number | null = null;
   additionalNotes = '';
 
   pickupCityId: string | null = null;
@@ -120,6 +131,7 @@ export class OrderFormComponent implements OnInit {
     this.translate.onLangChange.subscribe((event) => {
       this.currentLang = event.lang;
       this.buildPaymentMethodOptions();
+      this.buildDryBoxTypeOptions();
       this.loadLookups();
       this.loadLocations();
     });
@@ -129,8 +141,56 @@ export class OrderFormComponent implements OnInit {
     this.refreshMinDeliveryDate();
     this.date = new Date(this.minDeliveryDate);
     this.buildPaymentMethodOptions();
+    this.buildDryBoxTypeOptions();
     this.loadLookups();
     this.loadLocations();
+  }
+
+  get isDryShipmentSelected(): boolean {
+    if (!this.selectedShipmentType) {
+      return false;
+    }
+    const item = this.shipmentTypeOptions.find(
+      (o) => o.id === this.selectedShipmentType
+    );
+    return item?.key === 'Dry';
+  }
+
+  onShipmentTypeIdChange(id: string | null): void {
+    const item = id
+      ? this.shipmentTypeOptions.find((o) => o.id === id)
+      : undefined;
+    if (item?.key !== 'Dry') {
+      this.selectedDryBoxType = null;
+    }
+  }
+
+  get showPiecesInput(): boolean {
+    if (!this.selectedRequestType) {
+      return false;
+    }
+    const item = this.requestTypeOptions.find((o) => o.id === this.selectedRequestType);
+    return item?.key === 'NumberCarton' || item?.key === 'NumberDrum';
+  }
+
+  get isPrivateTripSelected(): boolean {
+    if (!this.selectedRequestType) {
+      return false;
+    }
+    const item = this.requestTypeOptions.find((o) => o.id === this.selectedRequestType);
+    return item?.key === 'PrivateTrip';
+  }
+
+  onRequestTypeIdChange(id: string | null): void {
+    const item = id ? this.requestTypeOptions.find((o) => o.id === id) : undefined;
+    if (item?.key !== 'NumberCarton' && item?.key !== 'NumberDrum') {
+      this.pieces = null;
+    }
+    if (item?.key !== 'PrivateTrip') {
+      this.selectedCarTypeId = null;
+      this.selectedWeightInTonId = null;
+      this.selectedPalletCapacityId = null;
+    }
   }
 
   /** Tomorrow 00:00:00 local time — minimum allowed delivery date (excludes today). */
@@ -173,11 +233,31 @@ export class OrderFormComponent implements OnInit {
     ];
   }
 
+  private buildDryBoxTypeOptions(): void {
+    this.dryBoxTypeOptions = [
+      {
+        value: DryBoxType.Flatbed,
+        name: this.translate.instant('dryBoxTypeFlatbed'),
+      },
+      {
+        value: DryBoxType.Closed,
+        name: this.translate.instant('dryBoxTypeClosed'),
+      },
+      {
+        value: DryBoxType.Mesh,
+        name: this.translate.instant('dryBoxTypeMesh'),
+      },
+    ];
+  }
+
   private loadLookups(): void {
     this.lookupService.getOrderFormLookups().subscribe({
       next: (res) => {
+        this.carTypeOptions = res.CarType ?? [];
         this.shipmentTypeOptions = res.ShipmentType ?? [];
         this.requestTypeOptions = res.RequestType ?? [];
+        this.weightInTonOptions = res.WeightInTon ?? [];
+        this.palletCapacityOptions = res.PalletCapacity ?? [];
       },
       error: () => {
         this.messageService.add({
@@ -235,13 +315,9 @@ export class OrderFormComponent implements OnInit {
     return this.shipmentSpeed === 'Express' ? 'Fast' : 'Normal';
   }
 
-  /** Maps selected payment to API string: "Cash" | "Visa" | "Walet". */
-  private getPaymentMethodNameForApi(): string | null {
-    if (this.selectedPaymentMethod == null) {
-      return null;
-    }
-    const key = PaymentMethod[this.selectedPaymentMethod];
-    return typeof key === 'string' ? key : null;
+  /** Maps selected payment to API enum value: 1/2/3. */
+  private getPaymentMethodValueForApi(): PaymentMethod | null {
+    return this.selectedPaymentMethod;
   }
 
   showUploadDialog() {
@@ -322,9 +398,19 @@ export class OrderFormComponent implements OnInit {
       const payload: CreateCargoShippingOrderRequest = {
         shipmentDetails: {
           description: this.additionalNotes?.trim() || 'Cargo shipment request',
-          weight: 1,
-          pieces: 1,
+          weight: this.weight as number,
+          pieces: this.showPiecesInput ? (this.pieces as number) : 1,
           shipmentTypeId: this.selectedShipmentType,
+          ...(this.isDryShipmentSelected && this.selectedDryBoxType != null
+            ? { dryBoxTypeId: this.selectedDryBoxType }
+            : {}),
+          ...(this.isPrivateTripSelected
+            ? {
+                carTypeId: this.selectedCarTypeId,
+                weightInTonId: this.selectedWeightInTonId,
+                palletCapacityId: this.selectedPalletCapacityId,
+              }
+            : {}),
           shipmentSpeed: this.getShipmentSpeedForApi(),
           length: this.shipmentLength,
           width: this.shipmentWidth,
@@ -333,7 +419,7 @@ export class OrderFormComponent implements OnInit {
         },
         images,
         deliveryDate: this.date ? this.date.toISOString() : null,
-        paymentMethod: this.getPaymentMethodNameForApi(),
+        paymentMethod: this.getPaymentMethodValueForApi(),
         orderTypeId: this.selectedRequestType,
         pickupAddress: {
           cityId: this.pickupCityId,
@@ -359,7 +445,7 @@ export class OrderFormComponent implements OnInit {
 
       this.cargoShippingOrderService.createOrder(payload).subscribe({
         next: (res) => {
-          this.router.navigate(['/our-services']).then(() => {
+          this.router.navigate(['/my-orders']).then(() => {
             const detail = res.requestNo
               ? this.translate.instant('orderAddedSuccessDetail', {
                   requestNo: res.requestNo,
@@ -496,8 +582,26 @@ export class OrderFormComponent implements OnInit {
     if (!this.selectedShipmentType) {
       missingFields.push(this.translate.instant('shipmentType'));
     }
+    if (this.isDryShipmentSelected && this.selectedDryBoxType == null) {
+      missingFields.push(this.translate.instant('dryBoxType'));
+    }
     if (!this.selectedRequestType) {
       missingFields.push(this.translate.instant('orderType'));
+    }
+    if (this.isPrivateTripSelected && !this.selectedCarTypeId) {
+      missingFields.push(this.translate.instant('carType'));
+    }
+    if (this.isPrivateTripSelected && !this.selectedWeightInTonId) {
+      missingFields.push(this.translate.instant('weightTons'));
+    }
+    if (this.isPrivateTripSelected && !this.selectedPalletCapacityId) {
+      missingFields.push(this.translate.instant('loadByPallet'));
+    }
+    if (this.weight == null) {
+      missingFields.push(this.translate.instant('weight'));
+    }
+    if (this.showPiecesInput && this.pieces == null) {
+      missingFields.push(this.translate.instant('pieces'));
     }
     if (this.shipmentLength == null) {
       missingFields.push(this.translate.instant('enterLength'));
