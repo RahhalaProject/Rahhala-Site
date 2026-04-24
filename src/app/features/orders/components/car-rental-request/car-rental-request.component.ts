@@ -21,6 +21,7 @@ import {
   CreatePersonalCarRentalOrderRequest,
 } from '../../../../core/models/car-rental-order.model';
 import { DryBoxType } from '../../../../core/models/dry-box-type.enum';
+import { LocationMapDialogComponent } from '../../../../shared/components/location-map-dialog/location-map-dialog.component';
 
 @Component({
   selector: 'car-rental-request',
@@ -38,6 +39,7 @@ import { DryBoxType } from '../../../../core/models/dry-box-type.enum';
     DatePickerModule,
     Dialog,
     InputTextModule,
+    LocationMapDialogComponent,
   ],
 })
 export class CarRentalRequestComponent implements OnInit {
@@ -85,37 +87,9 @@ export class CarRentalRequestComponent implements OnInit {
 
   /** Map dialog (same flow as order-form pickup map). */
   visibleLocationMap = false;
-  mapLat: number | null = null;
-  mapLng: number | null = null;
-  mapSearchText = '';
-  selectedLocationDescription = '';
-
-  private readonly staticMapLocations = [
-    {
-      nameEn: 'Riyadh - Olaya',
-      nameAr: 'الرياض - العليا',
-      descriptionEn: 'Commercial district in central Riyadh',
-      descriptionAr: 'حي تجاري في وسط الرياض',
-      lat: 24.711667,
-      lng: 46.674999,
-    },
-    {
-      nameEn: 'Jeddah - Al Hamra',
-      nameAr: 'جدة - الحمراء',
-      descriptionEn: 'Popular coastal district in Jeddah',
-      descriptionAr: 'حي ساحلي معروف في جدة',
-      lat: 21.543333,
-      lng: 39.172779,
-    },
-    {
-      nameEn: 'Dammam - Al Faisaliyah',
-      nameAr: 'الدمام - الفيصلية',
-      descriptionEn: 'Residential area in Dammam',
-      descriptionAr: 'منطقة سكنية في الدمام',
-      lat: 26.420683,
-      lng: 50.088795,
-    },
-  ];
+  mapDialogLat: number | null = null;
+  mapDialogLng: number | null = null;
+  mapDialogDescription = '';
 
   paymentMethodOptions: { name: string; value: PaymentMethod }[] = [];
   /** Default Cash, consistent with API samples and mobile flow. */
@@ -365,79 +339,36 @@ export class CarRentalRequestComponent implements OnInit {
     this.pickupStreetText = '';
     this.pickupLatitude = null;
     this.pickupLongitude = null;
-    this.mapSearchText = '';
-    this.selectedLocationDescription = '';
+    this.mapDialogLat = null;
+    this.mapDialogLng = null;
+    this.mapDialogDescription = '';
   }
 
   /** زر الخريطة: وصف مختار أو نص افتراضي. */
   get pickupMapButtonText(): string {
-    const d = this.selectedLocationDescription?.trim();
+    const d = this.mapDialogDescription?.trim();
     if (d) {
       return d;
     }
     return this.translate.instant('setLocationOnMap');
   }
 
-  get filteredMapLocations() {
-    const q = this.mapSearchText.trim().toLowerCase();
-    if (!q) {
-      return this.staticMapLocations;
-    }
-    return this.staticMapLocations.filter((location) => {
-      const name = this.currentLang === 'ar' ? location.nameAr : location.nameEn;
-      const desc =
-        this.currentLang === 'ar'
-          ? location.descriptionAr
-          : location.descriptionEn;
-      return `${name} ${desc}`.toLowerCase().includes(q);
-    });
-  }
-
   openPickupLocationMap(): void {
-    this.mapLat = this.pickupLatitude ?? 24.7136;
-    this.mapLng = this.pickupLongitude ?? 46.6753;
-    this.mapSearchText = '';
+    this.mapDialogLat = this.pickupLatitude ?? 24.7136;
+    this.mapDialogLng = this.pickupLongitude ?? 46.6753;
+    this.mapDialogDescription = this.mapDialogDescription?.trim() ?? '';
     this.visibleLocationMap = true;
   }
 
-  selectMapLocation(location: {
-    nameEn: string;
-    nameAr: string;
-    descriptionEn: string;
-    descriptionAr: string;
+  onMapLocationConfirmed(event: {
     lat: number;
     lng: number;
+    description: string;
   }): void {
-    this.mapLat = location.lat;
-    this.mapLng = location.lng;
-    this.selectedLocationDescription =
-      this.currentLang === 'ar' ? location.descriptionAr : location.descriptionEn;
-  }
-
-  resetPickupMapLocation(): void {
-    this.mapLat = 24.7136;
-    this.mapLng = 46.6753;
-    this.selectedLocationDescription =
-      this.currentLang === 'ar'
-        ? 'الموقع الحالي (وضع تجريبي)'
-        : 'Current location (mock mode)';
-    this.mapSearchText = '';
-  }
-
-  confirmPickupLocation(): void {
-    if (this.mapLat == null || this.mapLng == null) {
-      this.resetPickupMapLocation();
-    }
-    const lat = this.mapLat as number;
-    const lng = this.mapLng as number;
+    const { lat, lng, description } = event;
     this.pickupLatitude = lat;
     this.pickupLongitude = lng;
-    this.selectedLocationDescription =
-      this.selectedLocationDescription ||
-      (this.currentLang === 'ar'
-        ? `الموقع المحدد (${lat.toFixed(6)}, ${lng.toFixed(6)})`
-        : `Selected location (${lat.toFixed(6)}, ${lng.toFixed(6)})`);
-    this.visibleLocationMap = false;
+    this.mapDialogDescription = description;
   }
 
   showPaymentMethodDialog(): void {

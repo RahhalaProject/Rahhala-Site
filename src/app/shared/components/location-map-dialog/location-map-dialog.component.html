@@ -1,0 +1,66 @@
+<p-dialog
+  [modal]="true"
+  [header]="header"
+  [(visible)]="visible"
+  [style]="{ width: '50rem' }"
+  class="LocationMap-form"
+  (onHide)="closeDialog()"
+>
+  <div class="flex flex-col mb-3">
+    <div
+      class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 p-4"
+    >
+      <div class="flex justify-center card-cus w-full">
+        <div class="row w-100">
+          <div class="col-12">
+            <div #mapCanvas class="w-full mb-3 border-round" style="min-height: 280px"></div>
+          </div>
+          <div class="col-12 mb-3">
+            <div class="map-search-row">
+              <input
+                type="text"
+                pInputText
+                class="map-search-input"
+                [(ngModel)]="mapSearchText"
+                (keydown.enter)="searchMapLocation()"
+                [placeholder]="'searchLocationPlaceholder' | translate"
+              />
+              <button
+                type="button"
+                class="form-item-custom map-search-btn"
+                (click)="searchMapLocation()"
+                [attr.aria-label]="'searchLocationPlaceholder' | translate"
+              >
+                <i class="pi pi-search"></i>
+              </button>
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            <p class="title">{{ "selectedLocationTitle" | translate }}</p>
+            <p>
+              {{
+                selectedLocationDescription || ("selectedLocationDescEmpty" | translate)
+              }}
+            </p>
+          </div>
+          <div class="col-12 mb-3" *ngIf="mapCoordinatesDisplay">
+            <p>{{ mapCoordinatesDisplay }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex w-full justify-between">
+    <p-button
+      label="{{ 'resetCurrentLocation' | translate }}"
+      severity="secondary"
+      (click)="resetCurrentLocation()"
+      (keydown.enter)="resetCurrentLocation()"
+    />
+    <p-button
+      label="{{ 'confirmLocation' | translate }}"
+      (click)="confirmLocation()"
+      (keydown.enter)="confirmLocation()"
+    />
+  </div>
+</p-dialog>

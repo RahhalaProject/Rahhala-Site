@@ -22,6 +22,7 @@ import { CargoShippingOrderService } from '../../../../core/services/cargo-shipp
 import { CreateCargoShippingOrderRequest } from '../../../../core/models/cargo-shipping-order.model';
 import { PaymentMethod } from '../../../../core/models/payment-method.enum';
 import { LocationService } from '../../../../core/services/location.service';
+import { LocationMapDialogComponent } from '../../../../shared/components/location-map-dialog/location-map-dialog.component';
 
 @Component({
   selector: 'order-form',
@@ -45,6 +46,7 @@ import { LocationService } from '../../../../core/services/location.service';
     Dialog,
     FileUpload,
     DatePickerModule,
+    LocationMapDialogComponent,
   ],
 })
 export class OrderFormComponent implements OnInit {
@@ -100,43 +102,15 @@ export class OrderFormComponent implements OnInit {
   deliveryLatitude: number | null = null;
   deliveryLongitude: number | null = null;
   private mapTarget: 'pickup' | 'delivery' = 'pickup';
-  mapLat: number | null = null;
-  mapLng: number | null = null;
-  mapSearchText = '';
-  selectedLocationDescription = '';
+  mapDialogLat: number | null = null;
+  mapDialogLng: number | null = null;
+  mapDialogDescription = '';
   orderConfirmationValidationMessage = '';
   showValidationErrors = false;
   showShipmentValidationErrors = false;
   showDeliveryDateValidationErrors = false;
   showPaymentMethodValidationErrors = false;
   showLocationValidationErrors = false;
-  private readonly staticMapLocations = [
-    {
-      nameEn: 'Riyadh - Olaya',
-      nameAr: 'الرياض - العليا',
-      descriptionEn: 'Commercial district in central Riyadh',
-      descriptionAr: 'حي تجاري في وسط الرياض',
-      lat: 24.711667,
-      lng: 46.674999,
-    },
-    {
-      nameEn: 'Jeddah - Al Hamra',
-      nameAr: 'جدة - الحمراء',
-      descriptionEn: 'Popular coastal district in Jeddah',
-      descriptionAr: 'حي ساحلي معروف في جدة',
-      lat: 21.543333,
-      lng: 39.172779,
-    },
-    {
-      nameEn: 'Dammam - Al Faisaliyah',
-      nameAr: 'الدمام - الفيصلية',
-      descriptionEn: 'Residential area in Dammam',
-      descriptionAr: 'منطقة سكنية في الدمام',
-      lat: 26.420683,
-      lng: 50.088795,
-    },
-  ];
-
   constructor(
     readonly translate: TranslateService,
     readonly messageService: MessageService
@@ -298,79 +272,28 @@ export class OrderFormComponent implements OnInit {
     const targetLng =
       target === 'pickup' ? this.pickupLongitude : this.deliveryLongitude;
 
-    this.mapLat = targetLat ?? 24.7136;
-    this.mapLng = targetLng ?? 46.6753;
-    this.mapSearchText = '';
-    this.selectedLocationDescription =
+    this.mapDialogLat = targetLat ?? 24.7136;
+    this.mapDialogLng = targetLng ?? 46.6753;
+    this.mapDialogDescription =
       target === 'pickup' ? this.pickupPlaceName : this.deliveryPlaceName;
     this.visibleLocationMap = true;
   }
 
-  resetCurrentLocation() {
-    // Static fallback coordinates until real map/location service is integrated.
-    this.mapLat = 24.7136;
-    this.mapLng = 46.6753;
-    this.selectedLocationDescription =
-      this.currentLang === 'ar'
-        ? 'الموقع الحالي (وضع تجريبي)'
-        : 'Current location (mock mode)';
-    this.mapSearchText = '';
-  }
-
-  get filteredMapLocations() {
-    const q = this.mapSearchText.trim().toLowerCase();
-    if (!q) {
-      return this.staticMapLocations;
-    }
-
-    return this.staticMapLocations.filter((location) => {
-      const name = this.currentLang === 'ar' ? location.nameAr : location.nameEn;
-      const desc =
-        this.currentLang === 'ar'
-          ? location.descriptionAr
-          : location.descriptionEn;
-      return `${name} ${desc}`.toLowerCase().includes(q);
-    });
-  }
-
-  selectMapLocation(location: {
-    nameEn: string;
-    nameAr: string;
-    descriptionEn: string;
-    descriptionAr: string;
+  onMapLocationConfirmed(event: {
     lat: number;
     lng: number;
-  }) {
-    this.mapLat = location.lat;
-    this.mapLng = location.lng;
-    this.selectedLocationDescription =
-      this.currentLang === 'ar' ? location.descriptionAr : location.descriptionEn;
-  }
-
-  confirmLocation() {
-    if (this.mapLat == null || this.mapLng == null) {
-      this.resetCurrentLocation();
-    }
-
-    const lat = this.mapLat as number;
-    const lng = this.mapLng as number;
-    const placeName =
-      this.selectedLocationDescription ||
-      (this.currentLang === 'ar'
-        ? `الموقع المحدد (${lat.toFixed(6)}, ${lng.toFixed(6)})`
-        : `Selected location (${lat.toFixed(6)}, ${lng.toFixed(6)})`);
-
+    description: string;
+  }): void {
+    const { lat, lng, description } = event;
     if (this.mapTarget === 'pickup') {
       this.pickupLatitude = lat;
       this.pickupLongitude = lng;
-      this.pickupPlaceName = placeName;
+      this.pickupPlaceName = description;
     } else {
       this.deliveryLatitude = lat;
       this.deliveryLongitude = lng;
-      this.deliveryPlaceName = placeName;
+      this.deliveryPlaceName = description;
     }
-
-    this.visibleLocationMap = false;
   }
 
   onInitialPricingClick() {

@@ -534,85 +534,12 @@
 <!------------- End Location ------------>
 
 <!------------- Start LocationMap ------------>
-<p-dialog
-  [modal]="true"
+<location-map-dialog
   [(visible)]="visibleLocationMap"
-  [style]="{ width: '50rem' }"
-  class="LocationMap-form"
->
-  <div class="flex flex-col mb-3">
-    <div
-      class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 p-4"
-    >
-      <div class="flex justify-center card-cus w-full">
-        <div class="row">
-          <div class="col-12">
-            <div
-              class="w-full p-4 mb-3 border-round text-center"
-              style="background: #eef2ff; min-height: 220px"
-            >
-              <p class="mb-2">{{ "map" | translate }}</p>
-              <small>{{ "mapStaticMode" | translate }}</small>
-            </div>
-          </div>
-          <div class="col-12 mb-3">
-            <input
-              type="text"
-              pInputText
-              [(ngModel)]="mapSearchText"
-              placeholder="{{ 'searchLocationPlaceholder' | translate }}"
-            />
-          </div>
-          <div class="col-12 mb-3">
-            <div class="w-full p-2 border-round" style="background: #f8fafc">
-              <button
-                *ngFor="let location of filteredMapLocations"
-                class="form-item form-item-custom mb-2"
-                type="button"
-                (click)="selectMapLocation(location)"
-              >
-                <span>
-                  {{ currentLang === "ar" ? location.nameAr : location.nameEn }}
-                </span>
-              </button>
-            </div>
-          </div>
-          <div class="col-12 mb-2">
-            <p class="title">{{ "selectedLocationTitle" | translate }}</p>
-            <p>{{ selectedLocationDescription || ("selectedLocationDescEmpty" | translate) }}</p>
-          </div>
-          <div class="col-12 mb-3">
-            <input
-              type="number"
-              pInputText
-              [(ngModel)]="mapLat"
-              placeholder="{{ 'latitude' | translate }}"
-            />
-          </div>
-          <div class="col-12 mb-3">
-            <input
-              type="number"
-              pInputText
-              [(ngModel)]="mapLng"
-              placeholder="{{ 'longitude' | translate }}"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="flex w-full justify-between">
-    <p-button
-      label="{{ 'resetCurrentLocation' | translate }}"
-      severity="secondary"
-      (click)="resetCurrentLocation()"
-      (keydown.enter)="resetCurrentLocation()"
-    />
-    <p-button
-      label="{{ 'confirmLocation' | translate }}"
-      (click)="confirmLocation()"
-      (keydown.enter)="confirmLocation()"
-    />
-  </div>
-</p-dialog>
+  [initialLat]="mapDialogLat"
+  [initialLng]="mapDialogLng"
+  [initialDescription]="mapDialogDescription"
+  [header]="'setLocationOnMap' | translate"
+  (locationConfirmed)="onMapLocationConfirmed($event)"
+/>
 <!------------- End LocationMap ------------>
