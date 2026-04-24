@@ -42,3 +42,10 @@
   font-size: 14px;
   color: #003768;
 }
+
+.map-actions-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}

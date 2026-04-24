@@ -3,8 +3,6 @@ import {
   Input,
   inject,
   ViewChild,
-  OnChanges,
-  SimpleChanges,
 } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -31,7 +29,7 @@ import { EntityTableColumn } from '../../models/entity-table-column.model';
   templateUrl: './app-entity-table.component.html',
   styleUrl: './app-entity-table.component.scss',
 })
-export class AppEntityTableComponent implements OnChanges {
+export class AppEntityTableComponent {
   private readonly datePipe = inject(DatePipe);
   private readonly translate = inject(TranslateService);
 
@@ -68,14 +66,6 @@ export class AppEntityTableComponent implements OnChanges {
    */
   get colDefs(): EntityTableColumn[] {
     return this.columns;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['items']) {
-      // After new data arrives, clear sort/filter state so stale `filteredValue` cannot
-      // keep a single row (e.g. after a prior global search). Defer so `ViewChild` exists.
-      setTimeout(() => this.dt?.reset(), 0);
-    }
   }
 
   onGlobalFilter(table: Table, event: Event): void {
