@@ -46,4 +46,18 @@ export class OrderService {
         })
       );
   }
+
+  /**
+   * POST /Order/cancel/{orderId}
+   */
+  cancelOrder(orderId: string, cancelReason: string): Observable<unknown> {
+    return this.http
+      .post(`${this.apiUrl}/Order/cancel/${orderId}`, { cancelReason })
+      .pipe(
+        catchError((err) => {
+          console.error('Order cancel error:', err);
+          return throwError(() => err);
+        })
+      );
+  }
 }

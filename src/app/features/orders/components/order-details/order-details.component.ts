@@ -1,10 +1,14 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
+import { Dialog } from 'primeng/dialog';
+import { TextareaModule } from 'primeng/textarea';
+import { IftaLabelModule } from 'primeng/iftalabel';
 import { MessageService } from 'primeng/api';
 import { OrderService } from '../../../../core/services/order.service';
 import { OrderDetailsResponse } from '../../../../core/models/order-details.model';
@@ -18,6 +22,10 @@ import { OrderDetailsResponse } from '../../../../core/models/order-details.mode
     CardModule,
     ButtonModule,
     TagModule,
+    Dialog,
+    FormsModule,
+    TextareaModule,
+    IftaLabelModule,
     DatePipe,
     RouterLink,
   ],
@@ -32,8 +40,12 @@ export class OrderDetailsComponent implements OnInit {
   private readonly translate = inject(TranslateService);
 
   loading = false;
+  cancelling = false;
   orderId = '';
   details: OrderDetailsResponse | null = null;
+  visibleCancelDialog = false;
+  cancelReasonText = '';
+  showCancelReasonError = false;
 
   ngOnInit(): void {
     this.orderId = this.route.snapshot.paramMap.get('orderId') ?? '';
@@ -133,5 +145,44 @@ export class OrderDetailsComponent implements OnInit {
       return value.length > 0;
     }
     return true;
+  }
+
+  openCancelDialog(): void {
+    this.visibleCancelDialog = true;
+    this.cancelReasonText = '';
+    this.showCancelReasonError = false;
+  }
+
+  confirmCancelOrder(): void {
+    this.showCancelReasonError = true;
+    const reason = this.cancelReasonText.trim();
+    if (!reason) {
+      return;
+    }
+    this.cancelling = true;
+    this.orderService.cancelOrder(this.orderId, reason).subscribe({
+      next: () => {
+        this.cancelling = false;
+        this.visibleCancelDialog = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: this.translate.instant('orderCancelSuccessSummary') || 'Success',
+          detail:
+            this.translate.instant('orderCancelSuccessDetail') ||
+            'Order cancelled successfully.',
+        });
+        this.loadDetails();
+      },
+      error: () => {
+        this.cancelling = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: this.translate.instant('error') || 'Error',
+          detail:
+            this.translate.instant('orderCancelError') ||
+            'Failed to cancel order.',
+        });
+      },
+    });
   }
 }

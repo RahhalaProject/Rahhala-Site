@@ -418,5 +418,8 @@
   "shipmentSpeed": "Shipment speed",
   "dimensionsInCm": "All dimensions are in centimeters",
   "weight": "Weight",
-  "pieces": "Pieces"
+  "pieces": "Pieces",
+  "orderCancelSuccessSummary": "Success",
+  "orderCancelSuccessDetail": "Order cancelled successfully.",
+  "orderCancelError": "Failed to cancel order."
 }

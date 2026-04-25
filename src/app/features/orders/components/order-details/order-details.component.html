@@ -14,6 +14,12 @@
         [label]="'myOrders' | translate"
         routerLink="/my-orders"
       />
+      <p-button
+        type="button"
+        severity="danger"
+        [label]="'cancelOrder' | translate"
+        (onClick)="openCancelDialog()"
+      />
     </div>
 
     <div *ngIf="loading">{{ "loading" | translate }}</div>
@@ -92,3 +98,41 @@
     </div>
   </p-card>
 </div>
+
+<p-dialog
+  [modal]="true"
+  [(visible)]="visibleCancelDialog"
+  [header]="'cancelOrder' | translate"
+  [style]="{ width: '35rem' }"
+>
+  <div class="mb-3">
+    <p-iftalabel>
+      <textarea
+        pTextarea
+        id="cancelReason"
+        rows="4"
+        style="resize: none; width: 100%"
+        [(ngModel)]="cancelReasonText"
+      ></textarea>
+      <label for="cancelReason">{{ "cancelReason" | translate }}</label>
+    </p-iftalabel>
+    <small *ngIf="showCancelReasonError && !cancelReasonText.trim()" class="p-error">
+      {{ "requiredField" | translate }}
+    </small>
+  </div>
+  <div class="cancel-actions-row">
+    <p-button
+      [label]="'cancel' | translate"
+      severity="secondary"
+      (onClick)="visibleCancelDialog = false"
+    />
+    <div class="confirm-wrap">
+      <p-button
+        [label]="'confirm.label' | translate"
+        severity="danger"
+        [loading]="cancelling"
+        (onClick)="confirmCancelOrder()"
+      />
+    </div>
+  </div>
+</p-dialog>

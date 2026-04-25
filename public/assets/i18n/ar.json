@@ -357,5 +357,8 @@
   "shipmentSpeed": "سرعة الشحنة",
   "dimensionsInCm": "جميع القياسات بالسنتيمتر",
   "weight": "الوزن",
-  "pieces": "القطع"
+  "pieces": "القطع",
+  "orderCancelSuccessSummary": "تم بنجاح",
+  "orderCancelSuccessDetail": "تم إلغاء الطلب بنجاح.",
+  "orderCancelError": "تعذر إلغاء الطلب."
 }
