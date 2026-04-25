@@ -7,36 +7,51 @@
   <div class="box">
     <h2>{{ "homeIntro" | translate }}</h2>
     <div class="row mt-5 mb-5">
-      <div class="col-lg-4 col-sm-6 mb-4">
-        <p-card [style]="{ overflow: 'hidden' }">
-          <ng-template #header>
-            <img alt="Card" class="w-full" src="/images/businessValue.svg" />
-          </ng-template>
-          <ng-template #title>{{ "ourValuesTitle" | translate }}</ng-template>
-          <p>{{ "ourValuesText" | translate }}</p>
-        </p-card>
+      <div *ngIf="loading" class="col-12 text-center">
+        <p>{{ "loading" | translate }}</p>
       </div>
-      <div class="col-lg-4 col-sm-6 mb-4">
-        <p-card [style]="{ overflow: 'hidden' }">
-          <ng-template #header>
-            <img alt="Card" class="w-full" src="/images/VisionBanner.svg" />
-          </ng-template>
-          <ng-template #title>{{ "ourMissionTitle" | translate }}</ng-template>
-          <p>{{ "ourMissionText" | translate }}</p>
-        </p-card>
+      <div *ngIf="loadError" class="col-12 text-center text-danger">
+        <p>{{ "slidersLoadError" | translate }}</p>
       </div>
-      <div class="col-lg-4 col-sm-6 mb-4">
-        <p-card [style]="{ overflow: 'hidden' }">
+      <div
+        class="col-lg-4 col-sm-6 mb-4 slider-card-col"
+        *ngFor="let slider of sliders; trackBy: trackBySliderId"
+      >
+        <p-card [style]="{ overflow: 'hidden' }" styleClass="slider-card">
           <ng-template #header>
-            <img alt="Card" class="w-full" src="/images/message.svg" />
+            <div class="slider-card-image-wrap">
+              <img
+                *ngIf="getSliderImageUrl(slider) as imageUrl; else sliderImageFallback"
+                alt="Card"
+                class="w-full slider-card-image"
+                [src]="imageUrl"
+                (error)="onSliderImageError($event)"
+              />
+              <ng-template #sliderImageFallback>
+                <img
+                  alt="Card"
+                  class="w-full slider-card-image"
+                  [src]="fallbackSliderImage"
+                />
+              </ng-template>
+            </div>
           </ng-template>
-          <ng-template #title>{{ "ourVisionTitle" | translate }}</ng-template>
-          <p>{{ "ourVisionText" | translate }}</p>
+          <div
+            class="slider-card-clickable"
+            role="button"
+            tabindex="0"
+            (click)="openSliderDetails(slider.id)"
+            (keydown.enter)="openSliderDetails(slider.id)"
+            (keydown.space)="openSliderDetails(slider.id)"
+          >
+            <ng-template #title>{{ getLocalizedTitle(slider) }}</ng-template>
+            <p>{{ getLocalizedDescription(slider) }}</p>
+          </div>
         </p-card>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-4 col-sm-6 btns">
+    <div class="row services-buttons-row">
+      <div class="col-lg-4 col-sm-6 btns services-buttons-col">
         <p-button
           [label]="'newOrder' | translate"
           severity="contrast"
@@ -59,3 +74,49 @@
     </div>
   </div>
 </div>
+
+<p-dialog
+  [(visible)]="visibleSliderDialog"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: 'min(92vw, 700px)' }"
+  [styleClass]="'slider-details-dialog'"
+  [header]="getLocalizedTitle(selectedSliderDetails)"
+>
+  <div *ngIf="detailsLoading" class="slider-dialog-state">
+    <div class="slider-dialog-spinner"></div>
+    <p class="slider-dialog-state-text">{{ "loading" | translate }}</p>
+  </div>
+  <div *ngIf="detailsLoadError" class="slider-dialog-state slider-dialog-error">
+    <p class="slider-dialog-state-text">{{ "sliderDetailsLoadError" | translate }}</p>
+  </div>
+  <div
+    *ngIf="!detailsLoading && !detailsLoadError && selectedSliderDetails"
+    class="slider-dialog-content"
+  >
+    <div class="slider-dialog-image-wrap">
+      <img
+        *ngIf="
+          getSliderImageUrl(selectedSliderDetails) as detailsImageUrl;
+          else sliderDetailsFallbackImage
+        "
+        [src]="detailsImageUrl"
+        alt="Slider details"
+        class="w-full slider-details-image"
+        (error)="onSliderImageError($event)"
+      />
+      <ng-template #sliderDetailsFallbackImage>
+        <img
+          [src]="fallbackSliderImage"
+          alt="Slider details"
+          class="w-full slider-details-image"
+        />
+      </ng-template>
+    </div>
+    <p class="slider-dialog-description mb-0">
+      {{ getLocalizedDescription(selectedSliderDetails) }}
+    </p>
+  </div>
+</p-dialog>

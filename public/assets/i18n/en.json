@@ -421,5 +421,7 @@
   "pieces": "Pieces",
   "orderCancelSuccessSummary": "Success",
   "orderCancelSuccessDetail": "Order cancelled successfully.",
-  "orderCancelError": "Failed to cancel order."
+  "orderCancelError": "Failed to cancel order.",
+  "slidersLoadError": "Failed to load services.",
+  "sliderDetailsLoadError": "Failed to load service details."
 }

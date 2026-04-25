@@ -360,5 +360,7 @@
   "pieces": "القطع",
   "orderCancelSuccessSummary": "تم بنجاح",
   "orderCancelSuccessDetail": "تم إلغاء الطلب بنجاح.",
-  "orderCancelError": "تعذر إلغاء الطلب."
+  "orderCancelError": "تعذر إلغاء الطلب.",
+  "slidersLoadError": "تعذر تحميل الخدمات.",
+  "sliderDetailsLoadError": "تعذر تحميل تفاصيل الخدمة."
 }
