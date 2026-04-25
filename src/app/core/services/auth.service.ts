@@ -1,7 +1,16 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject, tap, catchError, throwError } from 'rxjs';
+import {
+  Observable,
+  BehaviorSubject,
+  tap,
+  catchError,
+  throwError,
+  from,
+  of,
+  switchMap,
+} from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { TokenService } from './token.service';
 import { LoginRequest } from '../models/login-request.model';
@@ -13,6 +22,7 @@ import { RefreshTokenRequest } from '../models/refresh-token-request.model';
 import { VerifyOtpRequest } from '../models/verify-otp-request.model';
 import { ResendOtpRequest } from '../models/resend-otp-request.model';
 import { ResetPasswordRequest } from '../models/reset-password-request.model';
+import { FcmTokenService } from './fcm-token.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +31,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
   private tokenService = inject(TokenService);
+  private fcmTokenService = inject(FcmTokenService);
 
   private config = inject(APP_CONFIG);
   //private apiUrl = `${this.config.apiUrl}/auth`;
@@ -42,7 +53,10 @@ export class AuthService {
   }
 
   login(request: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, request).pipe(
+    return this.withFcmToken(request).pipe(
+      switchMap((requestWithFcm) =>
+        this.http.post<LoginResponse>(`${this.apiUrl}/login`, requestWithFcm)
+      ),
       tap((response) => this.handleAuthResponse(response)),
       catchError((error) => {
         console.error('Login error:', error);
@@ -52,15 +66,16 @@ export class AuthService {
   }
 
   register(request: RegisterRequest): Observable<LoginResponse> {
-    return this.http
-      .post<LoginResponse>(`${this.apiUrl}/register`, request)
-      .pipe(
-        tap((response) => this.handleAuthResponse(response)),
-        catchError((error) => {
-          console.error('Registration error:', error);
-          return throwError(() => error);
-        })
-      );
+    return this.withFcmToken(request).pipe(
+      switchMap((requestWithFcm) =>
+        this.http.post<LoginResponse>(`${this.apiUrl}/register`, requestWithFcm)
+      ),
+      tap((response) => this.handleAuthResponse(response)),
+      catchError((error) => {
+        console.error('Registration error:', error);
+        return throwError(() => error);
+      })
+    );
   }
 
   refreshToken(): Observable<LoginResponse> {
@@ -164,33 +179,35 @@ export class AuthService {
       );
   }
   VerifyRegisterOtp(request: VerifyOtpRequest): Observable<LoginResponse> {
-    return this.http
-      .post<LoginResponse>(`${this.apiUrl}/v1/Authentication/register`, {
-        ...request,
-        userType: 1,
-      })
-      .pipe(
-        tap((response) => this.handleAuthResponse(response)),
-        catchError((error) => {
-          console.error('OTP verification error:', error);
-          return throwError(() => error);
+    return this.withFcmToken(request).pipe(
+      switchMap((requestWithFcm) =>
+        this.http.post<LoginResponse>(`${this.apiUrl}/v1/Authentication/register`, {
+          ...requestWithFcm,
+          userType: 1,
         })
-      );
+      ),
+      tap((response) => this.handleAuthResponse(response)),
+      catchError((error) => {
+        console.error('OTP verification error:', error);
+        return throwError(() => error);
+      })
+    );
   }
 
   VerifyLoginOtp(request: VerifyOtpRequest): Observable<LoginResponse> {
-    return this.http
-      .post<LoginResponse>(`${this.apiUrl}/v1/Authentication/login`, {
-        ...request,
-        userType: 1,
-      })
-      .pipe(
-        tap((response) => this.handleAuthResponse(response)),
-        catchError((error) => {
-          console.error('OTP verification error:', error);
-          return throwError(() => error);
+    return this.withFcmToken(request).pipe(
+      switchMap((requestWithFcm) =>
+        this.http.post<LoginResponse>(`${this.apiUrl}/v1/Authentication/login`, {
+          ...requestWithFcm,
+          userType: 1,
         })
-      );
+      ),
+      tap((response) => this.handleAuthResponse(response)),
+      catchError((error) => {
+        console.error('OTP verification error:', error);
+        return throwError(() => error);
+      })
+    );
   }
 
   sendForgotPasswordOtp(request: { phoneNumber: string }): Observable<any> {
@@ -241,6 +258,14 @@ export class AuthService {
           return throwError(() => error);
         })
       );
+  }
+
+  private withFcmToken<T extends { fcmToken?: string | null }>(
+    request: T
+  ): Observable<T> {
+    return from(this.fcmTokenService.getBrowserToken()).pipe(
+      switchMap((fcmToken) => of({ ...request, fcmToken: fcmToken ?? null }))
+    );
   }
   //#endregion
 }
