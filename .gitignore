@@ -41,8 +41,10 @@ testem.log
 .DS_Store
 Thumbs.db
 /.vs/Rahhala
-/.vs/Rahhala-Site
+/.vs/Rahhala-Site/CopilotIndices/17.14.939.21063
+/.vs/Rahhala-Site/FileContentIndex/5145787b-6a08-46c3-8d6d-6033f38b8815.vsidx
+*.vsidx
 /.vs/slnx.sqlite
-/.vs/Rahhala-Site.slnx/FileContentIndex/c083f296-75b9-47c9-9890-3b375b95983e.vsidx
-
-.vs/
+/.vs/Rahhala-Site.slnx/v18
+/.vs/Rahhala-Site.slnx/config
+/.vs
