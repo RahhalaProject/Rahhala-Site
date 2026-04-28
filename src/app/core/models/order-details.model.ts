@@ -4,6 +4,7 @@ export interface OrderDetailsResponse {
   createdOnUtc?: string | null;
   orderType?: string | null;
   statusName?: string | null;
+  statusId?: number | null;
   paymentMethodName?: string | null;
   cancelReason?: string | null;
   images?: string[] | null;

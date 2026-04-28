@@ -18,6 +18,7 @@
         type="button"
         severity="danger"
         [label]="'cancelOrder' | translate"
+        *ngIf="details?.['statusId'] === 1"
         (onClick)="openCancelDialog()"
       />
     </div>
