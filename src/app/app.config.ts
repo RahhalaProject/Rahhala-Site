@@ -8,7 +8,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import Aura from '@primeuix/themes/aura';
+import { RahhalaAuraPreset } from '../theme/rahala-preset';
 import {
   HttpClient,
   HttpClientModule,
@@ -45,7 +45,7 @@ export const config: ApplicationConfig = {
     ),
     providePrimeNG({
       theme: {
-        preset: Aura,
+        preset: RahhalaAuraPreset,
       },
     }),
   ],

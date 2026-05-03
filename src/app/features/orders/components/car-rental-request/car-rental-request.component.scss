@@ -21,7 +21,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #003768;
+  border: 1px solid var(--app-primary);
   border-radius: 8px;
   padding: 12px 15px;
   margin-bottom: 12px;
@@ -31,7 +31,7 @@
 }
 
 .form-item.dashed {
-  border: 2px dashed #003768;
+  border: 2px dashed var(--app-primary);
   background: #fafafa;
   cursor: pointer;
 }
@@ -51,7 +51,7 @@
   font-family: var(--btn-font-family);
   font-weight: 600;
   font-size: 14px;
-  color: #003768;
+  color: var(--app-primary);
   text-align: center;
   margin-bottom: 0.65rem;
 }
@@ -87,7 +87,7 @@
   margin-top: 0.75rem;
   margin-bottom: 0.25rem;
   padding-top: 0.75rem;
-  border-top: 1px dashed rgba(0, 55, 104, 0.25);
+  border-top: 1px dashed rgba(var(--app-primary-rgb), 0.25);
 }
 
 .pickup-address-instruction {
@@ -120,7 +120,7 @@
   font-size: 1rem;
 }
 
-/* فترة الإيجار: من / إلى */
+/* ÙØªØ±Ø© Ø§Ù„Ø¥ÙŠØ¬Ø§Ø±: Ù…Ù† / Ø¥Ù„Ù‰ */
 .date-range-fields {
   margin-bottom: 1.25rem;
 
@@ -143,7 +143,7 @@
 }
 
 .date-range-panel {
-  border: 1px solid rgba(0, 55, 104, 0.2);
+  border: 1px solid rgba(var(--app-primary-rgb), 0.2);
   border-radius: 10px;
   background: #fafbfc;
   padding: 1rem 1rem 1.1rem;
@@ -152,7 +152,7 @@
 
 .date-range-sep-icon {
   font-size: 1.25rem;
-  color: #003768;
+  color: var(--app-primary);
   opacity: 0.85;
 }
 
@@ -160,7 +160,7 @@
   .box .form .p-button {
     width: 100%;
     padding: 12px;
-    background: #003768;
+    background: var(--app-primary);
     display: block;
     margin-top: 20px;
   }
@@ -225,7 +225,7 @@
     font-weight: 600;
     font-style: Sans One Bold;
     font-size: 14px;
-    color: #003768;
+    color: var(--app-primary);
   }
 
   .title.form-section-heading {
@@ -290,7 +290,7 @@
     font-family: var(--btn-font-family);
     font-weight: 600;
     font-size: 14px;
-    color: #003768;
+    color: var(--app-primary);
   }
 }
 

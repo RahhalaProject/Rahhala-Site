@@ -35,11 +35,11 @@
   .box .form .p-button-label {
     font-weight: 700;
     font-size: 15px;
-    color: #003768;
+    color: var(--app-primary);
   }
 
   .p-button-icon {
-    color: #003768;
+    color: var(--app-primary);
     font-size: 15px;
     font-weight: bold;
     margin: 0 2px;
@@ -123,7 +123,7 @@
     margin-bottom: 1rem;
     font-size: 16px;
     font-weight: bold;
-    color: #003768;
+    color: var(--app-primary);
   }
 
   .transaction-item {
@@ -133,7 +133,7 @@
     padding: 0.75rem 0;
     border-bottom: 1px solid #eaeaea;
     font-size: 14px;
-    color: #003768;
+    color: var(--app-primary);
   }
 
   .transaction-date {
@@ -145,7 +145,7 @@
     color: #333;
     width: 40%;
     text-align: center;
-    color: #003768;
+    color: var(--app-primary);
   }
 
   .transaction-amount {

@@ -43,7 +43,7 @@
   .sign-up-box .form .p-button {
     width: 100%;
     padding: 12px;
-    background: #003768;
+    background: var(--app-primary);
     display: block;
     margin-top: 20px;
   }
@@ -79,7 +79,7 @@
   .social-login-separator .line {
     flex-grow: 1; /* Allows the lines to take up available space */
     height: 1px; /* Thickness of the line */
-    background-color: #003768; /* Color of the line */
+    background-color: var(--app-primary); /* Color of the line */
   }
 
   .social-login-separator .or-text {

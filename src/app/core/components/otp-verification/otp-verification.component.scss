@@ -33,7 +33,7 @@
 .box .header h2 {
   font-weight: 600;
   font-size: 24px;
-  color: #003768;
+  color: var(--app-primary);
   margin-bottom: 10px;
 }
 
@@ -43,11 +43,11 @@
   color: #a3a3a3;
 }
 .box .header p span {
-  color: #003768;
+  color: var(--app-primary);
 }
 
 .box .header span {
-  color: #003768;
+  color: var(--app-primary);
 }
 
 .return-btn {
@@ -69,7 +69,7 @@
   .box .form .p-button {
     width: 100%;
     padding: 12px;
-    background: #003768;
+    background: var(--app-primary);
     display: block;
     margin-top: 20px;
   }

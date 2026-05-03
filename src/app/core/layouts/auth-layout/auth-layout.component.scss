@@ -1,7 +1,7 @@
 :host ::ng-deep {
     .header-div {
         height: 15vh;
-        background: #003768;
+        background: var(--app-primary);
         padding: 20px 0px;
     }
     .p-megamenu {

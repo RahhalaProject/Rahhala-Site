@@ -35,7 +35,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #003768;
+  border: 1px solid var(--app-primary);
   border-radius: 8px;
   padding: 12px 15px;
   margin-bottom: 12px;
@@ -45,7 +45,7 @@
 }
 
 .form-item.dashed {
-  border: 2px dashed #003768;
+  border: 2px dashed var(--app-primary);
   background: #fafafa;
   cursor: pointer;
 }
@@ -69,7 +69,7 @@
   .box .form .p-button {
     width: 100%;
     padding: 12px;
-    background: #003768;
+    background: var(--app-primary);
     display: block;
   }
 
@@ -134,7 +134,7 @@
     font-weight: 600;
     font-style: Sans One Bold;
     font-size: 14px;
-    color: #003768;
+    color: var(--app-primary);
     text-align: center;
   }
   .p-inputtext {
@@ -165,7 +165,7 @@
     border-radius: 12px;
     padding: 7px 20px;
     margin-bottom: 15px;
-    color: #003768;
+    color: var(--app-primary);
   }
   .order img {
     width: 70px;
@@ -181,10 +181,10 @@
   .order p {
     margin: 3px 0;
     font-size: 13px;
-    color: #003768;
+    color: var(--app-primary);
   }
   .price {
-    color: #003768;
+    color: var(--app-primary);
     font-weight: bold;
   }
   .imag-div {
@@ -208,11 +208,11 @@
     margin: 0;
     font-size: 16px;
     font-weight: bold;
-    color: #003768;
+    color: var(--app-primary);
   }
   .driver p {
     margin: 2px 0 0;
-    color: #003768;
+    color: var(--app-primary);
     font-size: 14px;
   }
   .driver .info {
@@ -240,7 +240,7 @@
   }
   .step span {
     font-size: 12px;
-    color: #003768;
+    color: var(--app-primary);
     margin-top: 10px;
   }
   .circle {

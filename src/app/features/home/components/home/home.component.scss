@@ -47,7 +47,7 @@
                 right: 0;
                 bottom: 0;
                 left: 0;
-                background-color: rgba(0, 55, 104, 0.4);
+                background-color: rgba(var(--app-primary-rgb), 0.4);
                 z-index: 2;
                 pointer-events: none;
                 border-radius: 10px;
@@ -86,7 +86,7 @@
         .overlay .p-button-label {
             font-weight: 600;
             font-size: 13.95px;
-            color: #003768;
+            color: var(--app-primary);
             padding-left: 7px;
             padding-right: 7px;
             pointer-events: auto;
@@ -103,13 +103,13 @@
             font-weight: 600;
             font-size: 48px;
             text-align: center;
-            color: #003768;
+            color: var(--app-primary);
         }
         .p-card p {
             font-weight: 600;
             font-size: 16px;
             text-align: center;
-            color: #003768;
+            color: var(--app-primary);
             padding: 0 25%;
         }
     }
@@ -132,7 +132,7 @@
                 right: 0;
                 bottom: 0;
                 left: 0;
-                background-color: rgba(0, 55, 104, 0.4);
+                background-color: rgba(var(--app-primary-rgb), 0.4);
                 z-index: 2;
                 pointer-events: none;
                 border-radius: 10px;
@@ -183,7 +183,7 @@
                 right: 0;
                 bottom: 0;
                 left: 0;
-                background-color: rgba(0, 55, 104, 0.4);
+                background-color: rgba(var(--app-primary-rgb), 0.4);
                 z-index: 2;
                 pointer-events: none;
                 //border-radius: 10px;
@@ -231,7 +231,7 @@
                 right: 0;
                 bottom: 0;
                 left: 0;
-                background-color: rgba(0, 55, 104, 0.4);
+                background-color: rgba(var(--app-primary-rgb), 0.4);
                 z-index: 2;
                 pointer-events: none;
                 //border-radius: 10px;
@@ -280,13 +280,13 @@
         .p-card-header div h2{
             font-weight: 700;
             font-size: 48px;
-            color: #003768;
+            color: var(--app-primary);
         }
         .p-card p {
             font-weight: 600;
             font-size: 16px;
             text-align: center;
-            color: #003768;
+            color: var(--app-primary);
             padding: 0 20%;
         }
     }
@@ -303,12 +303,12 @@
         .p-card-title {
             font-weight: bold;
             font-size: 16px;
-            color: #003768;
+            color: var(--app-primary);
         }
         .p-card p {
             font-weight: 400;
             font-size: 18px;
-            color: #003768;
+            color: var(--app-primary);
         }
     }
 
@@ -327,13 +327,13 @@
         .p-card-title {
             font-weight: bold;
             font-size: 20px;
-            color: #003768;
+            color: var(--app-primary);
             margin-bottom: 0px;
         }
         .p-card p {
             font-weight: 600;
             font-size: 16px;
-            color: #003768;
+            color: var(--app-primary);
             margin-bottom: 0px;
         }
     }
@@ -348,9 +348,9 @@
             line-height: 60px;
             letter-spacing: 0px;
             text-align: center;
-            color: #003768;
+            color: var(--app-primary);
             margin-bottom: 50px;
-            border-bottom: 2px solid #003768;
+            border-bottom: 2px solid var(--app-primary);
             display: inline-block;
         }
         .p-card {
@@ -364,14 +364,14 @@
             font-weight: 400;
             font-size: 18px;
             color:#FFFFFF;
-            background: #003768;
+            background: var(--app-primary);
             padding: 7px;
             border-radius: 5px;
         }
         .p-card-content p {
             font-weight: 400;
             font-size: 16px;
-            color: #003768;
+            color: var(--app-primary);
         }
         .image {
             text-align: center;

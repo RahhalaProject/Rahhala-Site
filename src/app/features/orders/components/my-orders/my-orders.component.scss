@@ -27,7 +27,7 @@
 .toolbar-label {
   font-weight: 600;
   font-size: 0.9rem;
-  color: #003768;
+  color: var(--app-primary);
   margin: 0;
 }
 
@@ -37,12 +37,12 @@
 }
 
 :host ::ng-deep .toolbar-refresh-btn {
-  border-color: #003768 !important;
-  color: #003768 !important;
+  border-color: var(--app-primary) !important;
+  color: var(--app-primary) !important;
 }
 
 :host ::ng-deep .toolbar-refresh-btn:hover {
-  background: rgba(0, 55, 104, 0.06) !important;
+  background: rgba(var(--app-primary-rgb), 0.06) !important;
 }
 
 @media (max-width: 600px) {

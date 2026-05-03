@@ -61,14 +61,14 @@
   }
   .main-nav {
     .p-megamenu {
-      background: #003768;
+      background: var(--app-primary);
     }
     .p-megamenu-item-link {
       color: #ffffff;
     }
     .p-megamenu-item:not(.p-disabled) > .p-megamenu-item-content:hover {
       color: var(--p-megamenu-item-focus-background);
-      background: #112c58;
+      background: var(--app-primary-hover);
     }
     .p-megamenu-mobile-active {
       .p-megamenu-item-link {
@@ -76,7 +76,7 @@
       }
       .p-megamenu-item:not(.p-disabled) > .p-megamenu-item-content:hover {
         color: #ffffff;
-        background: #112c58;
+        background: var(--app-primary-hover);
         .p-megamenu-item-link {
           color: #ffffff;
         }

@@ -35,7 +35,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #003768;
+  border: 1px solid var(--app-primary);
   border-radius: 8px;
   padding: 12px 15px;
   margin-bottom: 12px;
@@ -45,7 +45,7 @@
 }
 
 .form-item.dashed {
-  border: 2px dashed #003768;
+  border: 2px dashed var(--app-primary);
   background: #fafafa;
   cursor: pointer;
 }
@@ -69,7 +69,7 @@
   .box .form .p-button {
     width: 100%;
     padding: 12px;
-    background: #003768;
+    background: var(--app-primary);
     display: block;
     margin-top: 20px;
   }
@@ -147,7 +147,7 @@
     font-weight: 600;
     font-style: Sans One Bold;
     font-size: 14px;
-    color: #003768;
+    color: var(--app-primary);
     text-align: center;
   }
   .Location-form .title-cum {
@@ -155,7 +155,7 @@
     font-weight: 600;
     font-style: Sans One Bold;
     font-size: 14px;
-    color: #003768;
+    color: var(--app-primary);
   }
   .p-inputtext {
     width: inherit;

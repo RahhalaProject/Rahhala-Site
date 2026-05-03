@@ -5,7 +5,20 @@
 @tailwind utilities;
 
 @import "primeicons/primeicons.css";
+
+/* Mobile-aligned design tokens (Flutter: primary, onPrimary, shadow, inverse*, error) */
 :root {
+  --app-primary: #003768;
+  --app-on-primary: #ffffff;
+  --app-shadow: #6cbcea;
+  --app-inverse-surface: #4bd12a;
+  --app-inverse-primary: #f5a623;
+  --app-error: #d0021b;
+
+  --app-primary-hover: #002e56;
+  --app-primary-active: #002545;
+  --app-primary-rgb: 0, 55, 104;
+
   --body-bg: var(--p-surface-50);
   --body-text-color: var(--p-surface-900);
   --card-border: 1px solid var(--border-color);
@@ -13,15 +26,18 @@
   --border-color: var(--p-surface-200);
   --text-color: var(--p-surface-700);
   --overlay-background: #ffffff;
-  --btn-color: #003768;
+  --btn-color: var(--app-primary);
   --btn-font-family: "FF Shamel Family", sans-serif;
-  --p-checkbox-checked-hover-background: #003768 !important;
-  --p-textarea-focus-border-color: #003768 !important;
-  --p-list-option-selected-focus-color: #003768 !important;
-  --p-list-option-selected-background-color: #003768 !important;
-  --p-form-field-focus-border-color: #003768 !important;
-  --p-primary-color: #003768 !important;
-  --p-button-primary-hover-border-color: #003768 !important;
+
+  /* PrimeNG CSS variables: keep in sync with RahhalaAuraPreset + overrides where needed */
+  --p-primary-color: var(--app-primary) !important;
+  --p-primary-contrast-color: var(--app-on-primary) !important;
+  --p-checkbox-checked-hover-background: var(--app-primary) !important;
+  --p-textarea-focus-border-color: var(--app-primary) !important;
+  --p-list-option-selected-focus-color: var(--app-primary) !important;
+  --p-list-option-selected-background-color: var(--app-primary) !important;
+  --p-form-field-focus-border-color: var(--app-primary) !important;
+  --p-button-primary-hover-border-color: var(--app-primary-hover) !important;
 }
 
 :root[class="p-dark"] {
@@ -73,7 +89,7 @@ html.ltr {
   text-align: left;
 }
 .title-sec {
-  background: #003768;
+  background: var(--app-primary);
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 }
@@ -86,7 +102,7 @@ html.ltr {
   font-size: 23px;
   margin-bottom: 15px;
   text-align: center;
-  color: white;
+  color: var(--app-on-primary);
 }
 .profile-menu {
   width: 260px;

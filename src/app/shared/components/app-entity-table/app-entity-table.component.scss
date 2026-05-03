@@ -46,12 +46,12 @@
   .app-entity-table-datatable {
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid rgba(0, 55, 104, 0.12);
+    border: 1px solid rgba(var(--app-primary-rgb), 0.12);
   }
 
   .app-entity-table-datatable .p-datatable-thead > tr > th {
     background: #f0f4f8;
-    color: #003768;
+    color: var(--app-primary);
     font-weight: 600;
     font-size: 0.875rem;
   }

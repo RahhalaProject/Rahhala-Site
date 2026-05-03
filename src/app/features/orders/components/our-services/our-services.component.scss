@@ -18,7 +18,7 @@
     h2 {
         font-weight: bold;
         font-size: 29px;
-        color: #003768;
+        color: var(--app-primary);
         text-align: center;
     }
     .p-card {
@@ -54,13 +54,13 @@
     .p-card-title {
         font-weight: bold;
         font-size: 20px;
-        color: #003768;
+        color: var(--app-primary);
         margin-bottom: 0px;
     }
     .p-card p {
         font-weight: 600;
         font-size: 16px;
-        color: #003768;
+        color: var(--app-primary);
         margin-bottom: 0px;
     }
     .slider-card-clickable {
@@ -71,7 +71,7 @@
         height: 100%;
     }
     .slider-card-clickable:focus-visible {
-        box-shadow: 0 0 0 2px #003768;
+        box-shadow: 0 0 0 2px var(--app-primary);
         border-radius: 8px;
     }
     .slider-details-image {
@@ -84,7 +84,7 @@
     .p-button {
         width: 100%;
         padding: 12px;
-        background: #003768;
+        background: var(--app-primary);
         display: block;
         margin-top: 20px
     }
@@ -110,7 +110,7 @@
     }
     .slider-details-dialog .p-dialog-title {
         font-weight: 700;
-        color: #003768;
+        color: var(--app-primary);
         font-size: 1.05rem;
     }
     .slider-details-dialog .p-dialog-content {
@@ -155,7 +155,7 @@
         width: 34px;
         height: 34px;
         border: 3px solid #d7e2ef;
-        border-top-color: #003768;
+        border-top-color: var(--app-primary);
         border-radius: 50%;
         animation: sliderSpin 0.8s linear infinite;
     }

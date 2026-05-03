@@ -1,6 +1,6 @@
 :host ::ng-deep {
   .title-sec {
-    background: #003768;
+    background: var(--app-primary);
   }
   .title-div {
     margin: 0 auto;
@@ -23,7 +23,7 @@
     padding-top: 0px;
     .p-tablist-tab-list {
       justify-content: center;
-      background: #003768;
+      background: var(--app-primary);
       border-bottom-left-radius: 15px;
       border-bottom-right-radius: 15px;
     }

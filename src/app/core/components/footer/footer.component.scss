@@ -5,7 +5,7 @@
         left: 0;
         right: 0;
         .p-card {
-            background-color: #003768;
+            background-color: var(--app-primary);
             box-shadow: none;
             border: none;
             border-radius: 0;
@@ -35,21 +35,21 @@
             font-family: var(--btn-font-family);
             font-weight: 600;
             font-size: 16px;
-            color: #003768;
+            color: var(--app-primary);
 
         }
         .row1 {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap; // لو عايز العناصر تنزل تحت بعض في الشاشات الصغيرة
+            flex-wrap: wrap; // Ù„Ùˆ Ø¹Ø§ÙŠØ² Ø§Ù„Ø¹Ù†Ø§ØµØ± ØªÙ†Ø²Ù„ ØªØ­Øª Ø¨Ø¹Ø¶ ÙÙŠ Ø§Ù„Ø´Ø§Ø´Ø§Øª Ø§Ù„ØµØºÙŠØ±Ø©
             gap: 1rem;
         }
     }
 
 
     .rahhala-footer {
-        background-color: #003768;
+        background-color: var(--app-primary);
         color: white;
         padding: 2rem;
         font-family: 'Tajawal', sans-serif;
@@ -65,7 +65,7 @@
 
         .cta-btn {
         background-color: white;
-        color: #003768;
+        color: var(--app-primary);
         padding: 0.6rem 1.2rem;
         border: none;
         border-radius: 0.4rem;
