@@ -47,14 +47,7 @@
   margin: 0 var(--app-icon-text-gap);
 }
 
-.form-section-heading {
-  font-family: var(--btn-font-family);
-  font-weight: var(--app-font-weight-semibold);
-  font-size: var(--app-font-size-base);
-  color: var(--app-primary);
-  text-align: center;
-  margin-bottom: 0.65rem;
-}
+/* Field + section labels: global styles.scss */
 
 .pickup-heading {
   margin-top: 0.25rem;
@@ -62,11 +55,6 @@
 
 .form-field-block {
   margin-bottom: var(--app-form-field-stack);
-}
-
-.field-label {
-  display: block;
-  margin-bottom: var(--app-label-gap);
 }
 
 .checks-spacer {
@@ -127,10 +115,6 @@
   .row {
     margin-inline: 0;
   }
-}
-
-.date-range-title {
-  margin-bottom: 0.35rem;
 }
 
 .date-range-hint {
@@ -217,23 +201,6 @@
       display: flex;
       justify-content: space-between;
     }
-  }
-
-  .title,
-  .title-cum {
-    font-family: var(--btn-font-family);
-    font-weight: var(--app-font-weight-semibold);
-    font-style: Sans One Bold;
-    font-size: var(--app-font-size-base);
-    color: var(--app-primary);
-  }
-
-  .title.form-section-heading {
-    text-align: center;
-  }
-
-  .title-cum.field-label {
-    text-align: inherit;
   }
 
   .p-datepicker {

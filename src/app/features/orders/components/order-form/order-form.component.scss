@@ -31,23 +31,10 @@
   margin-bottom: var(--app-space-5);
 }
 
-/* Match car-rental-request: visible labels above controls */
-.form-section-heading {
-  font-family: var(--btn-font-family);
-  font-weight: var(--app-font-weight-semibold);
-  font-size: var(--app-font-size-base);
-  color: var(--app-primary);
-  text-align: center;
-  margin-bottom: 0.65rem;
-}
+/* Field + section label typography: global styles.scss (.title-cum.field-label, .title.form-section-heading) */
 
 .form-field-block {
   margin-bottom: var(--app-form-field-stack);
-}
-
-.field-label {
-  display: block;
-  margin-bottom: var(--app-label-gap);
 }
 
 .checks-spacer {
@@ -214,22 +201,7 @@
     display: block;
     width: 100%;
   }
-  .Location-form .title,
-  .Location-form .form-section-heading {
-    font-family: var(--btn-font-family);
-    font-weight: var(--app-font-weight-semibold);
-    font-style: Sans One Bold;
-    font-size: var(--app-font-size-base);
-    color: var(--app-primary);
-    text-align: center;
-  }
-  .Location-form .title-cum {
-    font-family: var(--btn-font-family);
-    font-weight: var(--app-font-weight-semibold);
-    font-style: Sans One Bold;
-    font-size: var(--app-font-size-base);
-    color: var(--app-primary);
-  }
+  /* Location dialog labels use global orders form typography */
   /* Match p-select full width; `inherit` was overriding Tailwind w-full on plain inputs */
   .p-inputtext {
     width: 100%;

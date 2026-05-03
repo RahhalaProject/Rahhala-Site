@@ -72,6 +72,9 @@ html {
   --app-form-item-gap: 12px;
   --app-form-field-stack: 1rem;
   --app-label-gap: 0.35rem;
+  --app-form-section-heading-margin-bottom: 0.65rem;
+  --app-form-field-label-line-height: 1.4;
+  --app-form-section-heading-line-height: 1.35;
   --app-icon-text-gap: 10px;
   --app-trailing-gap: 0.7rem;
 
@@ -159,6 +162,31 @@ html.ltr {
   direction: ltr;
   text-align: left;
 }
+
+/* Order + car-rental forms: one typography for field labels & section titles (incl. Prime dialogs on body) */
+.title-cum.field-label,
+p.title-cum.field-label {
+  font-family: var(--btn-font-family);
+  font-size: var(--app-font-size-base);
+  font-weight: var(--app-font-weight-semibold);
+  color: var(--app-primary);
+  line-height: var(--app-form-field-label-line-height);
+  display: block;
+  margin: 0 0 var(--app-label-gap);
+  text-align: start;
+}
+
+.title.form-section-heading,
+p.title.form-section-heading {
+  font-family: var(--btn-font-family);
+  font-size: var(--app-font-size-base);
+  font-weight: var(--app-font-weight-semibold);
+  color: var(--app-primary);
+  line-height: var(--app-form-section-heading-line-height);
+  text-align: center;
+  margin: 0 0 var(--app-form-section-heading-margin-bottom);
+}
+
 .title-sec {
   background: var(--app-primary);
   border-bottom-left-radius: var(--app-radius-title);
