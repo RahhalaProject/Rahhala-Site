@@ -179,7 +179,7 @@
   "submit": "Submit",
   "otpVerification": "OTP Verification",
   "enterCodeSentTo": "Enter the code sent to",
-  "otpRequired": "Please enter the 6-digit verification code.",
+  "otpRequired": "Please enter the 4-digit verification code.",
   "unknownPhoneNumber": "Phone number unavailable",
   "recoverPassword": "Recover Password",
   "otpSentTo": "We have sent the verification code to",

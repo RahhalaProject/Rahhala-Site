@@ -112,12 +112,21 @@
       >
         <span>{{ item.label | translate }}</span>
       </a>
+      <div
+        class="flex items-center gap-2 auth-btn-inMenu"
+        *ngIf="!item.root && isLoggedIn()"
+      >
+        <ng-container *ngTemplateOutlet="userProfileMenu"></ng-container>
+      </div>
     </ng-template>
-    @if(isLoggedIn()){
-    <ng-template #end>
-      <ng-container *ngTemplateOutlet="userProfileMenu"></ng-container>
+
+    <ng-template #end let-root="root">
+      <div class="main-nav-end-slot flex items-center justify-end gap-2 auth-btn">
+        @if(isLoggedIn()){
+        <ng-container *ngTemplateOutlet="userProfileMenu"></ng-container>
+        }
+      </div>
     </ng-template>
-    }
   </p-megamenu>
 </div>
 }

@@ -118,7 +118,7 @@
   "submit": "تقديم",
   "otpVerification": "التحقق من OTP",
   "enterCodeSentTo": "أدخل الرمز من الرسالة النصية المسلة إلى",
-  "otpRequired": "يرجى إدخال رمز التحقق المكون من 6 أرقام.",
+  "otpRequired": "يرجى إدخال رمز التحقق المكون من 4 أرقام.",
   "unknownPhoneNumber": "رقم الجوال غير متوفر",
   "recoverPassword": "استعادة كلمة السر",
   "otpSentTo": "لقد قمنا بإرسال رمز التحقق الى",

@@ -60,6 +60,66 @@
     justify-content: end;
   }
   .main-nav {
+    /*
+      Mobile DOM order: start → button → p-megamenu-sub → end.
+      Flex + order was still letting the logo overlap the bars (RTL / wide logo).
+      Use grid so logo, optional end slot, and hamburger sit in separate tracks.
+    */
+    .p-megamenu.p-megamenu-mobile {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      align-items: center;
+      column-gap: 0.5rem;
+      row-gap: 0;
+
+      .p-megamenu-start {
+        grid-column: 1;
+        grid-row: 1;
+        flex-grow: 0 !important;
+        min-width: 0;
+        max-width: 100%;
+        z-index: 1;
+        align-self: center;
+
+        .p-avatar,
+        img {
+          max-width: 100%;
+          height: auto;
+          object-fit: contain;
+        }
+      }
+
+      .p-megamenu-end {
+        grid-column: 2;
+        grid-row: 1;
+        width: auto !important;
+        flex: unset !important;
+        min-width: 0;
+        justify-self: end;
+        align-self: center;
+        z-index: 2;
+      }
+
+      .p-megamenu-button {
+        grid-column: 3;
+        grid-row: 1;
+        flex: 0 0 auto;
+        justify-self: end;
+        align-self: center;
+        position: relative;
+        z-index: 3;
+        margin: 0 !important;
+      }
+
+      > p-megamenu-sub {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        width: 100% !important;
+        min-width: 0;
+        display: block;
+      }
+    }
+
     .p-megamenu {
       background: var(--app-primary);
     }
@@ -85,10 +145,6 @@
     .p-avatar {
       width: 45px;
       height: 45px;
-    }
-    .p-megamenu-mobile {
-      display: flex;
-      flex-flow: row;
     }
   }
 }

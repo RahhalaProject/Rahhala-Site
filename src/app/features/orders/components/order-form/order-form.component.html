@@ -115,27 +115,28 @@
         <div class="row">
           <div class="col-12 mb-3">
             <p-select
-              [options]="requestTypeOptions"
-              [(ngModel)]="selectedRequestType"
-              (ngModelChange)="onRequestTypeIdChange($event)"
+              [options]="shipmentTypeOptions"
+              [(ngModel)]="selectedShipmentType"
+              (ngModelChange)="onShipmentTypeIdChange($event)"
               optionLabel="name"
               optionValue="id"
-              placeholder="{{ 'orderType' | translate }}"
+              placeholder="{{ 'shipmentType' | translate }}"
               class="w-full md:w-56"
             />
-            <small *ngIf="showShipmentErrors && !selectedRequestType" class="p-error">
+            <small *ngIf="showShipmentErrors && !selectedShipmentType" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
-          <div class="col-12 mb-3" *ngIf="showPiecesInput">
-            <input
-              type="number"
-              pInputText
-              [(ngModel)]="pieces"
+          <div class="col-12 mb-3" *ngIf="isDryShipmentSelected">
+            <p-select
+              [options]="dryBoxTypeOptions"
+              [(ngModel)]="selectedDryBoxType"
+              optionLabel="name"
+              optionValue="value"
+              placeholder="{{ 'dryBoxType' | translate }}"
               class="w-full md:w-56"
-              placeholder="ادخل العدد"
             />
-            <small *ngIf="showShipmentErrors && pieces == null" class="p-error">
+            <small *ngIf="showShipmentErrors && selectedDryBoxType == null" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
@@ -171,28 +172,27 @@
           </div>
           <div class="col-12 mb-3">
             <p-select
-              [options]="shipmentTypeOptions"
-              [(ngModel)]="selectedShipmentType"
-              (ngModelChange)="onShipmentTypeIdChange($event)"
+              [options]="requestTypeOptions"
+              [(ngModel)]="selectedRequestType"
+              (ngModelChange)="onRequestTypeIdChange($event)"
               optionLabel="name"
               optionValue="id"
-              placeholder="{{ 'shipmentType' | translate }}"
+              placeholder="{{ 'orderType' | translate }}"
               class="w-full md:w-56"
             />
-            <small *ngIf="showShipmentErrors && !selectedShipmentType" class="p-error">
+            <small *ngIf="showShipmentErrors && !selectedRequestType" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
-          <div class="col-12 mb-3" *ngIf="isDryShipmentSelected">
-            <p-select
-              [options]="dryBoxTypeOptions"
-              [(ngModel)]="selectedDryBoxType"
-              optionLabel="name"
-              optionValue="value"
-              placeholder="{{ 'dryBoxType' | translate }}"
+          <div class="col-12 mb-3" *ngIf="showPiecesInput">
+            <input
+              type="number"
+              pInputText
+              [(ngModel)]="pieces"
               class="w-full md:w-56"
+              placeholder="ادخل العدد"
             />
-            <small *ngIf="showShipmentErrors && selectedDryBoxType == null" class="p-error">
+            <small *ngIf="showShipmentErrors && pieces == null" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
