@@ -1,3 +1,20 @@
+<section class="home-cta-strip" aria-label="Quick actions">
+    <div class="home-header-cta-row home-cta-row-inner">
+        <p-button
+            [label]="'newOrder' | translate"
+            severity="contrast"
+            size="small"
+            routerLink="/request-form"
+        />
+        <p-button
+            [label]="'carRentalRequest' | translate"
+            severity="contrast"
+            size="small"
+            routerLink="/car-rental-request"
+        />
+    </div>
+</section>
+
 <!--Start slider-->
 <section class="slider-section" id="home">
     <div class="card-overlay-wrapper">
@@ -9,14 +26,6 @@
             <p>
                 {{ 'homeSliderText' | translate }}
             </p>
-            <div class="add-btn">
-                <p-button
-                  [label]="'createOrder' | translate"
-                  severity="secondary"
-                  [outlined]="true"
-                  routerLink="/request-form"
-                />
-            </div>
         </div>
     </div>
 </div>
