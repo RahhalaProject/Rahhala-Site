@@ -16,12 +16,21 @@
           <span
             ><i class="pi pi-car"></i>{{ "shipmentDetails" | translate }}</span
           >
-          <i
-            class="pi"
-            [ngClass]="
-              currentLang === 'ar' ? 'pi-angle-left' : 'pi-angle-right'
-            "
-          ></i>
+          <span class="form-item-trailing">
+            <i
+              *ngIf="shipmentDetailsSectionSaved"
+              class="pi pi-check form-item-done-check"
+              [attr.title]="'formSectionSaved' | translate"
+              aria-hidden="true"
+            ></i>
+            <i
+              class="pi"
+              [ngClass]="
+                currentLang === 'ar' ? 'pi-angle-left' : 'pi-angle-right'
+              "
+              aria-hidden="true"
+            ></i>
+          </span>
         </button>
 
         <!-- Upload -->
@@ -33,6 +42,14 @@
           <span
             ><i class="pi pi-camera"></i>{{ "uploadImage" | translate }}</span
           >
+          <span class="form-item-trailing">
+            <i
+              *ngIf="uploadSectionSaved"
+              class="pi pi-check form-item-done-check"
+              [attr.title]="'formSectionSaved' | translate"
+              aria-hidden="true"
+            ></i>
+          </span>
         </button>
 
         <!-- Location -->
@@ -41,6 +58,14 @@
             ><i class="pi pi-map-marker"></i
             >{{ "pickupAndDeliveryLocation" | translate }}</span
           >
+          <span class="form-item-trailing">
+            <i
+              *ngIf="locationSectionSaved"
+              class="pi pi-check form-item-done-check"
+              [attr.title]="'formSectionSaved' | translate"
+              aria-hidden="true"
+            ></i>
+          </span>
         </button>
 
         <!-- Delivery Date -->
@@ -53,6 +78,14 @@
             ><i class="pi pi-calendar"></i
             >{{ "deliveryDate" | translate }}</span
           >
+          <span class="form-item-trailing">
+            <i
+              *ngIf="deliveryDateSectionSaved"
+              class="pi pi-check form-item-done-check"
+              [attr.title]="'formSectionSaved' | translate"
+              aria-hidden="true"
+            ></i>
+          </span>
         </button>
 
         <!-- Payment -->
@@ -66,13 +99,21 @@
             ><i class="pi pi-credit-card"></i
             >{{ "paymentMethod" | translate }}</span
           >
-          <i
-            class="pi"
-            [ngClass]="
-              currentLang === 'ar' ? 'pi-angle-left' : 'pi-angle-right'
-            "
-            aria-hidden="true"
-          ></i>
+          <span class="form-item-trailing">
+            <i
+              *ngIf="paymentMethodSectionSaved"
+              class="pi pi-check form-item-done-check"
+              [attr.title]="'formSectionSaved' | translate"
+              aria-hidden="true"
+            ></i>
+            <i
+              class="pi"
+              [ngClass]="
+                currentLang === 'ar' ? 'pi-angle-left' : 'pi-angle-right'
+              "
+              aria-hidden="true"
+            ></i>
+          </span>
         </button>
 
         <p-button

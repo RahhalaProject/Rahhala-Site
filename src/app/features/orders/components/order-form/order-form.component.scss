@@ -93,6 +93,19 @@
   margin: 0 10px;
 }
 
+.form-item-trailing {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-shrink: 0;
+}
+
+.form-item-done-check {
+  color: var(--app-inverse-surface);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
 :host ::ng-deep {
   .box .form .p-button {
     width: 100%;

@@ -362,6 +362,7 @@
   "pieces": "القطع",
   "enterPiecesCount": "ادخل العدد",
   "enterWeightKg": "ادخل الوزن (كجم)",
+  "formSectionSaved": "تم الحفظ — يمكنك المتابعة أو تعديل هذا القسم في أي وقت.",
   "orderCancelSuccessSummary": "تم بنجاح",
   "orderCancelSuccessDetail": "تم إلغاء الطلب بنجاح.",
   "orderCancelError": "تعذر إلغاء الطلب.",

@@ -423,6 +423,7 @@
   "pieces": "Pieces",
   "enterPiecesCount": "Enter number of pieces",
   "enterWeightKg": "Enter weight (kg)",
+  "formSectionSaved": "Saved — you can continue or edit this section anytime.",
   "orderCancelSuccessSummary": "Success",
   "orderCancelSuccessDetail": "Order cancelled successfully.",
   "orderCancelError": "Failed to cancel order.",

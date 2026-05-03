@@ -115,6 +115,12 @@ export class OrderFormComponent implements OnInit {
   mapDialogLng: number | null = null;
   mapDialogDescription = '';
   orderConfirmationValidationMessage = '';
+  /** Set when user saves each dialog successfully (shows green check on row). */
+  shipmentDetailsSectionSaved = false;
+  uploadSectionSaved = false;
+  locationSectionSaved = false;
+  deliveryDateSectionSaved = false;
+  paymentMethodSectionSaved = false;
   showValidationErrors = false;
   showShipmentValidationErrors = false;
   showDeliveryDateValidationErrors = false;
@@ -506,6 +512,8 @@ export class OrderFormComponent implements OnInit {
       Boolean
     );
     if (!files.length) {
+      this.uploadedFiles = [];
+      this.uploadSectionSaved = false;
       return;
     }
     this.uploadedFiles = files;
@@ -513,6 +521,7 @@ export class OrderFormComponent implements OnInit {
 
   onUploadSaveClick(): void {
     this.visibleUpload = false;
+    this.uploadSectionSaved = this.uploadedFiles.length > 0;
     if (!this.uploadedFiles.length) {
       return;
     }
@@ -528,6 +537,8 @@ export class OrderFormComponent implements OnInit {
       Boolean
     );
     if (!files.length) {
+      this.uploadedFiles = [];
+      this.uploadSectionSaved = false;
       return;
     }
     this.uploadedFiles = files;
@@ -545,6 +556,7 @@ export class OrderFormComponent implements OnInit {
       this.showValidationToast(missingFields);
       return;
     }
+    this.shipmentDetailsSectionSaved = true;
     this.visibleShipmentDetails = false;
   }
 
@@ -557,6 +569,7 @@ export class OrderFormComponent implements OnInit {
       this.showValidationToast(missingFields);
       return;
     }
+    this.deliveryDateSectionSaved = true;
     this.visibleDeliveryDate = false;
   }
 
@@ -567,6 +580,7 @@ export class OrderFormComponent implements OnInit {
       this.showValidationToast(missingFields);
       return;
     }
+    this.paymentMethodSectionSaved = true;
     this.visiblePaymentMethod = false;
   }
 
@@ -577,6 +591,7 @@ export class OrderFormComponent implements OnInit {
       this.showValidationToast(missingFields);
       return;
     }
+    this.locationSectionSaved = true;
     this.visibleLocation = false;
   }
 
