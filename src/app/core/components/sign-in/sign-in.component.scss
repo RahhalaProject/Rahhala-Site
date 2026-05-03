@@ -4,51 +4,51 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 80px 20px;
+    padding: var(--app-page-padding-auth);
     box-sizing: border-box; /* Include padding in the element's total width and height */
   }
 
   .sign-in-box {
     background-color: #ffffff;
-    padding: 60px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: var(--app-card-padding);
+    border-radius: var(--app-radius-md);
+    box-shadow: var(--app-card-shadow);
     width: 100%;
-    max-width: 600px; /* Max width for larger screens */
+    max-width: var(--app-card-max-width); /* Max width for larger screens */
   }
 
   .sign-in-box .form label {
-    font-weight: 600;
-    color: #013767;
+    font-weight: var(--app-font-weight-semibold);
+    color: var(--app-primary);
   }
   .sign-in-box .form .p-inputtext {
-    font-weight: 400;
+    font-weight: var(--app-font-weight-normal);
     background: #ffffff;
-    color: #afafaf;
+    color: var(--app-text-muted);
     border: 0px;
-    box-shadow: 0px 2px 2px 0px #0000001f;
-    padding: 12px;
+    box-shadow: var(--app-input-elevated-shadow);
+    padding: var(--app-form-item-padding-y);
   }
   .sign-in-box .form .forget {
-    font-weight: 400;
-    color: #afafaf;
+    font-weight: var(--app-font-weight-normal);
+    color: var(--app-text-muted);
   }
   .sign-in-box .form ::placeholder {
-    color: #afafaf;
+    color: var(--app-text-muted);
     opacity: 1;
   }
 
   .sign-in-box .form .p-button {
     width: 100%;
-    padding: 12px;
+    padding: var(--app-button-block-padding-y);
     background: var(--app-primary);
     display: block;
-    margin-top: 20px;
+    margin-top: var(--app-button-block-margin-top);
   }
 
   .sign-in-box .form .p-button-label {
-    font-weight: 600;
-    font-size: 13px;
+    font-weight: var(--app-font-weight-semibold);
+    font-size: var(--app-font-size-sm);
     color: #ffffff;
   }
 
@@ -56,9 +56,9 @@
   .social-login-separator {
     display: flex; /* Enables flexbox for horizontal alignment */
     align-items: center; /* Vertically aligns items in the middle */
-    gap: 15px; /* Adds space between the lines and the text */
+    gap: var(--app-space-5); /* Adds space between the lines and the text */
     width: 80%;
-    margin: 80px auto 0px;
+    margin: var(--app-space-11) auto 0;
   }
 
   .social-login-separator .line {
@@ -69,17 +69,17 @@
 
   .social-login-separator .or-text {
     white-space: nowrap; /* Prevents the text from wrapping */
-    color: #013769; /* Color of the text */
-    font-size: 14px; /* Font size of the text */
-    font-weight: 600;
+    color: var(--app-primary); /* Color of the text */
+    font-size: var(--app-font-size-base); /* Font size of the text */
+    font-weight: var(--app-font-weight-semibold);
   }
 
   /* Container for the social icons */
   .social-icons {
     display: flex; /* Enables flexbox for horizontal alignment */
     justify-content: center; /* Centers the icons horizontally */
-    gap: 25px; /* Space between the social icons */
-    margin-top: 20px; /* Space above the icons */
+    gap: var(--app-social-icon-gap); /* Space between the social icons */
+    margin-top: var(--app-button-block-margin-top); /* Space above the icons */
   }
 
   .social-icons img {
@@ -91,19 +91,19 @@
   /* For screens smaller than 600px */
   @media (max-width: 600px) {
     .sign-in-box {
-      padding: 20px; /* Reduce padding on smaller screens */
-      border-radius: 5px; /* Slightly less rounded corners */
+      padding: var(--app-card-padding-sm); /* Reduce padding on smaller screens */
+      border-radius: var(--app-radius-sm); /* Slightly less rounded corners */
     }
   }
 
   /* For very small screens, further adjustments if needed */
   @media (max-width: 320px) {
     .sign-in-box {
-      padding: 10px;
+      padding: var(--app-card-padding-xs);
     }
 
     .sign-in-box h2 {
-      margin-bottom: 15px;
+      margin-bottom: var(--app-space-5);
     }
   }
   .global-rrror .p-message-content {

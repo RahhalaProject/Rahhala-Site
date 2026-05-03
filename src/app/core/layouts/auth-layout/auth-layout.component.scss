@@ -2,7 +2,7 @@
     .header-div {
         height: 15vh;
         background: var(--app-primary);
-        padding: 20px 0px;
+        padding: var(--app-header-padding-block) 0;
     }
     .p-megamenu {
         box-shadow: 1px 1px 4px 5px rgba(0, 0, 0, 0.1);
