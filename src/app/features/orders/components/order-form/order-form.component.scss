@@ -89,21 +89,41 @@
   font-size: 18px;
 }
 
-.form-item span i {
+/* Icon beside label text only — not trailing chevron / done badge */
+.form-item > span:first-child i {
   margin: 0 10px;
 }
 
 .form-item-trailing {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.7rem;
+  flex-shrink: 0;
+}
+
+/* Saved-step indicator: large green circle + white check */
+.form-item-done-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  border-radius: 50%;
+  background: var(--app-inverse-surface);
+  color: var(--app-on-primary);
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.9),
+    0 2px 8px rgba(0, 55, 104, 0.2);
   flex-shrink: 0;
 }
 
 .form-item-done-check {
-  color: var(--app-inverse-surface);
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 700;
+  color: inherit;
+  line-height: 0;
 }
 
 :host ::ng-deep {

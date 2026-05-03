@@ -17,12 +17,15 @@
             ><i class="pi pi-car"></i>{{ "shipmentDetails" | translate }}</span
           >
           <span class="form-item-trailing">
-            <i
+            <span
               *ngIf="shipmentDetailsSectionSaved"
-              class="pi pi-check form-item-done-check"
+              class="form-item-done-badge"
               [attr.title]="'formSectionSaved' | translate"
-              aria-hidden="true"
-            ></i>
+              role="img"
+              [attr.aria-label]="'formSectionSaved' | translate"
+            >
+              <i class="pi pi-check form-item-done-check" aria-hidden="true"></i>
+            </span>
             <i
               class="pi"
               [ngClass]="
@@ -43,12 +46,15 @@
             ><i class="pi pi-camera"></i>{{ "uploadImage" | translate }}</span
           >
           <span class="form-item-trailing">
-            <i
+            <span
               *ngIf="uploadSectionSaved"
-              class="pi pi-check form-item-done-check"
+              class="form-item-done-badge"
               [attr.title]="'formSectionSaved' | translate"
-              aria-hidden="true"
-            ></i>
+              role="img"
+              [attr.aria-label]="'formSectionSaved' | translate"
+            >
+              <i class="pi pi-check form-item-done-check" aria-hidden="true"></i>
+            </span>
           </span>
         </button>
 
@@ -59,12 +65,15 @@
             >{{ "pickupAndDeliveryLocation" | translate }}</span
           >
           <span class="form-item-trailing">
-            <i
+            <span
               *ngIf="locationSectionSaved"
-              class="pi pi-check form-item-done-check"
+              class="form-item-done-badge"
               [attr.title]="'formSectionSaved' | translate"
-              aria-hidden="true"
-            ></i>
+              role="img"
+              [attr.aria-label]="'formSectionSaved' | translate"
+            >
+              <i class="pi pi-check form-item-done-check" aria-hidden="true"></i>
+            </span>
           </span>
         </button>
 
@@ -79,12 +88,15 @@
             >{{ "deliveryDate" | translate }}</span
           >
           <span class="form-item-trailing">
-            <i
+            <span
               *ngIf="deliveryDateSectionSaved"
-              class="pi pi-check form-item-done-check"
+              class="form-item-done-badge"
               [attr.title]="'formSectionSaved' | translate"
-              aria-hidden="true"
-            ></i>
+              role="img"
+              [attr.aria-label]="'formSectionSaved' | translate"
+            >
+              <i class="pi pi-check form-item-done-check" aria-hidden="true"></i>
+            </span>
           </span>
         </button>
 
@@ -100,12 +112,15 @@
             >{{ "paymentMethod" | translate }}</span
           >
           <span class="form-item-trailing">
-            <i
+            <span
               *ngIf="paymentMethodSectionSaved"
-              class="pi pi-check form-item-done-check"
+              class="form-item-done-badge"
               [attr.title]="'formSectionSaved' | translate"
-              aria-hidden="true"
-            ></i>
+              role="img"
+              [attr.aria-label]="'formSectionSaved' | translate"
+            >
+              <i class="pi pi-check form-item-done-check" aria-hidden="true"></i>
+            </span>
             <i
               class="pi"
               [ngClass]="
