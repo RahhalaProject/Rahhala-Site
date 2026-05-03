@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Keep native controls and scrollbars in light mode even when the OS prefers dark. */
+html {
+  color-scheme: light;
+}
+
 @import "primeicons/primeicons.css";
 
 /* Mobile-aligned design tokens (Flutter: primary, onPrimary, shadow, inverse*, error) */

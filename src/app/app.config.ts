@@ -46,6 +46,10 @@ export const config: ApplicationConfig = {
     providePrimeNG({
       theme: {
         preset: RahhalaAuraPreset,
+        // Default is "system" → @media (prefers-color-scheme: dark). Force light-only UI.
+        options: {
+          darkModeSelector: false,
+        },
       },
     }),
   ],
