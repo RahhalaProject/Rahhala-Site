@@ -233,8 +233,11 @@
     position: fixed !important;
   }
 
+  /* Same as order-form: inherit broke full-width inputs & datepicker icon layout */
   .p-inputtext {
-    width: inherit;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .company-name-field .company-name-input.p-inputtext,

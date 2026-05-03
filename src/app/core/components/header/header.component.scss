@@ -81,11 +81,10 @@
         z-index: 1;
         align-self: center;
 
-        .p-avatar,
-        img {
+        /* Do not set width/height on img here — breaks logos/SVGs inside p-avatar; grid + minmax handles overflow */
+        .p-avatar {
           max-width: 100%;
-          height: auto;
-          object-fit: contain;
+          min-width: 0;
         }
       }
 

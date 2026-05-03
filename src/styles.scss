@@ -11,6 +11,21 @@ html {
 
 @import "primeicons/primeicons.css";
 
+/*
+ * PrimeIcons must keep the icon font — app body uses FF Shamel; some Prime wrappers
+ * set font-family on parents and can override .pi if load order / specificity shifts.
+ */
+.pi {
+  font-family: "primeicons", sans-serif !important;
+  speak: none;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /* Mobile-aligned design tokens (Flutter: primary, onPrimary, shadow, inverse*, error) */
 :root {
   --app-primary: #003768;
