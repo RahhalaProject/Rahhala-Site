@@ -14,6 +14,7 @@ import { AuthService } from '../../services/auth.service';
 import { ToastModule } from 'primeng/toast';
 import { Message } from 'primeng/message';
 import { Router, RouterModule } from '@angular/router';
+import { emailOrSaudiPhoneValidator } from '../../../shared/validators/saudi-phone';
 
 @Component({
   selector: 'forgot-password',
@@ -43,7 +44,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   constructor() {
     this.forgotPasswordForm = this.fb.group({
-      phoneNumber: ['', Validators.required],
+      phoneNumber: ['', emailOrSaudiPhoneValidator()],
     });
   }
 

@@ -30,6 +30,11 @@
             "phoneNumberRequired" | translate
           }}</p-message>
           }
+          @if (phoneNumber?.errors?.['saudiPhone'] && phoneNumber?.touched) {
+          <p-message severity="error" size="small" variant="simple">{{
+            "invalidSaudiPhoneNumber" | translate
+          }}</p-message>
+          }
         </div>
         <!-- Password -->
         <div class="mb-4">

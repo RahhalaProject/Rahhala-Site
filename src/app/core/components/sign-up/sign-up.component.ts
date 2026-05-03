@@ -16,6 +16,7 @@ import { AuthService } from '../../services/auth.service';
 import { ToastModule } from 'primeng/toast';
 import { Message } from 'primeng/message';
 import { passwordMatchValidator } from '../../validators/password-match.validator';
+import { saudiPhoneValidator } from '../../../shared/validators/saudi-phone';
 import { Router } from '@angular/router';
 
 @Component({
@@ -53,7 +54,7 @@ export class SignUpComponent {
         email: ['', [Validators.required, Validators.email]],
         password: ['', Validators.required],
         confirmPassword: ['', Validators.required],
-        phoneNumber: ['', Validators.required],
+        phoneNumber: ['', [Validators.required, saudiPhoneValidator()]],
         acceptTerms: [false, Validators.requiredTrue],
         type: [1, Validators.required],
       },

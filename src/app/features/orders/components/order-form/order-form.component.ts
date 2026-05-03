@@ -10,7 +10,6 @@ import { Checkbox } from 'primeng/checkbox';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
-import { IftaLabelModule } from 'primeng/iftalabel';
 import { TextareaModule } from 'primeng/textarea';
 import { Dialog } from 'primeng/dialog';
 import { FileUpload } from 'primeng/fileupload';
@@ -24,6 +23,7 @@ import { PaymentMethod } from '../../../../core/models/payment-method.enum';
 import { LocationService } from '../../../../core/services/location.service';
 import { LocationMapDialogComponent } from '../../../../shared/components/location-map-dialog/location-map-dialog.component';
 import { DryBoxType } from '../../../../core/models/dry-box-type.enum';
+import { isValidSaudiPhone } from '../../../../shared/validators/saudi-phone';
 
 @Component({
   selector: 'order-form',
@@ -41,8 +41,6 @@ import { DryBoxType } from '../../../../core/models/dry-box-type.enum';
     InputGroupAddonModule,
     InputTextModule,
     CommonModule,
-    InputTextModule,
-    IftaLabelModule,
     TextareaModule,
     Dialog,
     FileUpload,
@@ -605,18 +603,38 @@ export class OrderFormComponent implements OnInit {
     }
     if (this.weight == null) {
       missingFields.push(this.translate.instant('weight'));
+    } else if (this.weight < 0) {
+      missingFields.push(
+        `${this.translate.instant('weight')} — ${this.translate.instant('valueMustNotBeNegative')}`
+      );
     }
     if (this.showPiecesInput && this.pieces == null) {
       missingFields.push(this.translate.instant('pieces'));
+    } else if (this.showPiecesInput && this.pieces != null && this.pieces < 0) {
+      missingFields.push(
+        `${this.translate.instant('pieces')} — ${this.translate.instant('valueMustNotBeNegative')}`
+      );
     }
     if (this.shipmentLength == null) {
       missingFields.push(this.translate.instant('enterLength'));
+    } else if (this.shipmentLength < 0) {
+      missingFields.push(
+        `${this.translate.instant('enterLength')} — ${this.translate.instant('valueMustNotBeNegative')}`
+      );
     }
     if (this.shipmentWidth == null) {
       missingFields.push(this.translate.instant('enterWidth'));
+    } else if (this.shipmentWidth < 0) {
+      missingFields.push(
+        `${this.translate.instant('enterWidth')} — ${this.translate.instant('valueMustNotBeNegative')}`
+      );
     }
     if (this.shipmentHeight == null) {
       missingFields.push(this.translate.instant('enterHeight'));
+    } else if (this.shipmentHeight < 0) {
+      missingFields.push(
+        `${this.translate.instant('enterHeight')} — ${this.translate.instant('valueMustNotBeNegative')}`
+      );
     }
     return missingFields;
   }
@@ -657,6 +675,8 @@ export class OrderFormComponent implements OnInit {
     }
     if (!this.recipientPhone.trim()) {
       missingFields.push(this.translate.instant('phoneNumber'));
+    } else if (!isValidSaudiPhone(this.recipientPhone)) {
+      missingFields.push(this.translate.instant('invalidSaudiPhoneNumber'));
     }
     if (!this.deliveryCityId) {
       missingFields.push(`${this.translate.instant('address')} - ${this.translate.instant('city')}`);
@@ -710,6 +730,17 @@ export class OrderFormComponent implements OnInit {
 
   get showLocationErrors(): boolean {
     return this.showValidationErrors || this.showLocationValidationErrors;
+  }
+
+  /** Block minus, scientific notation, and plus in native number inputs. */
+  preventInvalidNumberKeys(event: KeyboardEvent): void {
+    if (['-', '+', 'e', 'E'].includes(event.key)) {
+      event.preventDefault();
+    }
+  }
+
+  isRecipientPhoneValid(): boolean {
+    return isValidSaudiPhone(this.recipientPhone);
   }
 
 }

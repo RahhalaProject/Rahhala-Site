@@ -12,6 +12,7 @@ import {
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
+import { saudiPhoneValidator } from '../../../shared/validators/saudi-phone';
 import { Message } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
 @Component({
@@ -43,7 +44,7 @@ export class SignInComponent {
 
   constructor() {
     this.loginForm = this.fb.group({
-      phoneNumber: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.required, saudiPhoneValidator()]],
       password: ['', Validators.required],
     });
     this.errorMessage.set('');

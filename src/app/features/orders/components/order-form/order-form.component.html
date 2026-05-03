@@ -112,192 +112,230 @@
       class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
     >
       <div class="flex justify-center card-cus">
-        <div class="row">
-          <div class="col-12 mb-3">
+        <div class="w-full max-w-full">
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "shipmentType" | translate }}</p>
             <p-select
               [options]="shipmentTypeOptions"
               [(ngModel)]="selectedShipmentType"
               (ngModelChange)="onShipmentTypeIdChange($event)"
               optionLabel="name"
               optionValue="id"
-              placeholder="{{ 'shipmentType' | translate }}"
-              class="w-full md:w-56"
+              [placeholder]="'shipmentType' | translate"
+              class="w-full"
             />
             <small *ngIf="showShipmentErrors && !selectedShipmentType" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
-          <div class="col-12 mb-3" *ngIf="isDryShipmentSelected">
+          <div class="form-field-block" *ngIf="isDryShipmentSelected">
+            <p class="title-cum field-label">{{ "dryBoxType" | translate }}</p>
             <p-select
               [options]="dryBoxTypeOptions"
               [(ngModel)]="selectedDryBoxType"
               optionLabel="name"
               optionValue="value"
-              placeholder="{{ 'dryBoxType' | translate }}"
-              class="w-full md:w-56"
+              [placeholder]="'dryBoxType' | translate"
+              class="w-full"
             />
             <small *ngIf="showShipmentErrors && selectedDryBoxType == null" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
-          <div class="col-12 mb-3">
-            <p class="title-cum mb-2 text-center">{{ "shipmentSpeed" | translate }}</p>
+          <div class="form-field-block">
+            <p class="title form-section-heading">{{ "shipmentSpeed" | translate }}</p>
             <div class="checks">
               <div class="flex items-center item">
-                <label for="ingredient1" class="ml-2">
+                <label for="shipmentSpeedNormal" class="ml-2">
                   {{ "normal" | translate }}
                 </label>
-                  <p-checkbox
-                    inputId="shipmentSpeedNormal"
-                    name="shipmentSpeed"
-                    [binary]="true"
-                    [ngModel]="shipmentSpeed === 'Normal'"
-                    (onChange)="setShipmentSpeed('Normal')"
-                  />
+                <p-checkbox
+                  inputId="shipmentSpeedNormal"
+                  name="shipmentSpeed"
+                  [binary]="true"
+                  [ngModel]="shipmentSpeed === 'Normal'"
+                  (onChange)="setShipmentSpeed('Normal')"
+                />
               </div>
-              <div style="margin: 0 5px"></div>
+              <div class="checks-spacer"></div>
               <div class="flex items-center item">
-                <label for="ingredient1" class="ml-2">
+                <label for="shipmentSpeedExpress" class="ml-2">
                   {{ "express" | translate }}
                 </label>
-                  <p-checkbox
-                    inputId="shipmentSpeedExpress"
-                    name="shipmentSpeed"
-                    [binary]="true"
-                    [ngModel]="shipmentSpeed === 'Express'"
-                    (onChange)="setShipmentSpeed('Express')"
-                  />
+                <p-checkbox
+                  inputId="shipmentSpeedExpress"
+                  name="shipmentSpeed"
+                  [binary]="true"
+                  [ngModel]="shipmentSpeed === 'Express'"
+                  (onChange)="setShipmentSpeed('Express')"
+                />
               </div>
             </div>
           </div>
-          <div class="col-12 mb-3">
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "orderType" | translate }}</p>
             <p-select
               [options]="requestTypeOptions"
               [(ngModel)]="selectedRequestType"
               (ngModelChange)="onRequestTypeIdChange($event)"
               optionLabel="name"
               optionValue="id"
-              placeholder="{{ 'orderType' | translate }}"
-              class="w-full md:w-56"
+              [placeholder]="'orderType' | translate"
+              class="w-full"
             />
             <small *ngIf="showShipmentErrors && !selectedRequestType" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
-          <div class="col-12 mb-3" *ngIf="showPiecesInput">
+          <div class="form-field-block" *ngIf="showPiecesInput">
+            <p class="title-cum field-label">{{ "pieces" | translate }}</p>
             <input
               type="number"
               pInputText
               [(ngModel)]="pieces"
-              class="w-full md:w-56"
-              placeholder="ادخل العدد"
+              class="w-full"
+              [placeholder]="'enterPiecesCount' | translate"
+              min="0"
+              step="1"
+              (keydown)="preventInvalidNumberKeys($event)"
             />
             <small *ngIf="showShipmentErrors && pieces == null" class="p-error">
               {{ "requiredField" | translate }}
             </small>
+            <small *ngIf="showShipmentErrors && pieces != null && pieces < 0" class="p-error">
+              {{ "valueMustNotBeNegative" | translate }}
+            </small>
           </div>
-          <div class="col-12 mb-3" *ngIf="isPrivateTripSelected">
+          <div class="form-field-block" *ngIf="isPrivateTripSelected">
+            <p class="title-cum field-label">{{ "carType" | translate }}</p>
             <p-select
               [options]="carTypeOptions"
               [(ngModel)]="selectedCarTypeId"
               optionLabel="name"
               optionValue="id"
-              placeholder="{{ 'carType' | translate }}"
-              class="w-full md:w-56"
+              [placeholder]="'carType' | translate"
+              class="w-full"
             />
             <small *ngIf="showShipmentErrors && !selectedCarTypeId" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
-          <div class="col-12 mb-3" *ngIf="isPrivateTripSelected">
+          <div class="form-field-block" *ngIf="isPrivateTripSelected">
+            <p class="title-cum field-label">{{ "weightTons" | translate }}</p>
             <p-select
               [options]="weightInTonOptions"
               [(ngModel)]="selectedWeightInTonId"
               optionLabel="name"
               optionValue="id"
-              placeholder="{{ 'weightTons' | translate }}"
-              class="w-full md:w-56"
+              [placeholder]="'weightTons' | translate"
+              class="w-full"
             />
             <small *ngIf="showShipmentErrors && !selectedWeightInTonId" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
-          <div class="col-12 mb-3" *ngIf="isPrivateTripSelected">
+          <div class="form-field-block" *ngIf="isPrivateTripSelected">
+            <p class="title-cum field-label">{{ "loadByPallet" | translate }}</p>
             <p-select
               [options]="palletCapacityOptions"
               [(ngModel)]="selectedPalletCapacityId"
               optionLabel="name"
               optionValue="id"
-              placeholder="{{ 'loadByPallet' | translate }}"
-              class="w-full md:w-56"
+              [placeholder]="'loadByPallet' | translate"
+              class="w-full"
             />
             <small *ngIf="showShipmentErrors && !selectedPalletCapacityId" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
-          <div class="col-12 mb-3">
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "weight" | translate }}</p>
             <input
               type="number"
               pInputText
               [(ngModel)]="weight"
-              class="w-full md:w-56"
-              placeholder="ادخل الوزن (كجم)"
+              class="w-full"
+              [placeholder]="'enterWeightKg' | translate"
+              min="0"
+              step="any"
+              (keydown)="preventInvalidNumberKeys($event)"
             />
             <small *ngIf="showShipmentErrors && weight == null" class="p-error">
               {{ "requiredField" | translate }}
             </small>
+            <small *ngIf="showShipmentErrors && weight != null && weight < 0" class="p-error">
+              {{ "valueMustNotBeNegative" | translate }}
+            </small>
           </div>
-          <div class="col-12 mb-3">
-            <p class="title-cum mb-2 text-center">{{ "dimensionsInCm" | translate }}</p>
+          <div class="form-field-block">
+            <p class="title form-section-heading">{{ "dimensionsInCm" | translate }}</p>
             <div class="tags-div">
               <div class="dimension-field">
+                <p class="title-cum field-label">{{ "enterLength" | translate }}</p>
                 <input
                   type="number"
                   pInputText
+                  class="w-full"
                   [(ngModel)]="shipmentLength"
-                  placeholder="{{ 'enterLength' | translate }}"
+                  min="0"
+                  step="any"
+                  (keydown)="preventInvalidNumberKeys($event)"
                 />
                 <small *ngIf="showShipmentErrors && shipmentLength == null" class="p-error">
                   {{ "requiredField" | translate }}
                 </small>
+                <small *ngIf="showShipmentErrors && shipmentLength != null && shipmentLength < 0" class="p-error">
+                  {{ "valueMustNotBeNegative" | translate }}
+                </small>
               </div>
               <div class="dimension-field">
+                <p class="title-cum field-label">{{ "enterWidth" | translate }}</p>
                 <input
                   type="number"
                   pInputText
+                  class="w-full"
                   [(ngModel)]="shipmentWidth"
-                  placeholder="{{ 'enterWidth' | translate }}"
+                  min="0"
+                  step="any"
+                  (keydown)="preventInvalidNumberKeys($event)"
                 />
                 <small *ngIf="showShipmentErrors && shipmentWidth == null" class="p-error">
                   {{ "requiredField" | translate }}
                 </small>
+                <small *ngIf="showShipmentErrors && shipmentWidth != null && shipmentWidth < 0" class="p-error">
+                  {{ "valueMustNotBeNegative" | translate }}
+                </small>
               </div>
               <div class="dimension-field">
+                <p class="title-cum field-label">{{ "enterHeight" | translate }}</p>
                 <input
                   type="number"
                   pInputText
+                  class="w-full"
                   [(ngModel)]="shipmentHeight"
-                  placeholder="{{ 'enterHeight' | translate }}"
+                  min="0"
+                  step="any"
+                  (keydown)="preventInvalidNumberKeys($event)"
                 />
                 <small *ngIf="showShipmentErrors && shipmentHeight == null" class="p-error">
                   {{ "requiredField" | translate }}
                 </small>
+                <small *ngIf="showShipmentErrors && shipmentHeight != null && shipmentHeight < 0" class="p-error">
+                  {{ "valueMustNotBeNegative" | translate }}
+                </small>
               </div>
             </div>
           </div>
-          <div class="col-12 mb-3">
-            <p-iftalabel>
-              <textarea
-                pTextarea
-                id="description"
-                rows="5"
-                style="resize: none"
-                [(ngModel)]="additionalNotes"
-              ></textarea>
-              <label for="description">{{
-                "additionalNotes" | translate
-              }}</label>
-            </p-iftalabel>
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "additionalNotes" | translate }}</p>
+            <textarea
+              pTextarea
+              id="orderAdditionalNotes"
+              rows="5"
+              class="w-full"
+              style="resize: none"
+              [(ngModel)]="additionalNotes"
+            ></textarea>
           </div>
         </div>
       </div>
@@ -332,8 +370,9 @@
       class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
     >
       <div class="flex justify-center card-cus">
-        <div class="row">
-          <div class="col-12 mb-3">
+        <div class="w-full max-w-full">
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "uploadImage" | translate }}</p>
             <p-fileupload
               name="demo[]"
               [customUpload]="true"
@@ -343,6 +382,7 @@
               accept="image/*"
               maxFileSize="1000000"
               mode="advanced"
+              styleClass="w-full"
             >
               <ng-template #empty>
                 <div>Drag and drop files to here to upload.</div>
@@ -382,14 +422,19 @@
       class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
     >
       <div class="flex justify-center card-cus">
-        <div class="row">
-          <div class="col-12 mb-3">
+        <div class="w-full max-w-full">
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "deliveryDate" | translate }}</p>
             <p-datepicker
               [(ngModel)]="date"
               [minDate]="minDeliveryDate"
               [iconDisplay]="'input'"
               [showIcon]="true"
-              inputId="icondisplay"
+              [placeholder]="'selectDate' | translate"
+              inputId="orderDeliveryDate"
+              class="w-full"
+              [inputStyle]="{ width: '100%' }"
+              appendTo="body"
             />
             <small *ngIf="showDeliveryDateErrors && !date" class="p-error">
               {{ "requiredField" | translate }}
@@ -428,15 +473,16 @@
       class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
     >
       <div class="flex justify-center card-cus">
-        <div class="row">
-          <div class="col-12 mb-3">
+        <div class="w-full max-w-full">
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "paymentMethod" | translate }}</p>
             <p-select
               [options]="paymentMethodOptions"
               [(ngModel)]="selectedPaymentMethod"
               optionLabel="name"
               optionValue="value"
-              placeholder="{{ 'paymentMethod' | translate }}"
-              class="w-full md:w-56"
+              [placeholder]="'paymentMethod' | translate"
+              class="w-full"
             />
             <small *ngIf="showPaymentMethodErrors && selectedPaymentMethod == null" class="p-error">
               {{ "requiredField" | translate }}
@@ -475,13 +521,12 @@
       class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
     >
       <div class="flex justify-center card-cus">
-        <div class="row">
-          <div class="col-12">
-            <p class="title">{{ "pickupAddress" | translate }}</p>
-          </div>
-          <div class="col-12 mb-3">
+        <div class="w-full max-w-full">
+          <p class="title form-section-heading">{{ "pickupAddress" | translate }}</p>
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "setLocationOnMap" | translate }}</p>
             <button
-              class="form-item form-item-custom"
+              class="form-item form-item-custom w-full"
               type="button"
               (click)="openLocationMap('pickup')"
             >
@@ -489,71 +534,87 @@
               <i class="pi pi-send"></i>
             </button>
           </div>
-          <div class="col-12 mb-3">
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "city" | translate }}</p>
             <p-select
               [options]="cities"
               [(ngModel)]="pickupCityId"
               optionLabel="name"
               optionValue="id"
-              placeholder="{{ 'city' | translate }}"
-              class="w-full md:w-56"
+              [placeholder]="'city' | translate"
+              class="w-full"
             />
             <small *ngIf="showLocationErrors && !pickupCityId" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
-          <div class="col-12 mb-3">
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "districtName" | translate }}</p>
             <p-select
               [options]="provinces"
               [(ngModel)]="pickupProvinceId"
               optionLabel="name"
               optionValue="id"
-              placeholder="{{ 'districtName' | translate }}"
-              class="w-full md:w-56"
+              [placeholder]="'districtName' | translate"
+              class="w-full"
             />
             <small *ngIf="showLocationErrors && !pickupProvinceId" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
-          <div class="col-12 mb-3">
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "streetName" | translate }}</p>
             <input
               type="text"
               pInputText
+              class="w-full"
               [(ngModel)]="pickupStreet"
-              placeholder="{{ 'streetName' | translate }}"
+              [placeholder]="'streetName' | translate"
             />
             <small *ngIf="showLocationErrors && !pickupStreet.trim()" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
-          <div class="col-12">
-            <p class="title">{{ "recipientDetails" | translate }}</p>
-          </div>
-          <div class="col-12 mb-3">
+          <p class="title form-section-heading pickup-heading">{{ "recipientDetails" | translate }}</p>
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "recipientName" | translate }}</p>
             <input
               type="text"
               pInputText
+              class="w-full"
               [(ngModel)]="recipientName"
-              placeholder="{{ 'recipientName' | translate }}"
+              [placeholder]="'recipientName' | translate"
             />
             <small *ngIf="showLocationErrors && !recipientName.trim()" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
-          <div class="col-12 mb-3">
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "phoneNumber" | translate }}</p>
             <input
-              type="text"
+              type="tel"
               pInputText
+              class="w-full"
               [(ngModel)]="recipientPhone"
-              placeholder="{{ 'phoneNumber' | translate }}"
+              [placeholder]="'phoneNumber' | translate"
+              [attr.dir]="currentLang === 'ar' ? 'rtl' : 'ltr'"
+              inputmode="tel"
+              autocomplete="tel"
             />
             <small *ngIf="showLocationErrors && !recipientPhone.trim()" class="p-error">
               {{ "requiredField" | translate }}
             </small>
+            <small
+              *ngIf="showLocationErrors && recipientPhone.trim() && !isRecipientPhoneValid()"
+              class="p-error"
+            >
+              {{ "invalidSaudiPhoneNumber" | translate }}
+            </small>
           </div>
-          <div class="col-12 mb-3">
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "address" | translate }}</p>
             <button
-              class="form-item form-item-custom"
+              class="form-item form-item-custom w-full"
               type="button"
               (click)="openLocationMap('delivery')"
             >
@@ -561,38 +622,42 @@
               <i class="pi pi-map"></i>
             </button>
           </div>
-          <div class="col-12 mb-3">
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "city" | translate }}</p>
             <p-select
               [options]="cities"
               [(ngModel)]="deliveryCityId"
               optionLabel="name"
               optionValue="id"
-              placeholder="{{ 'city' | translate }}"
-              class="w-full md:w-56"
+              [placeholder]="'city' | translate"
+              class="w-full"
             />
             <small *ngIf="showLocationErrors && !deliveryCityId" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
-          <div class="col-12 mb-3">
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "neighborhood" | translate }}</p>
             <p-select
               [options]="provinces"
               [(ngModel)]="deliveryProvinceId"
               optionLabel="name"
               optionValue="id"
-              placeholder="{{ 'neighborhood' | translate }}"
-              class="w-full md:w-56"
+              [placeholder]="'neighborhood' | translate"
+              class="w-full"
             />
             <small *ngIf="showLocationErrors && !deliveryProvinceId" class="p-error">
               {{ "requiredField" | translate }}
             </small>
           </div>
-          <div class="col-12 mb-3">
+          <div class="form-field-block">
+            <p class="title-cum field-label">{{ "streetName" | translate }}</p>
             <input
               type="text"
               pInputText
+              class="w-full"
               [(ngModel)]="deliveryStreet"
-              placeholder="{{ 'streetName' | translate }}"
+              [placeholder]="'streetName' | translate"
             />
             <small *ngIf="showLocationErrors && !deliveryStreet.trim()" class="p-error">
               {{ "requiredField" | translate }}

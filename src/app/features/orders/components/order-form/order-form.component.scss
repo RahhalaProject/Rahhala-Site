@@ -31,6 +31,34 @@
   margin-bottom: 15px;
 }
 
+/* Match car-rental-request: visible labels above controls */
+.form-section-heading {
+  font-family: var(--btn-font-family);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--app-primary);
+  text-align: center;
+  margin-bottom: 0.65rem;
+}
+
+.form-field-block {
+  margin-bottom: 1rem;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.checks-spacer {
+  margin: 0 5px;
+  flex-shrink: 0;
+}
+
+.pickup-heading {
+  margin-top: 0.25rem;
+}
+
 .form-item {
   display: flex;
   justify-content: space-between;
@@ -139,10 +167,22 @@
   .DeliveryDate-form .p-datepicker .p-datepicker-panel {
     position: fixed !important;
   }
+  /* Full row like p-select / p-inputtext (inherit was shrinking the control) */
   .p-datepicker {
-    width: inherit;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
-  .Location-form .title {
+  .DeliveryDate-form .card-cus {
+    width: 100%;
+    max-width: 100%;
+  }
+  p-datepicker.w-full {
+    display: block;
+    width: 100%;
+  }
+  .Location-form .title,
+  .Location-form .form-section-heading {
     font-family: var(--btn-font-family);
     font-weight: 600;
     font-style: Sans One Bold;
@@ -157,8 +197,11 @@
     font-size: 14px;
     color: var(--app-primary);
   }
+  /* Match p-select full width; `inherit` was overriding Tailwind w-full on plain inputs */
   .p-inputtext {
-    width: inherit;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 }
 /* For screens smaller than 600px */
