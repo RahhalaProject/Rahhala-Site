@@ -312,19 +312,6 @@
             </small>
           </div>
         </div>
-
-        <!-- Upload image: disabled until feature is enabled
-        <button
-          type="button"
-          class="form-item dashed"
-          (click)="showUploadDialog()"
-        >
-          <span
-            ><i class="pi pi-camera"></i>{{ "uploadImage" | translate }}</span
-          >
-        </button>
-        -->
-
         <button
           type="button"
           class="form-item"
@@ -365,14 +352,6 @@
           size="small"
           (onClick)="onConfirmOrder()"
         />
-
-        <div class="flex w-full justify-between gap-3 flex-wrap cancel-actions">
-          <p-button
-            label="{{ 'cancel' | translate }}"
-            severity="secondary"
-            (onClick)="onCancel()"
-          />
-        </div>
       </div>
     </div>
   </p-card>
@@ -383,29 +362,27 @@
   [(visible)]="visiblePaymentMethod"
   [style]="{ width: '50rem' }"
   class="PaymentMethod-form"
+  [header]="'paymentMethod' | translate"
 >
-  <div class="flex flex-col h-48 mb-3">
-    <div
-      class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-    >
-      <div class="flex justify-center card-cus">
-        <div class="row">
-          <div class="col-12 mb-3">
-            <p-select
-              [options]="paymentMethodOptions"
-              [(ngModel)]="selectedPaymentMethod"
-              optionLabel="name"
-              optionValue="value"
-              placeholder="{{ 'paymentMethod' | translate }}"
-              class="w-full md:w-56"
-            />
-            <small
-              *ngIf="showPaymentMethodValidationErrors && selectedPaymentMethod == null"
-              class="p-error"
-            >
-              {{ "requiredField" | translate }}
-            </small>
-          </div>
+  <div class="flex flex-col mb-3">
+    <div class="flex justify-center card-cus">
+      <div class="w-full max-w-full">
+        <div class="form-field-block">
+          <p class="title-cum field-label">{{ "paymentMethod" | translate }}</p>
+          <p-select
+            [options]="paymentMethodOptions"
+            [(ngModel)]="selectedPaymentMethod"
+            optionLabel="name"
+            optionValue="value"
+            [placeholder]="'paymentMethod' | translate"
+            class="w-full"
+          />
+          <small
+            *ngIf="showPaymentMethodValidationErrors && selectedPaymentMethod == null"
+            class="p-error"
+          >
+            {{ "requiredField" | translate }}
+          </small>
         </div>
       </div>
     </div>
@@ -433,52 +410,3 @@
   [header]="'setLocationOnMap' | translate"
   (locationConfirmed)="onMapLocationConfirmed($event)"
 />
-
-<!-- Upload dialog: disabled with upload button until feature is enabled
-<p-dialog
-  [modal]="true"
-  [(visible)]="visibleUpload"
-  [style]="{ width: '50rem' }"
-  class="Upload-form"
->
-  <div class="flex flex-col h-48 mb-3">
-    <div
-      class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
-    >
-      <div class="flex justify-center card-cus">
-        <div class="row">
-          <div class="col-12 mb-3">
-            <p-fileupload
-              name="carRentalImages[]"
-              [customUpload]="true"
-              (onSelect)="onFilesSelected($event)"
-              (uploadHandler)="onUpload($event)"
-              [multiple]="true"
-              accept="image/*"
-              maxFileSize="1000000"
-              mode="advanced"
-            >
-              <ng-template #empty>
-                <div>Drag and drop files to here to upload.</div>
-              </ng-template>
-            </p-fileupload>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="flex w-full justify-between">
-    <p-button
-      label="{{ 'cancel' | translate }}"
-      severity="secondary"
-      (click)="visibleUpload = false"
-      (keydown.enter)="visibleUpload = false"
-    />
-    <p-button
-      label="{{ 'save' | translate }}"
-      (click)="onUploadSaveClick()"
-      (keydown.enter)="onUploadSaveClick()"
-    />
-  </div>
-</p-dialog>
--->

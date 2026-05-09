@@ -274,6 +274,20 @@
   color: var(--app-error);
 }
 
+:host ::ng-deep {
+  .PaymentMethod-form,
+  .Upload-form {
+    .p-dialog-content {
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      max-height: min(85vh, calc(100vh - 8rem));
+      min-height: 0;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}
+
 @media (max-width: 600px) {
   .box {
     padding: var(--app-card-padding-sm);

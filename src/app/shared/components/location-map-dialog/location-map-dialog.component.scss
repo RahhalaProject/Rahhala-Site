@@ -49,3 +49,12 @@
   justify-content: space-between;
   align-items: center;
 }
+
+:host ::ng-deep .LocationMap-form .p-dialog-content {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  max-height: min(85vh, calc(100vh - 8rem));
+  min-height: 0;
+  -webkit-overflow-scrolling: touch;
+}

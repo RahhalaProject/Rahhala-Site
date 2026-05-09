@@ -270,3 +270,21 @@
   white-space: pre-line;
   margin-top: 0.6rem;
 }
+
+/* Scroll on PrimeNG content wrapper so mouse wheel works reliably (nested overflow often does not). */
+:host ::ng-deep {
+  .ShipmentDetails-form,
+  .Upload-form,
+  .DeliveryDate-form,
+  .PaymentMethod-form,
+  .Location-form {
+    .p-dialog-content {
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      max-height: min(85vh, calc(100vh - 8rem));
+      min-height: 0;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}

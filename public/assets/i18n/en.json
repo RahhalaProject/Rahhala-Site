@@ -177,6 +177,7 @@
   "enterEmailOrPhone": "Enter Email / Phone Number",
   "emailOrPhone": "Email / Phone Number",
   "submit": "Submit",
+  "signIn": "Sign In",
   "otpVerification": "OTP Verification",
   "enterCodeSentTo": "Enter the code sent to",
   "otpRequired": "Please enter the 4-digit verification code.",
