@@ -100,6 +100,29 @@
           </span>
         </button>
 
+        <!-- Receive Date -->
+        <button
+          class="form-item"
+          (click)="showRecieveDateDialog()"
+          type="button"
+        >
+          <span
+            ><i class="pi pi-calendar"></i
+            >{{ "recieveDate" | translate }}</span
+          >
+          <span class="form-item-trailing">
+            <span
+              *ngIf="recieveDateSectionSaved"
+              class="form-item-done-badge"
+              [attr.title]="'formSectionSaved' | translate"
+              role="img"
+              [attr.aria-label]="'formSectionSaved' | translate"
+            >
+              <i class="pi pi-check form-item-done-check" aria-hidden="true"></i>
+            </span>
+          </span>
+        </button>
+
         <!-- Payment -->
         <button
           class="form-item"
@@ -521,6 +544,53 @@
   </div>
 </p-dialog>
 <!------------- End Delivery Date ------------>
+
+<!------------- Start Receive Date ------------>
+<p-dialog
+  [modal]="true"
+  [(visible)]="visibleRecieveDate"
+  [style]="{ width: '50rem' }"
+  class="RecieveDate-form"
+  [header]="'recieveDate' | translate"
+>
+  <div class="flex flex-col mb-3">
+    <div class="flex justify-center card-cus">
+      <div class="w-full max-w-full">
+        <div class="form-field-block">
+          <p class="title-cum field-label">{{ "recieveDate" | translate }}</p>
+          <p-datepicker
+            [(ngModel)]="recieveDate"
+            [minDate]="minDeliveryDate"
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            [placeholder]="'selectDate' | translate"
+            inputId="orderRecieveDate"
+            class="w-full"
+            [inputStyle]="{ width: '100%' }"
+            appendTo="body"
+          />
+          <small *ngIf="showRecieveDateErrors && !recieveDate" class="p-error">
+            {{ "requiredField" | translate }}
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex w-full justify-between">
+    <p-button
+      label="{{ 'cancel' | translate }}"
+      severity="secondary"
+      (click)="visibleRecieveDate = false"
+      (keydown.enter)="visibleRecieveDate = false"
+    />
+    <p-button
+      label="{{ 'save' | translate }}"
+      (click)="onRecieveDateSaveClick()"
+      (keydown.enter)="onRecieveDateSaveClick()"
+    />
+  </div>
+</p-dialog>
+<!------------- End Receive Date ------------>
 
 <!------------- Start Payment Method ------------>
 <p-dialog

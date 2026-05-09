@@ -1,0 +1,126 @@
+<p-dialog
+  [modal]="true"
+  [visible]="visible"
+  (visibleChange)="onVisibleChange($event)"
+  [header]="'profileSettings' | translate"
+  [style]="{ width: '32rem' }"
+  [draggable]="false"
+  styleClass="profile-settings-dialog"
+>
+  <div *ngIf="loading" class="profile-settings-loading">
+    {{ "loading" | translate }}
+  </div>
+
+  <div *ngIf="!loading" class="profile-settings-form flex flex-col gap-4">
+    <div class="flex flex-col items-center gap-2">
+      <p-avatar
+        [image]="avatarImage"
+        shape="circle"
+        [style]="{ width: '96px', height: '96px' }"
+      />
+      <input
+        #photoInput
+        type="file"
+        accept="image/*"
+        class="profile-photo-input"
+        (change)="onPhotoSelected($event)"
+      />
+      <p-button
+        type="button"
+        [label]="'changeProfilePhoto' | translate"
+        [text]="true"
+        [loading]="uploadingPhoto"
+        [disabled]="uploadingPhoto || saving"
+        (onClick)="photoInput.click()"
+      />
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="font-semibold text-sm" for="profileFirstName">{{
+        "firstName" | translate
+      }}</label>
+      <input
+        pInputText
+        id="profileFirstName"
+        class="w-full"
+        [(ngModel)]="firstName"
+        [disabled]="saving"
+        autocomplete="given-name"
+      />
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="font-semibold text-sm" for="profileLastName">{{
+        "lastName" | translate
+      }}</label>
+      <input
+        pInputText
+        id="profileLastName"
+        class="w-full"
+        [(ngModel)]="lastName"
+        [disabled]="saving"
+        autocomplete="family-name"
+      />
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="font-semibold text-sm" for="profileEmail">{{
+        "email" | translate
+      }}</label>
+      <input
+        pInputText
+        id="profileEmail"
+        type="email"
+        class="w-full"
+        [(ngModel)]="email"
+        [disabled]="saving"
+        autocomplete="email"
+      />
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="font-semibold text-sm" for="profilePhone">{{
+        "phoneNumber" | translate
+      }}</label>
+      <input
+        pInputText
+        id="profilePhone"
+        class="w-full"
+        [(ngModel)]="phoneNumber"
+        [readonly]="true"
+        tabindex="-1"
+      />
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="font-semibold text-sm" for="profileAddress">{{
+        "address" | translate
+      }}</label>
+      <input
+        pInputText
+        id="profileAddress"
+        class="w-full"
+        [(ngModel)]="address"
+        [disabled]="saving"
+        autocomplete="street-address"
+      />
+    </div>
+
+    <div class="flex w-full justify-end gap-2 pt-2">
+      <p-button
+        type="button"
+        [label]="'cancel' | translate"
+        severity="secondary"
+        [disabled]="saving || loading"
+        (onClick)="close()"
+      />
+      <p-button
+        type="button"
+        [label]="'save' | translate"
+        [loading]="saving"
+        [disabled]="loading || uploadingPhoto"
+        (onClick)="save()"
+      />
+    </div>
+  </div>
+</p-dialog>

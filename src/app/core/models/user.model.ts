@@ -4,4 +4,7 @@ export interface User {
   firstName: string;
   lastName: string;
   roles: string[];
+  phoneNumber?: string | null;
+  profilePictureUrl?: string | null;
+  address?: string | null;
 }

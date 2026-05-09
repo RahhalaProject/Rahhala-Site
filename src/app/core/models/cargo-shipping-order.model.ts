@@ -39,6 +39,7 @@ export interface CreateCargoShippingOrderRequest {
   receiver: ReceiverRequest;
   shipmentDetails: ShipmentDetailsRequest;
   deliveryDate: string | null;
+  recieveDate: string | null;
   /** Backend PaymentMethod enum value: 1 Cash, 2 Visa, 3 Walet. */
   paymentMethod: PaymentMethod | null;
   images: string[];
@@ -58,6 +59,7 @@ export interface CargoShippingOrderResponse {
   receiver: ReceiverRequest;
   shipmentDetails: ShipmentDetailsRequest;
   deliveryDate: string;
+  recieveDate?: string | null;
   paymentMethod: string | null;
   orderTypeId: string;
   images: string[] | null;

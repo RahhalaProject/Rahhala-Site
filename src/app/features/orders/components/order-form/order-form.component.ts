@@ -59,6 +59,7 @@ export class OrderFormComponent implements OnInit {
   visibleUpload = false;
   visibleLocation = false;
   visibleDeliveryDate = false;
+  visibleRecieveDate = false;
   visiblePaymentMethod = false;
   visibleLocationMap = false;
   uploadedFiles: File[] = [];
@@ -66,6 +67,7 @@ export class OrderFormComponent implements OnInit {
   /** Earliest selectable delivery day (start of tomorrow); today and past dates are disabled. */
   minDeliveryDate!: Date;
   date: Date | undefined;
+  recieveDate: Date | undefined;
 
   // Lookup options (id + name)
   carTypeOptions: LookupItem[] = [];
@@ -120,10 +122,12 @@ export class OrderFormComponent implements OnInit {
   uploadSectionSaved = false;
   locationSectionSaved = false;
   deliveryDateSectionSaved = false;
+  recieveDateSectionSaved = false;
   paymentMethodSectionSaved = false;
   showValidationErrors = false;
   showShipmentValidationErrors = false;
   showDeliveryDateValidationErrors = false;
+  showRecieveDateValidationErrors = false;
   showPaymentMethodValidationErrors = false;
   showLocationValidationErrors = false;
   constructor(
@@ -144,6 +148,7 @@ export class OrderFormComponent implements OnInit {
   ngOnInit(): void {
     this.refreshMinDeliveryDate();
     this.date = new Date(this.minDeliveryDate);
+    this.recieveDate = new Date(this.minDeliveryDate);
     this.buildPaymentMethodOptions();
     this.buildDryBoxTypeOptions();
     this.loadLookups();
@@ -213,6 +218,17 @@ export class OrderFormComponent implements OnInit {
     const curMs = this.startOfLocalDayMs(this.date);
     if (curMs < minMs) {
       this.date = new Date(this.minDeliveryDate);
+    }
+  }
+
+  private normalizeRecieveDateIfNeeded(): void {
+    if (!this.recieveDate) {
+      return;
+    }
+    const minMs = this.startOfLocalDayMs(this.minDeliveryDate);
+    const curMs = this.startOfLocalDayMs(this.recieveDate);
+    if (curMs < minMs) {
+      this.recieveDate = new Date(this.minDeliveryDate);
     }
   }
 
@@ -340,6 +356,13 @@ export class OrderFormComponent implements OnInit {
     this.visibleDeliveryDate = true;
   }
 
+  showRecieveDateDialog() {
+    this.showRecieveDateValidationErrors = false;
+    this.refreshMinDeliveryDate();
+    this.normalizeRecieveDateIfNeeded();
+    this.visibleRecieveDate = true;
+  }
+
   showPaymentMethodDialog() {
     this.showPaymentMethodValidationErrors = false;
     this.visiblePaymentMethod = true;
@@ -385,6 +408,7 @@ export class OrderFormComponent implements OnInit {
     this.showValidationErrors = true;
     this.showShipmentValidationErrors = true;
     this.showDeliveryDateValidationErrors = true;
+    this.showRecieveDateValidationErrors = true;
     this.showPaymentMethodValidationErrors = true;
     this.showLocationValidationErrors = true;
     const missingFields = this.getAllRequiredFieldErrors();
@@ -397,6 +421,7 @@ export class OrderFormComponent implements OnInit {
 
     this.refreshMinDeliveryDate();
     this.normalizeDeliveryDateIfNeeded();
+    this.normalizeRecieveDateIfNeeded();
 
     const submitOrder = (images: string[]) => {
       const payload: CreateCargoShippingOrderRequest = {
@@ -430,6 +455,7 @@ export class OrderFormComponent implements OnInit {
         },
         images,
         deliveryDate: this.date ? this.date.toISOString() : null,
+        recieveDate: this.recieveDate ? this.recieveDate.toISOString() : null,
         paymentMethod: this.getPaymentMethodValueForApi(),
         pickupAddress: {
           cityId: this.pickupCityId,
@@ -573,6 +599,19 @@ export class OrderFormComponent implements OnInit {
     this.visibleDeliveryDate = false;
   }
 
+  onRecieveDateSaveClick(): void {
+    this.refreshMinDeliveryDate();
+    this.normalizeRecieveDateIfNeeded();
+    this.showRecieveDateValidationErrors = true;
+    const missingFields = this.getRecieveDateRequiredFieldErrors();
+    if (missingFields.length) {
+      this.showValidationToast(missingFields);
+      return;
+    }
+    this.recieveDateSectionSaved = true;
+    this.visibleRecieveDate = false;
+  }
+
   onPaymentMethodSaveClick(): void {
     this.showPaymentMethodValidationErrors = true;
     const missingFields = this.getPaymentMethodRequiredFieldErrors();
@@ -662,6 +701,14 @@ export class OrderFormComponent implements OnInit {
     return missingFields;
   }
 
+  private getRecieveDateRequiredFieldErrors(): string[] {
+    const missingFields: string[] = [];
+    if (!this.recieveDate) {
+      missingFields.push(this.translate.instant('recieveDate'));
+    }
+    return missingFields;
+  }
+
   private getPaymentMethodRequiredFieldErrors(): string[] {
     const missingFields: string[] = [];
     if (this.selectedPaymentMethod == null) {
@@ -713,6 +760,7 @@ export class OrderFormComponent implements OnInit {
     return [
       ...this.getShipmentDetailsRequiredFieldErrors(),
       ...this.getDeliveryDateRequiredFieldErrors(),
+      ...this.getRecieveDateRequiredFieldErrors(),
       ...this.getPaymentMethodRequiredFieldErrors(),
       ...this.getLocationRequiredFieldErrors(),
     ];
@@ -737,6 +785,10 @@ export class OrderFormComponent implements OnInit {
 
   get showDeliveryDateErrors(): boolean {
     return this.showValidationErrors || this.showDeliveryDateValidationErrors;
+  }
+
+  get showRecieveDateErrors(): boolean {
+    return this.showValidationErrors || this.showRecieveDateValidationErrors;
   }
 
   get showPaymentMethodErrors(): boolean {

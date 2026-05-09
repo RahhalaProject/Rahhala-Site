@@ -69,6 +69,7 @@ export interface OrderDetailsResponse {
       additionalNotes?: string | null;
     } | null;
     deliveryDate?: string | null;
+    recieveDate?: string | null;
     images?: string[] | null;
   } | null;
   [key: string]: unknown;

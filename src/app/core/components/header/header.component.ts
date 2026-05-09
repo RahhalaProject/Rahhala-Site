@@ -11,8 +11,10 @@ import { PrimeNG } from 'primeng/config';
 import { FormsModule } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import { Inject } from '@angular/core';
-import { PopoverModule } from 'primeng/popover';
+import { Popover, PopoverModule } from 'primeng/popover';
 import { AuthService } from '../../services/auth.service';
+import { ProfileSettingsDialogComponent } from '../profile-settings-dialog/profile-settings-dialog.component';
+import { APP_CONFIG, AppConfig } from '../../config/app.config';
 import { User } from '../../models/user.model';
 import { Subscription, filter } from 'rxjs';
 @Component({
@@ -31,6 +33,7 @@ import { Subscription, filter } from 'rxjs';
     FormsModule,
     TranslateModule,
     PopoverModule,
+    ProfileSettingsDialogComponent,
   ],
   providers: [TranslateService],
 })
@@ -42,13 +45,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentUser: User | null = null;
   /** URL path is `/auth` (sign-in / sign-up layout). */
   isAuthEntryRoute = false;
+  profileSettingsVisible = false;
   private subscriptions = new Subscription();
+
   constructor(
     readonly config: PrimeNG,
     readonly translateService: TranslateService,
     @Inject(DOCUMENT) readonly document: Document,
     readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    @Inject(APP_CONFIG) private readonly appConfig: AppConfig
   ) {}
 
   ngOnInit() {
@@ -118,6 +124,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
+  }
+
+  get profileAvatarSrc(): string {
+    const u = this.currentUser?.profilePictureUrl?.trim();
+    if (!u) return './images/profile.png';
+    if (/^https?:\/\//i.test(u) || u.startsWith('data:')) return u;
+    const apiBase = this.appConfig.apiUrl.replace(/\/$/, '');
+    return u.startsWith('/') ? `${apiBase}${u}` : `${apiBase}/${u}`;
+  }
+
+  openProfileSettings(popover: Popover): void {
+    popover.hide();
+    this.profileSettingsVisible = true;
   }
 
   get displayName(): string {

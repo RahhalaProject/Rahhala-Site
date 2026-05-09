@@ -184,7 +184,8 @@
     resize: auto;
     width: 100%;
   }
-  .DeliveryDate-form .p-datepicker .p-datepicker-panel {
+  .DeliveryDate-form .p-datepicker .p-datepicker-panel,
+  .RecieveDate-form .p-datepicker .p-datepicker-panel {
     position: fixed !important;
   }
   /* Full row like p-select / p-inputtext (inherit was shrinking the control) */
@@ -193,7 +194,8 @@
     max-width: 100%;
     box-sizing: border-box;
   }
-  .DeliveryDate-form .card-cus {
+  .DeliveryDate-form .card-cus,
+  .RecieveDate-form .card-cus {
     width: 100%;
     max-width: 100%;
   }
@@ -276,6 +278,7 @@
   .ShipmentDetails-form,
   .Upload-form,
   .DeliveryDate-form,
+  .RecieveDate-form,
   .PaymentMethod-form,
   .Location-form {
     .p-dialog-content {

@@ -95,6 +95,10 @@
           <strong>{{ "deliveryDate" | translate }}:</strong>
           {{ details.cargoShipping?.deliveryDate | date : "mediumDate" }}
         </div>
+        <div *ngIf="hasValue(details.cargoShipping?.recieveDate)">
+          <strong>{{ "recieveDate" | translate }}:</strong>
+          {{ details.cargoShipping?.recieveDate | date : "mediumDate" }}
+        </div>
       </ng-container>
     </div>
   </p-card>
