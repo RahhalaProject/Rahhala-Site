@@ -6,17 +6,39 @@
     letter-spacing: -0.02em;
     color: var(--btn-color);
   }
-  .auth-btn .p-button,
-  .auth-btn-inMenu .p-button {
+  .auth-btn .p-button:not(.header-lang-toggle),
+  .auth-btn-inMenu .p-button:not(.header-lang-toggle) {
     border-radius: 8px;
     padding: 8px;
     background: var(--btn-color);
   }
-  .auth-btn .p-button .p-button-label,
-  .auth-btn-inMenu .p-button .p-button-label {
+  .auth-btn .p-button:not(.header-lang-toggle) .p-button-label,
+  .auth-btn-inMenu .p-button:not(.header-lang-toggle) .p-button-label {
     font-family: var(--btn-font-family);
     font-weight: 400;
     font-size: 13.95px;
+  }
+
+  .auth-btn .p-button.header-lang-toggle,
+  .auth-btn-inMenu .p-button.header-lang-toggle {
+    border-radius: 8px;
+    padding: 8px;
+    gap: 0.35rem;
+    font-family: var(--btn-font-family);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--btn-color);
+    border-color: color-mix(in srgb, var(--btn-color) 45%, transparent);
+    background: color-mix(in srgb, var(--btn-color) 14%, transparent);
+
+    &:not(:disabled):hover {
+      background: color-mix(in srgb, var(--btn-color) 22%, transparent);
+      border-color: color-mix(in srgb, var(--btn-color) 55%, transparent);
+    }
+
+    .p-button-icon {
+      font-size: 1rem;
+    }
   }
 
   .p-megamenu-mobile {
@@ -48,6 +70,15 @@
 
   .p-megamenu-mobile .auth-btn {
     display: none;
+  }
+
+  .main-nav.main-nav--show-mobile-auth .p-megamenu-mobile .auth-btn {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    max-width: min(100%, 220px);
   }
 
   .auth-btn-inMenu {
@@ -122,6 +153,29 @@
     .p-megamenu {
       background: var(--app-primary);
     }
+    .p-button.header-lang-toggle {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.12);
+
+      &:not(:disabled):hover {
+        background: rgba(255, 255, 255, 0.22);
+        border-color: rgba(255, 255, 255, 0.55);
+      }
+    }
+
+    /* Mobile overlay panel uses a light surface — white text disappears. */
+    .auth-btn-inMenu .p-button.header-lang-toggle {
+      color: var(--btn-color);
+      border-color: color-mix(in srgb, var(--btn-color) 45%, transparent);
+      background: color-mix(in srgb, var(--btn-color) 14%, transparent);
+
+      &:not(:disabled):hover {
+        background: color-mix(in srgb, var(--btn-color) 22%, transparent);
+        border-color: color-mix(in srgb, var(--btn-color) 55%, transparent);
+      }
+    }
+
     .p-megamenu-item-link {
       color: #ffffff;
     }

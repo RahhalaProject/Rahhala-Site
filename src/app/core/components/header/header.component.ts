@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 import { CommonModule } from '@angular/common';
 import { MegaMenu } from 'primeng/megamenu';
-import { RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PrimeNG } from 'primeng/config';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +14,7 @@ import { Inject } from '@angular/core';
 import { PopoverModule } from 'primeng/popover';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 @Component({
   selector: 'header',
   templateUrl: './header.component.html',
@@ -40,12 +40,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   supportLanguages = ['en', 'ar'];
   selectedLanguage!: string;
   currentUser: User | null = null;
+  /** URL path is `/auth` (sign-in / sign-up layout). */
+  isAuthEntryRoute = false;
   private subscriptions = new Subscription();
   constructor(
     readonly config: PrimeNG,
     readonly translateService: TranslateService,
     @Inject(DOCUMENT) readonly document: Document,
-    readonly authService: AuthService
+    readonly authService: AuthService,
+    private readonly router: Router
   ) {}
 
   ngOnInit() {
@@ -90,6 +93,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (!this.currentUser && this.authService.isLoggedIn()) {
       this.currentUser = this.authService.currentUserValue;
     }
+
+    this.refreshAuthEntryRoute();
+    this.subscriptions.add(
+      this.router.events
+        .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+        .subscribe(() => this.refreshAuthEntryRoute())
+    );
+  }
+
+  private refreshAuthEntryRoute(): void {
+    const path = this.router.url.split(/[?#]/)[0];
+    this.isAuthEntryRoute = path === '/auth';
+  }
+
+  /** On `/auth`, show login + language in the top bar on small screens (default hides `.auth-btn`). */
+  showMobileGuestAuthBar(): boolean {
+    return !this.isHomeLayout && !this.isLoggedIn() && this.isAuthEntryRoute;
   }
 
   ngOnDestroy(): void {
@@ -110,6 +130,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   get userEmail(): string {
     return this.currentUser?.email || '';
+  }
+
+  /** Short code for header language toggle (e.g. AR / EN). */
+  get currentLangCode(): string {
+    return (
+      this.translateService.currentLang ||
+      this.selectedLanguage ||
+      localStorage.getItem('lang') ||
+      'en'
+    ).toUpperCase();
   }
 
   get userInitials(): string {
@@ -134,6 +164,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     const selectedLang = lang.value || lang; // handle both { value: 'ar' } or 'ar'
 
+    this.selectedLanguage = selectedLang;
     this.translateService.use(selectedLang);
     localStorage.setItem('lang', selectedLang);
 
@@ -160,6 +191,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // عكس اللغة (اختياري لو عايز toggle)
     const selectedLang = currentLang === 'ar' ? 'en' : 'ar';
 
+    this.selectedLanguage = selectedLang;
     this.translateService.use(selectedLang);
     localStorage.setItem('lang', selectedLang);
 

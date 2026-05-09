@@ -36,6 +36,26 @@
   </p-popover>
 </ng-template>
 
+<ng-template #guestAuthActions>
+  <div class="flex items-center gap-2 guest-auth-actions">
+    <p-button
+      [label]="'login' | translate"
+      severity="contrast"
+      size="small"
+      routerLink="/auth"
+    />
+    <p-button
+      styleClass="header-lang-toggle"
+      icon="pi pi-globe"
+      [label]="currentLangCode"
+      size="small"
+      [outlined]="true"
+      [ariaLabel]="'language' | translate"
+      (onClick)="changeLang()"
+    />
+  </div>
+</ng-template>
+
 @if(isHomeLayout) {
 <p-megamenu
   [model]="items"
@@ -64,12 +84,7 @@
       @if(isLoggedIn()){
       <ng-container *ngTemplateOutlet="userProfileMenu"></ng-container>
       } @else{
-      <p-button
-        [label]="'login' | translate"
-        severity="contrast"
-        size="small"
-        routerLink="/auth"
-      />
+      <ng-container *ngTemplateOutlet="guestAuthActions"></ng-container>
       }
     </div>
   </ng-template>
@@ -79,20 +94,16 @@
       @if(isLoggedIn()){
       <ng-container *ngTemplateOutlet="userProfileMenu"></ng-container>
       } @else{
-
-      <p-button
-        [label]="'login' | translate"
-        severity="contrast"
-        size="small"
-        routerLink="/auth"
-      />
-
+      <ng-container *ngTemplateOutlet="guestAuthActions"></ng-container>
       }
     </div>
   </ng-template>
 </p-megamenu>
 } @else {
-<div class="main-nav">
+<div
+  class="main-nav"
+  [class.main-nav--show-mobile-auth]="showMobileGuestAuthBar()"
+>
   <p-megamenu [model]="items" [style]="{ 'border-radius': '1rem' }">
     <ng-template #start>
       <div class="flex items-center gap-2">
