@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   FormBuilder,
   FormGroup,
@@ -103,6 +104,7 @@ export class SignUpComponent {
 
     this.isLoading.set(true);
     this.errorMessage.set('');
+    this.clearServerDuplicateErrors();
 
     this.authService.SendRegisterOtp(this.signUpForm.value).subscribe({
       next: (response) => {
@@ -119,21 +121,96 @@ export class SignUpComponent {
         });
       },
       error: (error) => {
-        let friendlyMessage = 'Registration failed. Please try again.';
-        if (error?.error && typeof error.error === 'object') {
-          // Attempt to extract a user-friendly message from the error title
-          // Prefer "title" property which is the backend's explanation string
-          if (error.error.title) {
-            friendlyMessage = error.error.title;
-          }
-        } else if (typeof error === 'string') {
-          friendlyMessage = error;
-        } else if (error?.message) {
-          friendlyMessage = error.message;
-        }
-        this.errorMessage.set(friendlyMessage);
+        this.applyRegisterApiError(error);
         this.isLoading.set(false);
       },
     });
+  }
+
+  private clearServerDuplicateErrors(): void {
+    this.removeErrorKey(this.phoneNumber, 'duplicate');
+    this.removeErrorKey(this.email, 'duplicate');
+  }
+
+  private removeErrorKey(
+    control: ReturnType<FormGroup['get']>,
+    key: string
+  ): void {
+    if (!control) return;
+    const errs = control.errors;
+    if (!errs?.[key]) return;
+    const next = { ...errs };
+    delete next[key];
+    control.setErrors(Object.keys(next).length ? next : null);
+  }
+
+  /** Maps ProblemDetails-style body (title, errorCodes) to phone/email field errors when possible. */
+  private applyRegisterApiError(error: unknown): void {
+    const httpErr = error as HttpErrorResponse;
+    const body = httpErr?.error;
+
+    if (!body || typeof body !== 'object') {
+      this.errorMessage.set(this.fallbackRegisterMessage(error));
+      return;
+    }
+
+    const codes: string[] = Array.isArray((body as { errorCodes?: unknown }).errorCodes)
+      ? ((body as { errorCodes: string[] }).errorCodes ?? []).map(String)
+      : [];
+    const title =
+      typeof (body as { title?: unknown }).title === 'string'
+        ? (body as { title: string }).title
+        : '';
+
+    const phoneDup = this.isDuplicatePhoneConflict(codes, title);
+    const emailDup = this.isDuplicateEmailConflict(codes, title);
+
+    if (phoneDup) {
+      this.phoneNumber?.setErrors({ duplicate: true });
+      this.phoneNumber?.markAsTouched();
+    }
+    if (emailDup) {
+      this.email?.setErrors({ duplicate: true });
+      this.email?.markAsTouched();
+    }
+
+    if (phoneDup || emailDup) {
+      this.errorMessage.set('');
+      return;
+    }
+
+    if (title) {
+      this.errorMessage.set(title);
+      return;
+    }
+
+    this.errorMessage.set(this.fallbackRegisterMessage(error));
+  }
+
+  private isDuplicatePhoneConflict(codes: string[], title: string): boolean {
+    for (const c of codes) {
+      if (/duplicate.*phone|phone.*duplicate|phonenimber|phonenumber.*duplicate/i.test(c)) {
+        return true;
+      }
+    }
+    const t = title.toLowerCase();
+    return t.includes('phone') && t.includes('already');
+  }
+
+  private isDuplicateEmailConflict(codes: string[], title: string): boolean {
+    for (const c of codes) {
+      if (/duplicate.*mail|mail.*duplicate|email.*duplicate|duplicateemail/i.test(c)) {
+        return true;
+      }
+    }
+    const t = title.toLowerCase();
+    return t.includes('email') && t.includes('already');
+  }
+
+  private fallbackRegisterMessage(error: unknown): string {
+    if (typeof error === 'string') return error;
+    const msg = (error as { message?: string })?.message;
+    if (msg) return msg;
+    return 'Registration failed. Please try again.';
   }
 }
