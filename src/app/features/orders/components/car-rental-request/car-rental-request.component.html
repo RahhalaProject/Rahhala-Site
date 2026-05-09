@@ -54,6 +54,9 @@
         <div class="form-field-block">
           <p class="title-cum field-label">{{ "carType" | translate }}</p>
           <p-select
+            [filter]="true"
+            filterPlaceholder="{{ 'entityTableSearchPlaceholder' | translate }}"
+            appendTo="body"
             [options]="carTypeOptions"
             [(ngModel)]="selectedCarType"
             optionLabel="name"
@@ -72,6 +75,9 @@
         <div class="form-field-block">
           <p class="title-cum field-label">{{ "shipmentType" | translate }}</p>
           <p-select
+            [filter]="true"
+            filterPlaceholder="{{ 'entityTableSearchPlaceholder' | translate }}"
+            appendTo="body"
             [options]="shipmentTypeOptions"
             [(ngModel)]="selectedShipmentType"
             (ngModelChange)="onShipmentTypeIdChange($event)"
@@ -91,6 +97,9 @@
         <div class="form-field-block" *ngIf="isDryShipmentSelected">
           <p class="title-cum field-label">{{ "dryBoxType" | translate }}</p>
           <p-select
+            [filter]="true"
+            filterPlaceholder="{{ 'entityTableSearchPlaceholder' | translate }}"
+            appendTo="body"
             [options]="dryBoxTypeOptions"
             [(ngModel)]="selectedDryBoxType"
             optionLabel="name"
@@ -109,6 +118,9 @@
         <div class="form-field-block">
           <p class="title-cum field-label">{{ "weightTons" | translate }}</p>
           <p-select
+            [filter]="true"
+            filterPlaceholder="{{ 'entityTableSearchPlaceholder' | translate }}"
+            appendTo="body"
             [options]="weightInTonOptions"
             [(ngModel)]="selectedWeightInTon"
             optionLabel="name"
@@ -127,6 +139,9 @@
         <div class="form-field-block">
           <p class="title-cum field-label">{{ "loadByPallet" | translate }}</p>
           <p-select
+            [filter]="true"
+            filterPlaceholder="{{ 'entityTableSearchPlaceholder' | translate }}"
+            appendTo="body"
             [options]="palletCapacityOptions"
             [(ngModel)]="selectedPalletCapacity"
             optionLabel="name"
@@ -145,6 +160,9 @@
         <div class="form-field-block">
           <p class="title-cum field-label">{{ "rentDuration" | translate }}</p>
           <p-select
+            [filter]="true"
+            filterPlaceholder="{{ 'entityTableSearchPlaceholder' | translate }}"
+            appendTo="body"
             [options]="rentDurationOptions"
             [(ngModel)]="selectedRentDuration"
             optionLabel="name"
@@ -370,6 +388,9 @@
         <div class="form-field-block">
           <p class="title-cum field-label">{{ "paymentMethod" | translate }}</p>
           <p-select
+            [filter]="true"
+            filterPlaceholder="{{ 'entityTableSearchPlaceholder' | translate }}"
+            appendTo="body"
             [options]="paymentMethodOptions"
             [(ngModel)]="selectedPaymentMethod"
             optionLabel="name"

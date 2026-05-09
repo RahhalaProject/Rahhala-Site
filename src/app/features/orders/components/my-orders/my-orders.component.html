@@ -11,6 +11,9 @@
         "filterByOrderStatus" | translate
       }}</label>
       <p-select
+        [filter]="true"
+        filterPlaceholder="{{ 'entityTableSearchPlaceholder' | translate }}"
+        appendTo="body"
         inputId="orderStatusFilter"
         [options]="statusFilterOptions"
         [(ngModel)]="selectedOrderStatus"
