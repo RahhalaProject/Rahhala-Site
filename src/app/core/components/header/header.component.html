@@ -41,6 +41,18 @@
   </p-popover>
 </ng-template>
 
+<ng-template #langToggle>
+  <p-button
+    styleClass="header-lang-toggle"
+    icon="pi pi-globe"
+    [label]="currentLangCode"
+    size="small"
+    [outlined]="true"
+    [ariaLabel]="'language' | translate"
+    (onClick)="changeLang()"
+  />
+</ng-template>
+
 <ng-template #guestAuthActions>
   <div class="flex items-center gap-2 guest-auth-actions">
     <p-button
@@ -134,16 +146,22 @@
       </a>
       <div
         class="flex items-center gap-2 auth-btn-inMenu"
-        *ngIf="!item.root && isLoggedIn()"
+        *ngIf="!item.root"
       >
-        <ng-container *ngTemplateOutlet="userProfileMenu"></ng-container>
+        <ng-container *ngTemplateOutlet="langToggle"></ng-container>
+        @if(isLoggedIn()){
+          <ng-container *ngTemplateOutlet="userProfileMenu"></ng-container>
+        }
       </div>
     </ng-template>
 
     <ng-template #end let-root="root">
       <div class="main-nav-end-slot flex items-center justify-end gap-2 auth-btn">
+        <div class="hidden md:flex">
+          <ng-container *ngTemplateOutlet="langToggle"></ng-container>
+        </div>
         @if(isLoggedIn()){
-        <ng-container *ngTemplateOutlet="userProfileMenu"></ng-container>
+          <ng-container *ngTemplateOutlet="userProfileMenu"></ng-container>
         }
       </div>
     </ng-template>

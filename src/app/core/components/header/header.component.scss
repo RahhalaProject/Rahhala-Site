@@ -188,10 +188,9 @@
         color: var(--btn-color);
       }
       .p-megamenu-item:not(.p-disabled) > .p-megamenu-item-content:hover {
-        color: #ffffff;
-        background: var(--app-primary-hover);
+        background: color-mix(in srgb, var(--app-primary) 12%, transparent);
         .p-megamenu-item-link {
-          color: #ffffff;
+          color: var(--btn-color) !important;
         }
       }
     }
