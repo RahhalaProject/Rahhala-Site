@@ -78,17 +78,17 @@
       />
     </div>
 
-    <div class="flex flex-col gap-1">
+    <div class="flex flex-col gap-1 profile-phone-field">
       <label class="font-semibold text-sm" for="profilePhone">{{
         "phoneNumber" | translate
       }}</label>
       <input
         pInputText
         id="profilePhone"
-        class="w-full"
+        class="w-full profile-phone-non-editable"
         [(ngModel)]="phoneNumber"
-        [readonly]="true"
-        tabindex="-1"
+        [disabled]="true"
+        [attr.aria-readonly]="true"
       />
     </div>
 

@@ -20,3 +20,15 @@
   overflow-y: auto;
   max-height: min(85vh, calc(100vh - 8rem));
 }
+
+/* Phone is not editable — muted + slight blur so it reads as “locked”. */
+:host ::ng-deep input.profile-phone-non-editable:disabled {
+  cursor: not-allowed;
+  user-select: none;
+  opacity: 0.72;
+  filter: blur(0.55px);
+}
+
+:host ::ng-deep .profile-phone-field label {
+  opacity: 0.85;
+}

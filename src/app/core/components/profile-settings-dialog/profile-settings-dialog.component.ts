@@ -19,6 +19,7 @@ import { UserProfileService } from '../../services/user-profile.service';
 import { AuthService } from '../../services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../config/app.config';
 import { MyProfileResponse } from '../../models/user-profile.model';
+import { resolveProfilePictureUrl } from '../../utils/profile-picture-url';
 
 @Component({
   selector: 'app-profile-settings-dialog',
@@ -76,11 +77,7 @@ export class ProfileSettingsDialogComponent implements OnChanges {
   }
 
   private resolveImageUrl(url: string | null | undefined): string {
-    const u = url?.trim();
-    if (!u) return './images/profile.png';
-    if (/^https?:\/\//i.test(u) || u.startsWith('data:')) return u;
-    const apiBase = this.appConfig.apiUrl.replace(/\/$/, '');
-    return u.startsWith('/') ? `${apiBase}${u}` : `${apiBase}/${u}`;
+    return resolveProfilePictureUrl(url, this.appConfig.apiUrl);
   }
 
   onPhotoSelected(event: Event): void {
@@ -137,6 +134,15 @@ export class ProfileSettingsDialogComponent implements OnChanges {
     this.phoneNumber = p.phoneNumber ?? '';
     this.profilePictureUrl = p.profilePictureUrl ?? null;
     this.loading = false;
+    this.authService.applyProfileToCurrentUser({
+      id: p.id,
+      firstName: p.firstName,
+      lastName: p.lastName,
+      email: p.email,
+      phoneNumber: p.phoneNumber,
+      profilePictureUrl: p.profilePictureUrl,
+      address: p.address,
+    });
   }
 
   save(): void {

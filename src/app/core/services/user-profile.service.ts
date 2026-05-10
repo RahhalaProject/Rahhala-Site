@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { APP_CONFIG } from '../config/app.config';
 import {
   MyProfileResponse,
+  SingleImageUploadResponse,
   UpdateMyProfileRequest,
 } from '../models/user-profile.model';
 
@@ -23,27 +24,14 @@ export class UserProfileService {
     return this.http.put<void>(`${this.base}/Users/my-profile`, body);
   }
 
-  /** POST multipart; response body is the image URL as plain text. */
+  /**
+   * POST multipart; response is `{ fileName }` — use as `profilePictureUrl` on profile PUT.
+   */
   uploadSingleImage(file: File): Observable<string> {
     const formData = new FormData();
     formData.append('file', file, file.name);
     return this.http
-      .post(`${this.base}/FileUpload/single-Image`, formData, {
-        responseType: 'text',
-      })
-      .pipe(map((raw) => this.normalizeUploadUrl(raw)));
-  }
-
-  private normalizeUploadUrl(raw: string): string {
-    const t = raw?.trim() ?? '';
-    if (!t) return t;
-    if (t.startsWith('"') && t.endsWith('"')) {
-      try {
-        return JSON.parse(t) as string;
-      } catch {
-        return t.slice(1, -1);
-      }
-    }
-    return t;
+      .post<SingleImageUploadResponse>(`${this.base}/FileUpload/single-Image`, formData)
+      .pipe(map((res) => (res?.fileName ?? '').trim()));
   }
 }

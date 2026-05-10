@@ -16,3 +16,8 @@ export interface UpdateMyProfileRequest {
   address: string;
   profilePictureUrl: string | null;
 }
+
+/** Response from POST /v1/FileUpload/single-Image */
+export interface SingleImageUploadResponse {
+  fileName: string;
+}

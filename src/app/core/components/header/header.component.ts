@@ -17,6 +17,7 @@ import { ProfileSettingsDialogComponent } from '../profile-settings-dialog/profi
 import { APP_CONFIG, AppConfig } from '../../config/app.config';
 import { User } from '../../models/user.model';
 import { Subscription, filter } from 'rxjs';
+import { resolveProfilePictureUrl } from '../../utils/profile-picture-url';
 @Component({
   selector: 'header',
   templateUrl: './header.component.html',
@@ -127,11 +128,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   get profileAvatarSrc(): string {
-    const u = this.currentUser?.profilePictureUrl?.trim();
-    if (!u) return './images/profile.png';
-    if (/^https?:\/\//i.test(u) || u.startsWith('data:')) return u;
-    const apiBase = this.appConfig.apiUrl.replace(/\/$/, '');
-    return u.startsWith('/') ? `${apiBase}${u}` : `${apiBase}/${u}`;
+    return resolveProfilePictureUrl(
+      this.currentUser?.profilePictureUrl,
+      this.appConfig.apiUrl
+    );
   }
 
   openProfileSettings(popover: Popover): void {
