@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CardModule } from 'primeng/card';
-import { TabsModule } from 'primeng/tabs';
 import { SignUpComponent } from '../sign-up/sign-up.component';
 import { SignInComponent } from '../sign-in/sign-in.component';
 import { TranslateModule } from '@ngx-translate/core';
+
 @Component({
   selector: 'auth',
   templateUrl: './auth.component.html',
@@ -12,7 +12,6 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [
     CommonModule,
-    TabsModule,
     CardModule,
     SignInComponent,
     SignUpComponent,
@@ -20,7 +19,13 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
 })
 export class AuthComponent {
-  constructor() {}
+  activeView = signal<'signin' | 'signup'>('signin');
 
-  ngOnInit() {}
+  showSignUp(): void {
+    this.activeView.set('signup');
+  }
+
+  showSignIn(): void {
+    this.activeView.set('signin');
+  }
 }

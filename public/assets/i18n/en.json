@@ -171,6 +171,8 @@
   "packageTracking": "We help you deliver and track your package",
   "vision": "We believe that a connected world is a better world, and that belief drives everything we do",
   "createAccount": "Create Account",
+  "noAccountYet": "Don't have an account?",
+  "alreadyHaveAccount": "Already have an account?",
   "forgotPassword": "Forgot Password?",
   "backToLogin": "Back to Login",
   "resetPassword": "Reset Password",

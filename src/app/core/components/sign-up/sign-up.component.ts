@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, Output, EventEmitter } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   FormBuilder,
@@ -43,6 +43,8 @@ export class SignUpComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+
+  @Output() goToSignIn = new EventEmitter<void>();
 
   signUpForm!: FormGroup;
   isLoading = signal(false);

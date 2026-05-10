@@ -208,6 +208,10 @@
           />
         </div>
       </form>
+      <div class="switch-auth-text">
+        <span>{{ "alreadyHaveAccount" | translate }}</span>
+        <a (click)="goToSignIn.emit()" style="cursor: pointer"> {{ "signIn" | translate }}</a>
+      </div>
     </div>
   </p-card>
 </div>

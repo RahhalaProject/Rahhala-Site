@@ -6,18 +6,9 @@
 </div>
 
 <div class="card-div">
-  <p-tabs value="0">
-    <p-tablist>
-      <p-tab value="0">{{ "login" | translate }}</p-tab>
-      <p-tab value="1">{{ "createAccount" | translate }}</p-tab>
-    </p-tablist>
-    <p-tabpanels>
-      <p-tabpanel value="0">
-        <sign-in></sign-in>
-      </p-tabpanel>
-      <p-tabpanel value="1">
-        <sign-up></sign-up>
-      </p-tabpanel>
-    </p-tabpanels>
-  </p-tabs>
+  @if (activeView() === 'signin') {
+    <sign-in (goToSignUp)="showSignUp()" />
+  } @else {
+    <sign-up (goToSignIn)="showSignIn()" />
+  }
 </div>

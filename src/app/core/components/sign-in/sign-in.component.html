@@ -80,6 +80,10 @@
           <a href="#"><img src="/icons/google.svg" alt="Google" /></a>
         </div>
       </div>
+      <div class="switch-auth-text">
+        <span>{{ "noAccountYet" | translate }}</span>
+        <a (click)="goToSignUp.emit()" style="cursor: pointer"> {{ "createAccount" | translate }}</a>
+      </div>
     </div>
   </p-card>
 </div>
