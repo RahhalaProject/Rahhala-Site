@@ -10,10 +10,10 @@ import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { InputOtp } from 'primeng/inputotp';
 import { AuthService } from '../../services/auth.service';
 import { Message } from 'primeng/message';
 import { extractApiError } from '../../../shared/utils/api-error';
+import { OtpInputComponent } from '../../../shared/components/otp-input/otp-input.component';
 
 @Component({
   selector: 'otp-verification',
@@ -24,7 +24,7 @@ import { extractApiError } from '../../../shared/utils/api-error';
     CommonModule,
     ButtonModule,
     CardModule,
-    InputOtp,
+    OtpInputComponent,
     RouterModule,
     TranslateModule,
     ReactiveFormsModule,

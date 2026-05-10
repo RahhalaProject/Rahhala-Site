@@ -2,7 +2,7 @@ import { CommonModule, Location } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { InputOtp } from 'primeng/inputotp';
+import { OtpInputComponent } from '../../../shared/components/otp-input/otp-input.component';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import {
@@ -23,7 +23,7 @@ import { extractApiError } from '../../../shared/utils/api-error';
     CommonModule,
     ButtonModule,
     CardModule,
-    InputOtp,
+    OtpInputComponent,
     RouterModule,
     TranslateModule,
     ReactiveFormsModule,

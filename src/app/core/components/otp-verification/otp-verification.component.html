@@ -13,13 +13,14 @@
     </div>
     <form class="form" [formGroup]="otpForm" (ngSubmit)="onSubmit()">
       <div class="mb-5">
-        <p-inputotp formControlName="otp" [length]="4"></p-inputotp>
-        <small
-          class="error-text"
-          *ngIf="otp?.invalid && (otp?.dirty || otp?.touched)"
-        >
-          {{ "otpRequired" | translate }}
-        </small>
+        <app-otp-input formControlName="otp" [length]="4" />
+        @if (otp?.invalid && (otp?.dirty || otp?.touched)) {
+          <div style="display:flex; justify-content:center; margin-top:8px;">
+            <p-message severity="error" size="small" variant="simple">
+              {{ "otpRequired" | translate }}
+            </p-message>
+          </div>
+        }
       </div>
       <div class="mb-6">
         <p-button
