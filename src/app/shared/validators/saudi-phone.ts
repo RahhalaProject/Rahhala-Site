@@ -11,26 +11,12 @@ export function saudiPhoneDigits(value: string | null | undefined): string {
 }
 
 /**
- * Saudi mobile numbers (common formats after digit normalization):
- * - 05xxxxxxxx (10 digits)
- * - 5xxxxxxxx (9 digits)
- * - 9665xxxxxxxx (12 digits, country code)
+ * Saudi mobile numbers — only the local format is accepted:
+ * - 05xxxxxxxx (10 digits, must start with 05)
  */
 export function isValidSaudiPhone(value: string | null | undefined): boolean {
   const d = saudiPhoneDigits(value);
-  if (!d.length) {
-    return false;
-  }
-  if (/^9665[0-9]{8}$/.test(d)) {
-    return true;
-  }
-  if (/^05[0-9]{8}$/.test(d)) {
-    return true;
-  }
-  if (/^5[0-9]{8}$/.test(d)) {
-    return true;
-  }
-  return false;
+  return /^05\d{8}$/.test(d);
 }
 
 /** Use together with `Validators.required` when the field must be present. */

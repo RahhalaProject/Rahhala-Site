@@ -13,6 +13,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Message } from 'primeng/message';
+import { extractApiError } from '../../../shared/utils/api-error';
 @Component({
   selector: 'password-recovery-otp',
   templateUrl: './password-recovery-otp.component.html',
@@ -159,17 +160,7 @@ export class PasswordRecoveryOTPComponent implements OnInit, OnDestroy {
           this.startTimer();
         },
         error: (error) => {
-          let friendlyMessage = 'Failed to resend OTP. Please try again.';
-          if (error?.error && typeof error.error === 'object') {
-            if (error.error.title) {
-              friendlyMessage = error.error.title;
-            }
-          } else if (typeof error === 'string') {
-            friendlyMessage = error;
-          } else if (error?.message) {
-            friendlyMessage = error.message;
-          }
-          this.errorMessage.set(friendlyMessage);
+          this.errorMessage.set(extractApiError(error, 'Failed to resend OTP. Please try again.'));
           this.isResending.set(false);
         },
       });
@@ -214,17 +205,7 @@ export class PasswordRecoveryOTPComponent implements OnInit, OnDestroy {
         });
       },
       error: (error) => {
-        let friendlyMessage = 'OTP verification failed. Please try again.';
-        if (error?.error && typeof error.error === 'object') {
-          if (error.error.title) {
-            friendlyMessage = error.error.title;
-          }
-        } else if (typeof error === 'string') {
-          friendlyMessage = error;
-        } else if (error?.message) {
-          friendlyMessage = error.message;
-        }
-        this.errorMessage.set(friendlyMessage);
+        this.errorMessage.set(extractApiError(error, 'OTP verification failed. Please try again.'));
         this.isLoading.set(false);
       },
     });

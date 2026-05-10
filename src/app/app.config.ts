@@ -4,7 +4,7 @@ import {
   provideZoneChangeDetection,
   importProvidersFrom,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withRouterConfig } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
@@ -20,6 +20,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { APP_CONFIG, appConfig } from './core/config/app.config';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
+import { langInterceptor } from './core/interceptors/lang.interceptor';
 import { MessageService } from 'primeng/api';
 
 export const config: ApplicationConfig = {
@@ -28,9 +29,9 @@ export const config: ApplicationConfig = {
     { provide: APP_CONFIG, useValue: appConfig },
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(routes, withRouterConfig({ onSameUrlNavigation: 'reload' })),
     provideAnimationsAsync(),
-    provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
+    provideHttpClient(withInterceptors([langInterceptor, authInterceptor, errorInterceptor])),
     importProvidersFrom(
       HttpClientModule,
       TranslateModule.forRoot({

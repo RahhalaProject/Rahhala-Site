@@ -176,57 +176,34 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   useLang(lang: any) {
-    // this.translateService.use(lang.value);
-    // this.translateService.get('primeng').subscribe((res) => {
-    //     this.config.setTranslation(res);
-    // });
-
     const selectedLang = lang.value || lang; // handle both { value: 'ar' } or 'ar'
-
-    this.selectedLanguage = selectedLang;
-    this.translateService.use(selectedLang);
-    localStorage.setItem('lang', selectedLang);
-
-    this.translateService.get('primeng').subscribe((res) => {
-      this.config.setTranslation(res);
-    });
-
-    // Change direction dynamically
-    const html = this.document.documentElement as HTMLElement;
-    html.setAttribute('dir', selectedLang === 'ar' ? 'rtl' : 'ltr');
-
-    // Optionally: Change a custom class (for styling)
-    html.classList.remove('rtl', 'ltr');
-    html.classList.add(selectedLang === 'ar' ? 'rtl' : 'ltr');
-
-    // Optional hard reload (only if needed):
-    // location.reload(); // not ideal; use only if component doesn't detect dir change
+    this.applyLang(selectedLang);
   }
 
   changeLang() {
     const currentLang =
       this.translateService.currentLang || localStorage.getItem('lang') || 'en';
+    this.applyLang(currentLang === 'ar' ? 'en' : 'ar');
+  }
 
-    // عكس اللغة (اختياري لو عايز toggle)
-    const selectedLang = currentLang === 'ar' ? 'en' : 'ar';
-
-    this.selectedLanguage = selectedLang;
-    this.translateService.use(selectedLang);
-    localStorage.setItem('lang', selectedLang);
+  private applyLang(lang: string): void {
+    this.selectedLanguage = lang;
+    this.translateService.use(lang);
+    localStorage.setItem('lang', lang);
 
     this.translateService.get('primeng').subscribe((res) => {
       this.config.setTranslation(res);
     });
 
-    // Change direction dynamically
     const html = this.document.documentElement as HTMLElement;
-    html.setAttribute('dir', selectedLang === 'ar' ? 'rtl' : 'ltr');
-
-    // Optionally: Change a custom class (for styling)
+    html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
     html.classList.remove('rtl', 'ltr');
-    html.classList.add(selectedLang === 'ar' ? 'rtl' : 'ltr');
+    html.classList.add(lang === 'ar' ? 'rtl' : 'ltr');
 
-    // Optional hard reload (only if needed):
-    // location.reload(); // not ideal; use only if component doesn't detect dir change
+    // Re-navigate to the current route so all components reload and re-fetch APIs
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigateByUrl(currentUrl);
+    });
   }
 }

@@ -19,6 +19,7 @@ import { Message } from 'primeng/message';
 import { passwordMatchValidator } from '../../validators/password-match.validator';
 import { saudiPhoneValidator } from '../../../shared/validators/saudi-phone';
 import { Router } from '@angular/router';
+import { extractApiError } from '../../../shared/utils/api-error';
 
 @Component({
   selector: 'sign-up',
@@ -150,7 +151,7 @@ export class SignUpComponent {
     const body = httpErr?.error;
 
     if (!body || typeof body !== 'object') {
-      this.errorMessage.set(this.fallbackRegisterMessage(error));
+      this.errorMessage.set(extractApiError(error, 'Registration failed. Please try again.'));
       return;
     }
 
@@ -179,12 +180,7 @@ export class SignUpComponent {
       return;
     }
 
-    if (title) {
-      this.errorMessage.set(title);
-      return;
-    }
-
-    this.errorMessage.set(this.fallbackRegisterMessage(error));
+    this.errorMessage.set(extractApiError(error, 'Registration failed. Please try again.'));
   }
 
   private isDuplicatePhoneConflict(codes: string[], title: string): boolean {
@@ -207,10 +203,4 @@ export class SignUpComponent {
     return t.includes('email') && t.includes('already');
   }
 
-  private fallbackRegisterMessage(error: unknown): string {
-    if (typeof error === 'string') return error;
-    const msg = (error as { message?: string })?.message;
-    if (msg) return msg;
-    return 'Registration failed. Please try again.';
-  }
 }

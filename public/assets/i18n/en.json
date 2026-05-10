@@ -369,7 +369,7 @@
   "firstNameRequired": "First Name is required",
   "lastNameRequired": "Last Name is required",
   "phoneNumberRequired": "Phone Number is required",
-  "invalidSaudiPhoneNumber": "Enter a valid Saudi number (e.g. 05xxxxxxxx or +9665xxxxxxxx)",
+  "invalidSaudiPhoneNumber": "Enter a valid Saudi number (e.g. 0551234567)",
   "phoneAlreadyRegistered": "This phone number is already registered",
   "emailAlreadyRegistered": "This email is already registered",
   "signUpSubmit": "Sign up",

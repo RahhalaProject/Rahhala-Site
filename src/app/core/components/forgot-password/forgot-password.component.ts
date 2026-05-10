@@ -15,6 +15,7 @@ import { ToastModule } from 'primeng/toast';
 import { Message } from 'primeng/message';
 import { Router, RouterModule } from '@angular/router';
 import { emailOrSaudiPhoneValidator } from '../../../shared/validators/saudi-phone';
+import { extractApiError } from '../../../shared/utils/api-error';
 
 @Component({
   selector: 'forgot-password',
@@ -74,18 +75,7 @@ export class ForgotPasswordComponent implements OnInit {
         });
       },
       error: (error) => {
-        let friendlyMessage =
-          'Password reset request failed. Please try again.';
-        if (error?.error && typeof error.error === 'object') {
-          if (error.error.title) {
-            friendlyMessage = error.error.title;
-          }
-        } else if (typeof error === 'string') {
-          friendlyMessage = error;
-        } else if (error?.message) {
-          friendlyMessage = error.message;
-        }
-        this.errorMessage.set(friendlyMessage);
+        this.errorMessage.set(extractApiError(error, 'Password reset request failed. Please try again.'));
         this.isLoading.set(false);
       },
     });

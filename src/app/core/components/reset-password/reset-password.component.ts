@@ -15,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
 import { Message } from 'primeng/message';
 import { passwordMatchValidator } from '../../validators/password-match.validator';
 import { ResetPasswordRequest } from '../../models/reset-password-request.model';
+import { extractApiError } from '../../../shared/utils/api-error';
 
 @Component({
   selector: 'reset-password',
@@ -135,17 +136,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         this.router.navigate(['/auth']);
       },
       error: (error) => {
-        let friendlyMessage = 'Registration failed. Please try again.';
-        if (error?.error && typeof error.error === 'object') {
-          if (error.error.title) {
-            friendlyMessage = error.error.title;
-          }
-        } else if (typeof error === 'string') {
-          friendlyMessage = error;
-        } else if (error?.message) {
-          friendlyMessage = error.message;
-        }
-        this.errorMessage.set(friendlyMessage);
+        this.errorMessage.set(extractApiError(error, 'Password reset failed. Please try again.'));
         this.isLoading.set(false);
       },
     });

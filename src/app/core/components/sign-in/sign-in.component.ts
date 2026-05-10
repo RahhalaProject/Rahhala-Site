@@ -15,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
 import { saudiPhoneValidator } from '../../../shared/validators/saudi-phone';
 import { Message } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
+import { extractApiError } from '../../../shared/utils/api-error';
 @Component({
   selector: 'sign-in',
   templateUrl: './sign-in.component.html',
@@ -76,19 +77,7 @@ export class SignInComponent {
         });
       },
       error: (error) => {
-        let friendlyMessage = 'Login failed. Please try again.';
-        if (error?.error && typeof error.error === 'object') {
-          // Attempt to extract a user-friendly message from the error title
-          // Prefer "title" property which is the backend's explanation string
-          if (error.error.title) {
-            friendlyMessage = error.error.title;
-          }
-        } else if (typeof error === 'string') {
-          friendlyMessage = error;
-        } else if (error?.message) {
-          friendlyMessage = error.message;
-        }
-        this.errorMessage.set(friendlyMessage);
+        this.errorMessage.set(extractApiError(error, 'Login failed. Please try again.'));
         this.isLoading.set(false);
       },
     });

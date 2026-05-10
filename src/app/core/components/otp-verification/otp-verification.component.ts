@@ -13,6 +13,7 @@ import { CardModule } from 'primeng/card';
 import { InputOtp } from 'primeng/inputotp';
 import { AuthService } from '../../services/auth.service';
 import { Message } from 'primeng/message';
+import { extractApiError } from '../../../shared/utils/api-error';
 
 @Component({
   selector: 'otp-verification',
@@ -173,17 +174,7 @@ export class OTPVerificationComponent implements OnInit, OnDestroy {
         this.router.navigate([this.redirectUrl]);
       },
       error: (error) => {
-        let friendlyMessage = 'OTP verification failed. Please try again.';
-        if (error?.error && typeof error.error === 'object') {
-          if (error.error.title) {
-            friendlyMessage = error.error.title;
-          }
-        } else if (typeof error === 'string') {
-          friendlyMessage = error;
-        } else if (error?.message) {
-          friendlyMessage = error.message;
-        }
-        this.errorMessage.set(friendlyMessage);
+        this.errorMessage.set(extractApiError(error, 'OTP verification failed. Please try again.'));
         this.isLoading.set(false);
       },
     });
