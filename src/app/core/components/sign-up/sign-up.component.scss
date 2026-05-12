@@ -128,4 +128,16 @@
   .global-rrror .p-message-content {
     justify-content: center;
   }
+
+  .switch-auth-text {
+    a {
+      color: var(--app-primary);
+      font-weight: var(--app-font-weight-semibold);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
